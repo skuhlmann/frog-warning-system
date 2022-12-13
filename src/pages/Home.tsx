@@ -1,6 +1,5 @@
 import { H1, H2, Link, ParLg, SingleColumnLayout, Card } from '@daohaus/ui';
 import styled from 'styled-components';
-import { HausAnimated } from '../components/HausAnimated';
 
 const LinkBox = styled.div`
   display: flex;
