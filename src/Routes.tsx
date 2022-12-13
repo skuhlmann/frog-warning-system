@@ -6,6 +6,7 @@ import { Proposals } from './pages/Proposals';
 import { Treasury } from './pages/Treasury';
 import { Operations } from './pages/Operations';
 import { Trading } from './pages/Trading';
+import { Settings } from './pages/Settings';
 
 export const Routes = () => {
   const { pathname } = useLocation();
@@ -19,6 +20,7 @@ export const Routes = () => {
         { label: 'Treasury', href: '/treasury' },
         { label: 'Operations', href: '/operations' },
         { label: 'Trading', href: '/trading' },
+        { label: 'Settings', href: '/settings' },
       ]}
     >
       <Router>
@@ -28,6 +30,7 @@ export const Routes = () => {
         <Route path='/treasury' element={<Treasury />} />
         <Route path='/operations' element={<Operations />} />
         <Route path='/trading' element={<Trading />} />
+        <Route path='/settings' element={<Settings />} />
       </Router>
     </DHLayout>
   );
