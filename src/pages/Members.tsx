@@ -1,316 +1,282 @@
-import { useDHConnect } from '@daohaus/connect';
-import { H1 } from '@daohaus/ui';
+import { useMemo } from 'react';
+import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import { Column, Row } from 'react-table';
+import {
+  formatDateFromSeconds,
+  formatValueTo,
+  fromWei,
+  sharesDelegatedToMember,
+  votingPowerPercentage,
+} from '@daohaus/utils';
+import { Keychain } from '@daohaus/keychain-utils';
+
+import {
+  useMembers,
+  useDao,
+  useConnectedMember,
+} from '@daohaus/moloch-v3-context';
+import { Member_OrderBy, MolochV3Members } from '@daohaus/moloch-v3-data';
+import {
+  SingleColumnLayout,
+  Card,
+  widthQuery,
+  AddressDisplay,
+  Spinner,
+  useBreakpoint,
+  Tooltip,
+} from '@daohaus/ui';
+
+import { ButtonRouterLink } from '../components/ButtonRouterLink';
+import { DaoTable } from '../components/DaohausTable';
+import { MembersOverview } from '../components/MembersOverview';
+import { MemberProfileAvatar } from '../components/MemberProfileAvatar';
+import { MemberProfileMenu } from '../components/MemberProfileMenu';
+
+const Actions = styled.div`
+  display: flex;
+  width: 100%;
+  button:first-child {
+    margin-right: 1rem;
+  }
+  @media ${widthQuery.sm} {
+    flex-direction: column;
+    button:first-child {
+      margin-right: 0;
+      margin-bottom: 1rem;
+    }
+  }
+`;
+
+const MemberContainer = styled(Card)`
+  padding: 3rem;
+  border: none;
+  margin-bottom: 3rem;
+  min-height: 20rem;
+  width: 100%;
+  overflow-x: auto;
+  th {
+    min-width: 10rem;
+  }
+  .hide-sm {
+    button {
+      padding-left: 0.5rem;
+    }
+  }
+  @media ${widthQuery.lg} {
+    max-width: 100%;
+    min-width: 0;
+  }
+  @media ${widthQuery.md} {
+    .hide-sm {
+      display: none;
+    }
+  }
+`;
+
+const ActionContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
+export type MembersTableType = MolochV3Members[number];
 
 export const Members = () => {
-  return <H1>Members</H1>;
+  const { dao } = useDao();
+  const { members, paging, loadNextPage, sortMembers } = useMembers();
+  const { connectedMember } = useConnectedMember();
+  const isMd = useBreakpoint(widthQuery.md);
+  const { daoid, daochain } = useParams();
+
+  const tableData: MolochV3Members | undefined = useMemo(() => {
+    if (members) {
+      return members.filter(member => member !== undefined);
+    }
+  }, [members]);
+
+  const columns = useMemo<Column<MembersTableType>[]>(
+    () => [
+      {
+        Header: 'Member',
+        accessor: 'memberAddress',
+        Cell: ({ value }: { value: string }) => {
+          return (
+            <MemberProfileAvatar
+              daochain={daochain as keyof Keychain}
+              memberAddress={value}
+              daoid={daoid}
+            />
+          );
+        },
+      },
+      {
+        Header: () => {
+          return <div className='hide-sm'>Join Date</div>;
+        },
+        accessor: 'createdAt',
+        Cell: ({ value }: { value: string }) => {
+          return <div className='hide-sm'>{formatDateFromSeconds(value)}</div>;
+        },
+      },
+      {
+        Header: () => {
+          return <div className='hide-sm'>Power</div>;
+        },
+        accessor: 'delegateShares',
+        Cell: ({
+          value,
+          row,
+        }: {
+          value: string;
+          row: Row<MembersTableType>;
+        }) => {
+          const delegatedShares = sharesDelegatedToMember(
+            row.original.delegateShares,
+            row.original.shares
+          );
+          return (
+            <div className='hide-sm'>
+              {votingPowerPercentage(dao?.totalShares || '0', value)}
+              {' %'}
+              {delegatedShares > 0 && (
+                <Tooltip
+                  content={`${formatValueTo({
+                    value: fromWei(delegatedShares.toFixed()),
+                    decimals: 2,
+                    format: 'number',
+                  })} voting tokens are delegated to this member`}
+                  side='bottom'
+                />
+              )}
+            </div>
+          );
+        },
+      },
+      {
+        Header: () => {
+          return <>Voting</>;
+        },
+        accessor: 'shares',
+        Cell: ({ value }: { value: string }) => {
+          return (
+            <div>
+              {formatValueTo({
+                value: fromWei(value),
+                decimals: 2,
+                format: 'number',
+              })}
+            </div>
+          );
+        },
+      },
+      {
+        Header: () => {
+          return <div>Non-Voting</div>;
+        },
+        accessor: 'loot',
+        Cell: ({ value }: { value: string }) => {
+          return (
+            <div>
+              {formatValueTo({
+                value: fromWei(value),
+                decimals: 2,
+                format: 'number',
+              })}
+            </div>
+          );
+        },
+      },
+      {
+        Header: () => {
+          return <div className='hide-sm'>Delegated To</div>;
+        },
+        accessor: 'delegatingTo',
+        Cell: ({
+          value,
+          row,
+        }: {
+          value: string;
+          row: Row<MembersTableType>;
+        }) => {
+          return (
+            <div className='hide-sm'>
+              {value === row.original.memberAddress ? (
+                '--'
+              ) : (
+                <AddressDisplay address={value} truncate />
+              )}
+            </div>
+          );
+        },
+      },
+      {
+        accessor: 'id',
+        Cell: ({ row }: { row: Row<MembersTableType> }) => {
+          return (
+            <ActionContainer>
+              <MemberProfileMenu memberAddress={row.original.memberAddress} />
+            </ActionContainer>
+          );
+        },
+      },
+    ],
+    [dao, daochain, daoid]
+  );
+
+  const handleColumnSort = (
+    orderBy: string,
+    orderDirection: 'asc' | 'desc'
+  ) => {
+    sortMembers({ orderBy: orderBy as Member_OrderBy, orderDirection });
+  };
+
+  return (
+    <SingleColumnLayout
+      title='Members'
+      actions={
+        <Actions>
+          <ButtonRouterLink
+            to={`/molochv3/${daochain}/${daoid}/new-proposal?formLego=ISSUE`}
+            color='secondary'
+            fullWidth={isMd}
+            linkType='no-icon-external'
+          >
+            Add Member
+          </ButtonRouterLink>
+          {connectedMember && (
+            <ButtonRouterLink
+              to={`/molochv3/${daochain}/${daoid}/members/${connectedMember.memberAddress}`}
+              fullWidth={isMd}
+              linkType='no-icon-external'
+              // centerAlign={isMd}
+            >
+              My Profile
+            </ButtonRouterLink>
+          )}
+        </Actions>
+      }
+    >
+      <MemberContainer>
+        {dao && <MembersOverview dao={dao} />}
+        {dao && members && tableData && columns ? (
+          <DaoTable<MembersTableType>
+            tableData={tableData}
+            columns={columns}
+            hasNextPaging={paging.next !== undefined}
+            handleLoadMore={loadNextPage}
+            handleColumnSort={handleColumnSort}
+            sortableColumns={
+              isMd
+                ? ['loot', 'shares']
+                : ['createdAt', 'shares', 'loot', 'delegateShares']
+            }
+          />
+        ) : (
+          <Spinner size={isMd ? '8rem' : '16rem'} padding='6rem' />
+        )}
+      </MemberContainer>
+    </SingleColumnLayout>
+  );
 };
 
-// import { BsShareFill, BsArrowLeft } from 'react-icons/bs';
-// import { useParams } from 'react-router-dom';
-// import { Column } from 'react-table';
-// import styled from 'styled-components';
-// import { useDao } from '@daohaus/moloch-v3-context';
-// import {
-//   MolochV3Dao,
-//   FindMemberQuery,
-//   DaoVault,
-// } from '@daohaus/moloch-v3-data';
-// import {
-//   AddressDisplay,
-//   Button,
-//   Card,
-//   DataIndicator,
-//   DataMd,
-//   ParMd,
-//   SingleColumnLayout,
-//   Spinner,
-//   useBreakpoint,
-//   useToast,
-//   widthQuery,
-// } from '@daohaus/ui';
-// import {
-//   formatValueTo,
-//   memberTokenBalanceShare,
-//   memberUsdValueShare,
-//   charLimit,
-//   NETWORK_TOKEN_ETH_ADDRESS,
-//   AccountProfile,
-// } from '@daohaus/utils';
-
-// import { Keychain } from '@daohaus/keychain-utils';
-
-// import { ButtonRouterLink } from '../components/ButtonRouterLink';
-// import { DaoTable } from '../components/DaohausTable';
-// import { Profile } from '../components/Profile';
-// import { fetchProfile } from '../utils/cacheProfile';
-// import { loadMember } from '../utils/dataFetchHelpers';
-// import { useDHConnect } from '@daohaus/connect';
-
-// const ProfileCard = styled(Card)`
-//   width: 64rem;
-//   padding: 2rem;
-//   border: none;
-//   margin-bottom: 3.4rem;
-//   @media ${widthQuery.md} {
-//     max-width: 100%;
-//     min-width: 0;
-//   }
-// `;
-
-// const StyledArrowLeft = styled(BsArrowLeft)`
-//   height: 1.6rem;
-//   width: 1.6rem;
-// `;
-
-// const ButtonsContainer = styled.div`
-//   display: flex;
-//   justify-content: space-between;
-//   width: 64rem;
-//   margin-bottom: 3rem;
-//   @media ${widthQuery.md} {
-//     max-width: 100%;
-//     min-width: 0;
-//   }
-//   @media ${widthQuery.sm} {
-//     flex-direction: column;
-//     button:first-child {
-//       margin-bottom: 1rem;
-//     }
-//   }
-// `;
-
-// export const DataIndicatorContainer = styled.div`
-//   display: flex;
-//   flex-direction: column;
-// `;
-
-// export const DataIndicatorLabelMd = styled(ParMd)`
-//   margin-bottom: 0.5rem;
-//   opacity: 0.9;
-// `;
-
-// export const ValueRow = styled.div`
-//   width: 64rem;
-//   padding: 3rem 0;
-//   text-align: left;
-// `;
-
-// export function Members() {
-//   const { daochain, daoid, memberAddress } = useParams();
-//   const { dao } = useDao();
-//   const { successToast } = useToast();
-//   const isMobile = useBreakpoint(widthQuery.sm);
-//   const { networks } = useDHConnect();
-//   const [currentMember, setCurrentMember] = useState<
-//     FindMemberQuery['member'] | undefined
-//   >();
-//   const [currentMemberLoading, setCurrentMemberLoading] =
-//     useState<boolean>(false);
-//   const [currentProfile, setCurrentProfile] = useState<
-//     AccountProfile | undefined
-//   >();
-
-//   useEffect(() => {
-//     let shouldUpdate = true;
-//     if (daochain && daoid && memberAddress) {
-//       loadMember({
-//         daoid,
-//         daochain: daochain as keyof Keychain,
-//         address: memberAddress,
-//         setMember: setCurrentMember,
-//         setMemberLoading: setCurrentMemberLoading,
-//         shouldUpdate,
-//       });
-//     }
-//     return () => {
-//       shouldUpdate = false;
-//     };
-//   }, [daochain, daoid, memberAddress]);
-
-//   const fetchMemberProfile = useCallback(
-//     async (address: string, loadState: typeof setCurrentMemberLoading) => {
-//       loadState(true);
-//       const profile = await fetchProfile(address);
-//       setCurrentProfile(profile);
-//       loadState(false);
-//     },
-//     [setCurrentProfile]
-//   );
-
-//   useEffect(() => {
-//     if (currentMember) {
-//       fetchMemberProfile(currentMember.memberAddress, setCurrentMemberLoading);
-//     }
-//   }, [currentMember, fetchMemberProfile]);
-
-//   type TokenTableType = {
-//     token: {
-//       address: string;
-//       name: string | undefined;
-//     };
-//     balance: string;
-//     fiatBalance: string;
-//   };
-//   const treasury: MolochV3Dao['vaults'][number] | undefined = useMemo(() => {
-//     if (dao) {
-//       return (
-//         dao.vaults.find((v: DaoVault) => v.safeAddress === dao.safeAddress) ||
-//         undefined
-//       );
-//     }
-//     return undefined;
-//   }, [dao]);
-
-//   const tableData: TokenTableType[] | null = useMemo(() => {
-//     if (dao && currentMember && treasury) {
-//       return treasury.tokenBalances
-//         .filter(bal => Number(bal.balance))
-//         .map(bal => {
-//           return {
-//             token: {
-//               address: bal.tokenAddress || NETWORK_TOKEN_ETH_ADDRESS,
-//               name: charLimit(bal.token?.name, 21),
-//             },
-//             fiatBalance: formatValueTo({
-//               value: memberUsdValueShare(
-//                 bal.fiatBalance,
-//                 dao.totalShares || 0,
-//                 dao.totalLoot || 0,
-//                 currentMember.shares || 0,
-//                 currentMember.loot || 0
-//               ),
-//               decimals: 2,
-//               format: 'currency',
-//             }),
-//             balance: formatValueTo({
-//               value: memberTokenBalanceShare(
-//                 bal.balance,
-//                 dao.totalShares || 0,
-//                 dao.totalLoot || 0,
-//                 currentMember.shares || 0,
-//                 currentMember.loot || 0,
-//                 bal.token?.decimals || 18
-//               ),
-//               format: 'number',
-//             }),
-//           };
-//         });
-//     } else {
-//       return null;
-//     }
-//   }, [dao, currentMember, treasury]);
-
-//   const columns = useMemo<Column<TokenTableType>[]>(
-//     () => [
-//       {
-//         Header: 'Token',
-//         accessor: 'token',
-//         Cell: ({ value }: { value: TokenTableType['token'] }) => {
-//           return value.address === NETWORK_TOKEN_ETH_ADDRESS ? (
-//             <DataMd>{networks?.[daochain as keyof Keychain]?.symbol}</DataMd>
-//           ) : (
-//             <AddressDisplay
-//               address={value.address}
-//               textOverride={value.name}
-//               truncate
-//               copy
-//               explorerNetworkId={daochain as keyof Keychain}
-//             />
-//           );
-//         },
-//       },
-//       {
-//         Header: 'Amount',
-//         accessor: 'balance',
-//         Cell: ({ value }: { value: string }) => {
-//           return <div>{value}</div>;
-//         },
-//       },
-//       {
-//         Header: () => {
-//           return <div>USD Value</div>;
-//         },
-//         accessor: 'fiatBalance',
-//         Cell: ({ value }: { value: string }) => {
-//           return <div>{value}</div>;
-//         },
-//       },
-//     ],
-//     [daochain, networks]
-//   );
-
-//   const handleOnClick = () => {
-//     navigator.clipboard.writeText(`${window.location.href}`);
-//     successToast({
-//       title: 'URL copied to clipboard',
-//     });
-//   };
-
-//   return (
-//     <SingleColumnLayout title='Member Profile'>
-//       {currentMemberLoading && <Spinner />}
-//       {currentMember && (
-//         <>
-//           <ButtonsContainer>
-//             <ButtonRouterLink
-//               to={`/molochv3/${daochain}/${daoid}/members`}
-//               IconLeft={StyledArrowLeft}
-//               color='secondary'
-//               linkType='no-icon-external'
-//               variant='outline'
-//               fullWidth={isMobile}
-//               // was centerAlign={isMobile}
-//               // Default has always been center.
-//               // Not sure what is supposed to happen here?
-//               // justify={isMobile ? 'center' : 'flex-start'}
-//             >
-//               MEMBERS
-//             </ButtonRouterLink>
-//             <Button
-//               IconLeft={BsShareFill}
-//               onClick={handleOnClick}
-//               fullWidth={isMobile}
-//               // Same as above
-//               // centerAlign={isMobile}
-//             >
-//               SHARE PROFILE
-//             </Button>
-//           </ButtonsContainer>
-//           <ProfileCard>
-//             {currentProfile && (
-//               <>
-//                 <Profile profile={currentProfile} membership={currentMember} />
-//                 <ValueRow>
-//                   <DataIndicator
-//                     label='Total Exit Amount'
-//                     data={formatValueTo({
-//                       value: memberUsdValueShare(
-//                         dao?.fiatTotal || 0,
-//                         dao?.totalShares || 0,
-//                         dao?.totalLoot || 0,
-//                         currentMember.shares || 0,
-//                         currentMember.loot || 0
-//                       ),
-//                       decimals: 2,
-//                       format: 'currency',
-//                     })}
-//                   />
-//                 </ValueRow>
-//               </>
-//             )}
-
-//             {treasury && tableData && columns && (
-//               <DaoTable<TokenTableType>
-//                 tableData={tableData}
-//                 columns={columns}
-//                 sortableColumns={[]}
-//               />
-//             )}
-//           </ProfileCard>
-//         </>
-//       )}
-//     </SingleColumnLayout>
-//   );
-// }
-
-// export default Members;
+export default Members;

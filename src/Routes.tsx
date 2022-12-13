@@ -1,4 +1,4 @@
-import { DHLayout } from '@daohaus/connect';
+import { DHLayout, useDHConnect } from '@daohaus/connect';
 import { Routes as Router, Route, useLocation } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { Members } from './pages/Members';
@@ -7,9 +7,12 @@ import { Treasury } from './pages/Treasury';
 import { Operations } from './pages/Operations';
 import { Trading } from './pages/Trading';
 import { Settings } from './pages/Settings';
+import { MolochV3DaoProvider } from '@daohaus/moloch-v3-context';
 
 export const Routes = () => {
   const { pathname } = useLocation();
+  const { address } = useDHConnect();
+
   return (
     <DHLayout
       pathname={pathname}
@@ -23,15 +26,22 @@ export const Routes = () => {
         { label: 'Settings', href: '/settings' },
       ]}
     >
-      <Router>
-        <Route path='/' element={<Home />} />
-        <Route path='/members' element={<Members />} />
-        <Route path='/proposals' element={<Proposals />} />
-        <Route path='/treasury' element={<Treasury />} />
-        <Route path='/operations' element={<Operations />} />
-        <Route path='/trading' element={<Trading />} />
-        <Route path='/settings' element={<Settings />} />
-      </Router>
+      <MolochV3DaoProvider
+        address={address}
+        daoid='0x9789ac55e21939f3cc771325c6a23e8497182042'
+        daochain='0x5'
+        graphApiKeys={{}}
+      >
+        <Router>
+          <Route path='/' element={<Home />} />
+          <Route path='/members' element={<Members />} />
+          <Route path='/proposals' element={<Proposals />} />
+          <Route path='/treasury' element={<Treasury />} />
+          <Route path='/operations' element={<Operations />} />
+          <Route path='/trading' element={<Trading />} />
+          <Route path='/settings' element={<Settings />} />
+        </Router>
+      </MolochV3DaoProvider>
     </DHLayout>
   );
 };

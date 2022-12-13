@@ -41,7 +41,7 @@ export const ProfileMenuLink = styled(DropdownLink)`
 
 const ProfileMenuText = styled(DropdownText)`
   border-radius: 2px;
-  color: ${(props) => props.theme.secondary.step12};
+  color: ${props => props.theme.secondary.step12};
   font-weight: ${font.weight.bold};
   cursor: pointer;
   display: flex;
@@ -55,13 +55,13 @@ const ProfileMenuText = styled(DropdownText)`
   }
 
   :hover {
-    background-color: ${(props) => props.theme.secondary.step4};
-    border-color: ${(props) => props.theme.secondary.step8};
+    background-color: ${props => props.theme.secondary.step4};
+    border-color: ${props => props.theme.secondary.step8};
     text-decoration: none;
   }
 
   &.disabled {
-    color: ${(props) => props.theme.secondary.step11};
+    color: ${props => props.theme.secondary.step11};
   }
 `;
 
@@ -92,24 +92,24 @@ export const MemberProfileMenu = ({
   return (
     <Dialog>
       <Dropdown
-        menuMinWidth="17.8rem"
+        menuMinWidth='17.8rem'
         trigger={
           <ProfileMenuTrigger
             IconLeft={RiMore2Fill}
-            size="sm"
-            variant="ghost"
+            size='sm'
+            variant='ghost'
           />
         }
-        side="left"
+        side='left'
       >
         {isMenuForConnectedMember && (
           <>
-            <DropdownMenuItem key="delegate" asChild>
+            <DropdownMenuItem key='delegate' asChild>
               <DialogTrigger asChild>
                 <ProfileMenuText>Delegate</ProfileMenuText>
               </DialogTrigger>
             </DropdownMenuItem>
-            <DropdownMenuItem key="ragequit" asChild>
+            <DropdownMenuItem key='ragequit' asChild>
               <ProfileMenuLink
                 href={`/molochv3/${daochain}/${daoid}/members/ragequit`}
               >
@@ -121,14 +121,14 @@ export const MemberProfileMenu = ({
 
         {!isMenuForConnectedMember && (
           <>
-            <DropdownMenuItem key="delegateTo" asChild>
+            <DropdownMenuItem key='delegateTo' asChild>
               <DialogTrigger asChild>
                 <ProfileMenuText className={enableActions ? '' : 'disabled'}>
                   Delegate To
                 </ProfileMenuText>
               </DialogTrigger>
             </DropdownMenuItem>
-            <DropdownMenuItem key="guildkick" asChild>
+            <DropdownMenuItem key='guildkick' asChild>
               <ProfileMenuLink
                 className={enableActions ? '' : 'disabled'}
                 href={`/molochv3/${daochain}/${daoid}/new-proposal?formLego=GUILDKICK&defaultValues=${JSON.stringify(
@@ -143,7 +143,7 @@ export const MemberProfileMenu = ({
           </>
         )}
       </Dropdown>
-      <DialogContent title="Manage Delegate">
+      <DialogContent title='Manage Delegate'>
         <ManageDelegate
           defaultMember={!isMenuForConnectedMember ? memberAddress : undefined}
         />
