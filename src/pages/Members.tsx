@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Column, Row } from 'react-table';
 import {
@@ -86,7 +85,6 @@ export const Members = () => {
   const { members, paging, loadNextPage, sortMembers } = useMembers();
   const { connectedMember } = useConnectedMember();
   const isMd = useBreakpoint(widthQuery.md);
-  const { daoid, daochain } = useParams();
 
   const tableData: MolochV3Members | undefined = useMemo(() => {
     if (members) {
@@ -102,9 +100,9 @@ export const Members = () => {
         Cell: ({ value }: { value: string }) => {
           return (
             <MemberProfileAvatar
-              daochain={daochain as keyof Keychain}
+              daochain={'0x5' as keyof Keychain}
               memberAddress={value}
-              daoid={daoid}
+              daoid={'0x9789ac55e21939f3cc771325c6a23e8497182042'}
             />
           );
         },
@@ -220,7 +218,7 @@ export const Members = () => {
         },
       },
     ],
-    [dao, daochain, daoid]
+    [dao, '0x5', '0x9789ac55e21939f3cc771325c6a23e849718204']
   );
 
   const handleColumnSort = (
@@ -236,7 +234,7 @@ export const Members = () => {
       actions={
         <Actions>
           <ButtonRouterLink
-            to={`/molochv3/${daochain}/${daoid}/new-proposal?formLego=ISSUE`}
+            to={`/molochv3/${'0x5'}/${'0x9789ac55e21939f3cc771325c6a23e8497182042'}/new-proposal?formLego=ISSUE`}
             color='secondary'
             fullWidth={isMd}
             linkType='no-icon-external'
@@ -245,7 +243,7 @@ export const Members = () => {
           </ButtonRouterLink>
           {connectedMember && (
             <ButtonRouterLink
-              to={`/molochv3/${daochain}/${daoid}/members/${connectedMember.memberAddress}`}
+              to={`/members/${connectedMember.memberAddress}`}
               fullWidth={isMd}
               linkType='no-icon-external'
               // centerAlign={isMd}

@@ -8,6 +8,7 @@ import { Operations } from './pages/Operations';
 import { Trading } from './pages/Trading';
 import { Settings } from './pages/Settings';
 import { MolochV3DaoProvider } from '@daohaus/moloch-v3-context';
+import Member from './pages/Member';
 
 export const Routes = () => {
   const { pathname } = useLocation();
@@ -35,6 +36,7 @@ export const Routes = () => {
         <Router>
           <Route path='/' element={<Home />} />
           <Route path='/members' element={<Members />} />
+          <Route path='/members/:memberAddress' element={<Member />} />
           <Route path='/proposals' element={<Proposals />} />
           <Route path='/treasury' element={<Treasury />} />
           <Route path='/operations' element={<Operations />} />
