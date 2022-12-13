@@ -1,6 +1,49 @@
-import { useDHConnect } from '@daohaus/connect';
-import { H1 } from '@daohaus/ui';
+import styled from 'styled-components';
+import { Card, SingleColumnLayout, widthQuery } from '@daohaus/ui';
 
-export const Settings = () => {
-  return <H1>Settings</H1>;
-};
+import { useDao } from '@daohaus/moloch-v3-context';
+import { MetadataSettings } from '../components/MetadataSettings';
+import { GovernanceSettings } from '../components/GovernanceSettings';
+import { ShamanSettings } from '../components/ShamanSettings';
+import { ContractSettings } from '../components/ContractSettings';
+
+const SettingsContainer = styled(Card)`
+  width: 110rem;
+  padding: 3rem;
+  border: none;
+  margin-bottom: 3rem;
+  @media ${widthQuery.lg} {
+    max-width: 100%;
+    min-width: 0;
+  }
+`;
+
+export function Settings() {
+  const { dao } = useDao();
+
+  return (
+    <SingleColumnLayout title='Settings'>
+      {dao && (
+        <>
+          <SettingsContainer>
+            <MetadataSettings dao={dao} />
+          </SettingsContainer>
+
+          <SettingsContainer>
+            <ContractSettings dao={dao} />
+          </SettingsContainer>
+
+          <SettingsContainer>
+            <GovernanceSettings dao={dao} />
+          </SettingsContainer>
+
+          <SettingsContainer>
+            <ShamanSettings dao={dao} />
+          </SettingsContainer>
+        </>
+      )}
+    </SingleColumnLayout>
+  );
+}
+
+export default Settings;
