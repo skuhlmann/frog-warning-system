@@ -94,10 +94,10 @@ export const NewProposalList = ({
             label: 'Basics',
             Component: () => <ProposalList proposals={basicProposals} />,
           },
-          {
-            label: 'Advanced',
-            Component: () => <ProposalList proposals={advancedProposals} />,
-          },
+          // {
+          //   label: 'Advanced',
+          //   Component: () => <ProposalList proposals={advancedProposals} />,
+          // },
         ]}
       />
     </ListContainer>

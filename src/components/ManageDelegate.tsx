@@ -3,7 +3,7 @@ import { FormBuilder } from '@daohaus/form-builder';
 import { useConnectedMember, useDao } from '@daohaus/moloch-v3-context';
 
 import { CustomFields } from '../legos/config';
-import { COMMON_FORMS } from '../legos/form';
+import { FORM } from '../legos/forms';
 import { useParams } from 'react-router-dom';
 
 type ManageDelegateProps = {
@@ -34,7 +34,7 @@ export const ManageDelegate = ({ defaultMember }: ManageDelegateProps) => {
   return (
     <FormBuilder
       defaultValues={defaultValues}
-      form={COMMON_FORMS.MANAGE_DELEGATE}
+      form={FORM.MANAGE_DELEGATE}
       customFields={CustomFields}
       onSuccess={onFormComplete}
       targetNetwork={daochain}

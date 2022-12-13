@@ -15,7 +15,7 @@ import { BsPlusLg } from 'react-icons/bs';
 
 import { useDao, useProposals } from '@daohaus/moloch-v3-context';
 import { NewProposalList } from '../components/NewProposalList';
-import { ADVANCED_PROPOSAL_FORMS, BASIC_PROPOSAL_FORMS } from '../legos/form';
+import { FORM } from '../legos/forms';
 import SearchInput from '../components/SearchInput';
 import FilterDropdown from '../components/FilterDropdown';
 import { BaseProposalCard } from '../components/proposalCards/BaseProposalCard';
@@ -53,8 +53,8 @@ export function Proposals() {
     return Object.keys(proposals).map(key => proposals[key]);
   };
 
-  const basicProposals = prepareProposals(BASIC_PROPOSAL_FORMS);
-  const advancedProposals = prepareProposals(ADVANCED_PROPOSAL_FORMS);
+  const basicProposals = prepareProposals(FORM);
+  // const advancedProposals = prepareProposals(ADVANCED_PROPOSAL_FORMS);
 
   const handleSearchFilter = (term: string) => {
     setSearchTerm(term);
@@ -120,7 +120,7 @@ export function Proposals() {
           <DialogContent title='Choose Proposal Type'>
             <NewProposalList
               basicProposals={basicProposals}
-              advancedProposals={advancedProposals}
+              advancedProposals={[]}
             />
           </DialogContent>
         </Dialog>
