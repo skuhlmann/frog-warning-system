@@ -264,13 +264,12 @@ export function Member() {
               MEMBERS
             </ButtonRouterLink>
             <Button
-              IconLeft={BsShareFill}
               onClick={handleOnClick}
               fullWidth={isMobile}
               // Same as above
               // centerAlign={isMobile}
             >
-              SHARE PROFILE
+              Convert Shares
             </Button>
           </ButtonsContainer>
           <ProfileCard>
