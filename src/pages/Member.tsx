@@ -1,14 +1,14 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { BsShareFill, BsArrowLeft } from 'react-icons/bs';
-import { useParams } from 'react-router-dom';
-import { Column } from 'react-table';
-import styled from 'styled-components';
-import { useDao } from '@daohaus/moloch-v3-context';
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { BsShareFill, BsArrowLeft } from "react-icons/bs";
+import { useParams } from "react-router-dom";
+import { Column } from "react-table";
+import styled from "styled-components";
+import { useDao } from "@daohaus/moloch-v3-context";
 import {
   MolochV3Dao,
   FindMemberQuery,
   DaoVault,
-} from '@daohaus/moloch-v3-data';
+} from "@daohaus/moloch-v3-data";
 import {
   AddressDisplay,
   Button,
@@ -21,7 +21,7 @@ import {
   useBreakpoint,
   useToast,
   widthQuery,
-} from '@daohaus/ui';
+} from "@daohaus/ui";
 import {
   formatValueTo,
   memberTokenBalanceShare,
@@ -29,19 +29,19 @@ import {
   charLimit,
   NETWORK_TOKEN_ETH_ADDRESS,
   AccountProfile,
-} from '@daohaus/utils';
+} from "@daohaus/utils";
 
-import { Keychain } from '@daohaus/keychain-utils';
+import { Keychain } from "@daohaus/keychain-utils";
 
-import { ButtonRouterLink } from '../components/ButtonRouterLink';
-import { DaoTable } from '../components/DaohausTable';
-import { Profile } from '../components/Profile';
-import { fetchProfile } from '../utils/cacheProfile';
-import { loadMember } from '../utils/dataFetchHelpers';
-import { useDHConnect } from '@daohaus/connect';
+import { ButtonRouterLink } from "../components/ButtonRouterLink";
+import { DaoTable } from "../components/DaohausTable";
+import { Profile } from "../components/Profile";
+import { fetchProfile } from "../utils/cacheProfile";
+import { loadMember } from "../utils/dataFetchHelpers";
+import { useDHConnect } from "@daohaus/connect";
 
-const daochain = '0x5';
-const daoid = '0x9789ac55e21939f3cc771325c6a23e8497182042';
+const daochain = "0x5";
+const daoid = "0x9789ac55e21939f3cc771325c6a23e8497182042";
 
 const ProfileCard = styled(Card)`
   width: 64rem;
@@ -99,7 +99,7 @@ export function Member() {
   const isMobile = useBreakpoint(widthQuery.sm);
   const { networks } = useDHConnect();
   const [currentMember, setCurrentMember] = useState<
-    FindMemberQuery['member'] | undefined
+    FindMemberQuery["member"] | undefined
   >();
   const [currentMemberLoading, setCurrentMemberLoading] =
     useState<boolean>(false);
@@ -148,7 +148,7 @@ export function Member() {
     balance: string;
     fiatBalance: string;
   };
-  const treasury: MolochV3Dao['vaults'][number] | undefined = useMemo(() => {
+  const treasury: MolochV3Dao["vaults"][number] | undefined = useMemo(() => {
     if (dao) {
       return (
         dao.vaults.find((v: DaoVault) => v.safeAddress === dao.safeAddress) ||
@@ -161,8 +161,8 @@ export function Member() {
   const tableData: TokenTableType[] | null = useMemo(() => {
     if (dao && currentMember && treasury) {
       return treasury.tokenBalances
-        .filter(bal => Number(bal.balance))
-        .map(bal => {
+        .filter((bal) => Number(bal.balance))
+        .map((bal) => {
           return {
             token: {
               address: bal.tokenAddress || NETWORK_TOKEN_ETH_ADDRESS,
@@ -177,7 +177,7 @@ export function Member() {
                 currentMember.loot || 0
               ),
               decimals: 2,
-              format: 'currency',
+              format: "currency",
             }),
             balance: formatValueTo({
               value: memberTokenBalanceShare(
@@ -188,7 +188,7 @@ export function Member() {
                 currentMember.loot || 0,
                 bal.token?.decimals || 18
               ),
-              format: 'number',
+              format: "number",
             }),
           };
         });
@@ -200,9 +200,9 @@ export function Member() {
   const columns = useMemo<Column<TokenTableType>[]>(
     () => [
       {
-        Header: 'Token',
-        accessor: 'token',
-        Cell: ({ value }: { value: TokenTableType['token'] }) => {
+        Header: "Token",
+        accessor: "token",
+        Cell: ({ value }: { value: TokenTableType["token"] }) => {
           return value.address === NETWORK_TOKEN_ETH_ADDRESS ? (
             <DataMd>{networks?.[daochain as keyof Keychain]?.symbol}</DataMd>
           ) : (
@@ -217,8 +217,8 @@ export function Member() {
         },
       },
       {
-        Header: 'Amount',
-        accessor: 'balance',
+        Header: "Amount",
+        accessor: "balance",
         Cell: ({ value }: { value: string }) => {
           return <div>{value}</div>;
         },
@@ -227,7 +227,7 @@ export function Member() {
         Header: () => {
           return <div>USD Value</div>;
         },
-        accessor: 'fiatBalance',
+        accessor: "fiatBalance",
         Cell: ({ value }: { value: string }) => {
           return <div>{value}</div>;
         },
@@ -239,12 +239,12 @@ export function Member() {
   const handleOnClick = () => {
     navigator.clipboard.writeText(`${window.location.href}`);
     successToast({
-      title: 'URL copied to clipboard',
+      title: "URL copied to clipboard",
     });
   };
 
   return (
-    <SingleColumnLayout title='Member Profile'>
+    <SingleColumnLayout title="Member Profile">
       {currentMemberLoading && <Spinner />}
       {currentMember && (
         <>
@@ -252,9 +252,9 @@ export function Member() {
             <ButtonRouterLink
               to={`/members`}
               IconLeft={StyledArrowLeft}
-              color='secondary'
-              linkType='no-icon-external'
-              variant='outline'
+              color="secondary"
+              linkType="no-icon-external"
+              variant="outline"
               fullWidth={isMobile}
               // was centerAlign={isMobile}
               // Default has always been center.
@@ -263,14 +263,15 @@ export function Member() {
             >
               MEMBERS
             </ButtonRouterLink>
-            <Button
-              onClick={handleOnClick}
-              fullWidth={isMobile}
-              // Same as above
-              // centerAlign={isMobile}
-            >
-              Convert Shares
-            </Button>
+            {currentMember && currentMember.memberAddress === memberAddress && (
+              <ButtonRouterLink
+                to={`/convert`}
+                color="secondary"
+                linkType="no-icon-external"
+              >
+                Convert Shares
+              </ButtonRouterLink>
+            )}
           </ButtonsContainer>
           <ProfileCard>
             {currentProfile && (
@@ -278,7 +279,7 @@ export function Member() {
                 <Profile profile={currentProfile} membership={currentMember} />
                 <ValueRow>
                   <DataIndicator
-                    label='Total Exit Amount'
+                    label="Total Exit Amount"
                     data={formatValueTo({
                       value: memberUsdValueShare(
                         dao?.fiatTotal || 0,
@@ -288,7 +289,7 @@ export function Member() {
                         currentMember.loot || 0
                       ),
                       decimals: 2,
-                      format: 'currency',
+                      format: "currency",
                     })}
                   />
                 </ValueRow>
