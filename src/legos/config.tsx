@@ -16,7 +16,6 @@ import { WalletConnectLink } from "../components/customFields/WalletConnectLink"
 import { MetadataLink } from "../components/customFields/MetadataLink";
 import { SafeSelect } from "../components/customFields/SafeSelect";
 import { MultisendActions } from "../components/customFields/MultisendActions";
-import { ConvertDisplay } from "../components/customFields/ConvertDisplay";
 import { ConvertToken } from "../components/customFields/ConvertToken";
 
 export const CustomFields = {
@@ -37,7 +36,6 @@ export const CustomFields = {
   metadataLink: MetadataLink,
   safeSelect: SafeSelect,
   multisendActions: MultisendActions,
-  convert: ConvertDisplay,
   convertToken: ConvertToken,
 };
 
