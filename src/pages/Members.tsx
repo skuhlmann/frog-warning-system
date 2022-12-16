@@ -239,7 +239,7 @@ export const Members = () => {
             fullWidth={isMd}
             linkType='no-icon-external'
           >
-            Join DAO
+            Accept Offer
           </ButtonRouterLink>
           {connectedMember && (
             <ButtonRouterLink
