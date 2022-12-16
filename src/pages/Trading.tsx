@@ -11,9 +11,24 @@ import {
   useBreakpoint,
   widthQuery,
 } from '@daohaus/ui';
+import { ButtonRouterLink } from '../components/ButtonRouterLink';
 import { useConnectedMember, useDao } from '@daohaus/moloch-v3-context';
 import { VaultOverview } from '../components/VaultOverview';
-import AddSafeForm from '../components/AddSafeForm';
+
+const Actions = styled.div`
+  display: flex;
+  width: 100%;
+  button:first-child {
+    margin-right: 1rem;
+  }
+  @media ${widthQuery.sm} {
+    flex-direction: column;
+    button:first-child {
+      margin-right: 0;
+      margin-bottom: 1rem;
+    }
+  }
+`;
 
 const VaultContainer = styled(Card)`
   padding: 3rem;
@@ -31,7 +46,7 @@ export function Trading() {
   const { connectedMember } = useConnectedMember();
 
   const [open, setOpen] = useState(false);
-
+  const isMd = useBreakpoint(widthQuery.md);
   const isMobile = useBreakpoint(widthQuery.sm);
 
   const handleClose = () => {
@@ -40,21 +55,28 @@ export function Trading() {
 
   return (
     <SingleColumnLayout
-      title='Safes'
+      title='Trading'
       actions={
-        connectedMember && (
-          <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-              <Button color='secondary' fullWidth={isMobile}>
-                New Safe
-              </Button>
-            </DialogTrigger>
-
-            <DialogContent title='Add Safe'>
-              <AddSafeForm onSuccess={handleClose} />
-            </DialogContent>
-          </Dialog>
-        )
+        <Actions>
+          <ButtonRouterLink
+            to={`/molochv3/${'0x5'}/${'0x9789ac55e21939f3cc771325c6a23e8497182042'}/new-proposal?formLego=ISSUE`}
+            color='secondary'
+            fullWidth={isMd}
+            linkType='no-icon-external'
+          >
+            Delegate Trader
+          </ButtonRouterLink>
+          {connectedMember && (
+            <ButtonRouterLink
+              to={`/members/${connectedMember.memberAddress}`}
+              fullWidth={isMd}
+              linkType='no-icon-external'
+              // centerAlign={isMd}
+            >
+              Take Profit
+            </ButtonRouterLink>
+          )}
+        </Actions>
       }
     >
       {dao?.vaults

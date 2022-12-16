@@ -239,7 +239,7 @@ export const Members = () => {
             fullWidth={isMd}
             linkType='no-icon-external'
           >
-            Add Member
+            Join DAO
           </ButtonRouterLink>
           {connectedMember && (
             <ButtonRouterLink
@@ -248,7 +248,7 @@ export const Members = () => {
               linkType='no-icon-external'
               // centerAlign={isMd}
             >
-              My Profile
+              View Profile
             </ButtonRouterLink>
           )}
         </Actions>
