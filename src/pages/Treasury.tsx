@@ -64,7 +64,7 @@ export function Treasury() {
             fullWidth={isMd}
             linkType='no-icon-external'
           >
-            Try Service
+            Approve Spending
           </ButtonRouterLink>
           {connectedMember && (
             <ButtonRouterLink
