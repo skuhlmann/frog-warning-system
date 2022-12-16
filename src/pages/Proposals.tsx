@@ -113,17 +113,6 @@ export function Proposals() {
 
           <FilterDropdown filter={localFilter} toggleFilter={toggleFilter} />
         </SearchFilterContainer>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button IconLeft={BsPlusLg}>New Proposal</Button>
-          </DialogTrigger>
-          <DialogContent title='Choose Proposal Type'>
-            <NewProposalList
-              basicProposals={basicProposals}
-              advancedProposals={[]}
-            />
-          </DialogContent>
-        </Dialog>
       </ActionsContainer>
       {!proposals && <Spinner size={isMobile ? '8rem' : '16rem'} />}
       {proposals &&
