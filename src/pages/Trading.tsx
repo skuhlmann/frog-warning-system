@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import styled from 'styled-components';
+import { useState } from "react";
+import styled from "styled-components";
 
 import {
   Button,
@@ -7,13 +7,14 @@ import {
   Dialog,
   DialogContent,
   DialogTrigger,
+  ParMd,
   SingleColumnLayout,
   useBreakpoint,
   widthQuery,
-} from '@daohaus/ui';
-import { ButtonRouterLink } from '../components/ButtonRouterLink';
-import { useConnectedMember, useDao } from '@daohaus/moloch-v3-context';
-import { VaultOverview } from '../components/VaultOverview';
+} from "@daohaus/ui";
+import { ButtonRouterLink } from "../components/ButtonRouterLink";
+import { useConnectedMember, useDao } from "@daohaus/moloch-v3-context";
+import { VaultOverview } from "../components/VaultOverview";
 
 const Actions = styled.div`
   display: flex;
@@ -41,6 +42,8 @@ const VaultContainer = styled(Card)`
   }
 `;
 
+const VAULT_NAMES = ["Trading"];
+
 export function Trading() {
   const { dao } = useDao();
   const { connectedMember } = useConnectedMember();
@@ -53,16 +56,20 @@ export function Trading() {
     setOpen(false);
   };
 
+  const VaultExplainer = styled.div`
+    margin-bottom: 3rem;
+  `;
+
   return (
     <SingleColumnLayout
-      title='Trading'
+      title="Trading"
       actions={
         <Actions>
           <ButtonRouterLink
-            to={`/molochv3/${'0x5'}/${'0x9789ac55e21939f3cc771325c6a23e8497182042'}/new-proposal?formLego=ISSUE`}
-            color='secondary'
+            to={`/molochv3/${"0x5"}/${"0x9789ac55e21939f3cc771325c6a23e8497182042"}/new-proposal?formLego=ISSUE`}
+            color="secondary"
             fullWidth={isMd}
-            linkType='no-icon-external'
+            linkType="no-icon-external"
           >
             Delegate Trader
           </ButtonRouterLink>
@@ -70,7 +77,7 @@ export function Trading() {
             <ButtonRouterLink
               to={`/members/${connectedMember.memberAddress}`}
               fullWidth={isMd}
-              linkType='no-icon-external'
+              linkType="no-icon-external"
               // centerAlign={isMd}
             >
               Take Profit
@@ -80,14 +87,23 @@ export function Trading() {
       }
     >
       {dao?.vaults
-        .sort((a, b) => Number(b.ragequittable) - Number(a.ragequittable))
+        .filter((v) => VAULT_NAMES.includes(v.name))
         .map(
-          vault =>
+          (vault) =>
             dao &&
             vault && (
-              <VaultContainer key={vault.id}>
-                <VaultOverview dao={dao} vault={vault} />
-              </VaultContainer>
+              <>
+                <VaultExplainer>
+                  <ParMd>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Integer sit amet odio varius, tincidunt quam at, bibendum
+                    erat. Quisque tristique sed sem sed iaculis.
+                  </ParMd>
+                </VaultExplainer>
+                <VaultContainer key={vault.id}>
+                  <VaultOverview dao={dao} vault={vault} />
+                </VaultContainer>
+              </>
             )
         )}
     </SingleColumnLayout>

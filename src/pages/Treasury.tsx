@@ -1,19 +1,16 @@
-import { useState } from 'react';
-import styled from 'styled-components';
+import { useState } from "react";
+import styled from "styled-components";
 
 import {
-  Button,
   Card,
-  Dialog,
-  DialogContent,
-  DialogTrigger,
+  ParMd,
   SingleColumnLayout,
   useBreakpoint,
   widthQuery,
-} from '@daohaus/ui';
-import { ButtonRouterLink } from '../components/ButtonRouterLink';
-import { useConnectedMember, useDao } from '@daohaus/moloch-v3-context';
-import { VaultOverview } from '../components/VaultOverview';
+} from "@daohaus/ui";
+import { ButtonRouterLink } from "../components/ButtonRouterLink";
+import { useConnectedMember, useDao } from "@daohaus/moloch-v3-context";
+import { VaultOverview } from "../components/VaultOverview";
 
 const Actions = styled.div`
   display: flex;
@@ -41,13 +38,16 @@ const VaultContainer = styled(Card)`
   }
 `;
 
+const VaultExplainer = styled.div`
+  margin-bottom: 3rem;
+`;
+
 export function Treasury() {
   const { dao } = useDao();
   const { connectedMember } = useConnectedMember();
 
   const [open, setOpen] = useState(false);
   const isMd = useBreakpoint(widthQuery.md);
-  const isMobile = useBreakpoint(widthQuery.sm);
 
   const handleClose = () => {
     setOpen(false);
@@ -55,14 +55,14 @@ export function Treasury() {
 
   return (
     <SingleColumnLayout
-      title='Treasury'
+      title="Treasury"
       actions={
         <Actions>
           <ButtonRouterLink
-            to={`/molochv3/${'0x5'}/${'0x9789ac55e21939f3cc771325c6a23e8497182042'}/new-proposal?formLego=ISSUE`}
-            color='secondary'
+            to={`/molochv3/${"0x5"}/${"0x9789ac55e21939f3cc771325c6a23e8497182042"}/new-proposal?formLego=ISSUE`}
+            color="secondary"
             fullWidth={isMd}
-            linkType='no-icon-external'
+            linkType="no-icon-external"
           >
             Approve Spending
           </ButtonRouterLink>
@@ -70,8 +70,7 @@ export function Treasury() {
             <ButtonRouterLink
               to={`/members/${connectedMember.memberAddress}`}
               fullWidth={isMd}
-              linkType='no-icon-external'
-              // centerAlign={isMd}
+              linkType="no-icon-external"
             >
               Fund Trading
             </ButtonRouterLink>
@@ -80,14 +79,23 @@ export function Treasury() {
       }
     >
       {dao?.vaults
-        .sort((a, b) => Number(b.ragequittable) - Number(a.ragequittable))
+        .filter((v) => Number(v.ragequittable))
         .map(
-          vault =>
+          (vault) =>
             dao &&
             vault && (
-              <VaultContainer key={vault.id}>
-                <VaultOverview dao={dao} vault={vault} />
-              </VaultContainer>
+              <>
+                <VaultExplainer>
+                  <ParMd>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Integer sit amet odio varius, tincidunt quam at, bibendum
+                    erat. Quisque tristique sed sem sed iaculis.
+                  </ParMd>
+                </VaultExplainer>
+                <VaultContainer key={vault.id}>
+                  <VaultOverview dao={dao} vault={vault} />
+                </VaultContainer>
+              </>
             )
         )}
     </SingleColumnLayout>
