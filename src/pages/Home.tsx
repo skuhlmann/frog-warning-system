@@ -6,15 +6,21 @@ import {
   ParMd,
   SingleColumnLayout,
   Card,
-} from '@daohaus/ui';
-import styled from 'styled-components';
+} from "@daohaus/ui";
+import styled from "styled-components";
 
-import { ButtonRouterLink } from '../components/ButtonRouterLink';
+import { ButtonRouterLink } from "../components/ButtonRouterLink";
 
 const Cards = styled.div`
   padding: 5em 0 5em 0;
   display: flex;
+  justify-content: space-between;
   gap: 1.7rem;
+  width: 80%;
+`;
+
+const HomeCard = styled(Card)`
+  max-width: 300px;
 `;
 
 export const Home = () => {
@@ -29,47 +35,45 @@ export const Home = () => {
       </ParLg>
       <Button onClick={function noRefCheck() {}}>Join DAO</Button>
       <Cards>
-        <Card>
+        <HomeCard>
           <H2>Proposals</H2>
           <ParMd>
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </ParMd>
           <ButtonRouterLink
             to={`/proposals`}
-            color='secondary'
-            linkType='no-icon-external'
+            color="secondary"
+            linkType="no-icon-external"
           >
             View Proposals
           </ButtonRouterLink>
-        </Card>
-        <Card>
+        </HomeCard>
+        <HomeCard>
           <H2>Members</H2>
           <ParMd>
-            Ex, iusto qui vitae asperiores ad ratione officiis! Magnam
-            praesentium veritatis nemo ab. Vitae deserunt eligendi molestias ea
-            reiciendis accusamus inventore facilis.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </ParMd>
           <ButtonRouterLink
             to={`/members`}
-            color='secondary'
-            linkType='no-icon-external'
+            color="secondary"
+            linkType="no-icon-external"
           >
             See Members
           </ButtonRouterLink>
-        </Card>
-        <Card>
+        </HomeCard>
+        <HomeCard>
           <H2>Treasury</H2>
           <ParMd>
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </ParMd>
           <ButtonRouterLink
             to={`/treasury`}
-            color='secondary'
-            linkType='no-icon-external'
+            color="secondary"
+            linkType="no-icon-external"
           >
             View Treasury
           </ButtonRouterLink>
-        </Card>
+        </HomeCard>
       </Cards>
       <H2>Lorem Ipsum</H2>
       <ParLg>

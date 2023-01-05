@@ -10,6 +10,8 @@ import { Settings } from "./pages/Settings";
 import { MolochV3DaoProvider } from "@daohaus/moloch-v3-context";
 import Member from "./pages/Member";
 import { ConvertShares } from "./pages/ConvertShares";
+import { HeaderAvatar } from "./components/HeaderAvatar";
+import { DAO_ADDRESS, DAO_NAME } from "./utils/constants";
 
 export const Routes = () => {
   const { pathname } = useLocation();
@@ -27,10 +29,11 @@ export const Routes = () => {
         { label: "Trading", href: "/trading" },
         { label: "Settings", href: "/settings" },
       ]}
+      leftNav={<HeaderAvatar name={DAO_NAME} address={DAO_ADDRESS} />}
     >
       <MolochV3DaoProvider
         address={address}
-        daoid="0x9789ac55e21939f3cc771325c6a23e8497182042"
+        daoid={DAO_ADDRESS}
         daochain="0x5"
         graphApiKeys={{}}
       >
