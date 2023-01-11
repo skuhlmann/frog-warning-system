@@ -1,4 +1,3 @@
-import { FormLego } from "@daohaus/form-builder";
 import { CustomFormLego } from "./config";
 import { FIELD } from "./fields";
 import { TX } from "./tx";
@@ -14,7 +13,7 @@ export const getFormLegoById = (
   return allForms[formKey];
 };
 
-export const FORM: Record<string, FormLego> = {
+export const FORM: Record<string, CustomFormLego> = {
   SIGNAL: {
     id: "SIGNAL",
     title: "Signal Form",
@@ -119,6 +118,38 @@ export const FORM: Record<string, FormLego> = {
       //   // @ts-expect-error: doing object spread, even if the field definition has the property
       //   daoMemberOnly: true,
       // },
+      // ...PROPOSAL_SETTINGS_FIELDS,
+    ],
+  },
+  NEW_MEMBER: {
+    id: "NEW_MEMBER",
+    title: "Membership Proposal",
+    subtitle: "Accept Offer",
+    description: "Create a proposal to get membership in the DAO.",
+    tx: TX.ISSUE_SHARES,
+    requiredFields: {
+      title: true,
+      description: true,
+      sharesRequested: true,
+      lootRequested: true,
+      recipient: true,
+    },
+    fields: [
+      FIELD.TITLE,
+      FIELD.DESCRIPTION,
+      FIELD.LINK,
+      {
+        id: "recipient",
+        type: "input",
+        label: "Recipient",
+        expectType: "ethAddress",
+        placeholder: "0x...",
+      },
+      {
+        ...FIELD.TO_WEI,
+        label: "Voting Token Requested",
+        id: "sharesRequested",
+      },
       // ...PROPOSAL_SETTINGS_FIELDS,
     ],
   },

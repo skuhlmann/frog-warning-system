@@ -32,6 +32,7 @@ import { MembersOverview } from "../components/MembersOverview";
 import { MemberProfileAvatar } from "../components/MemberProfileAvatar";
 import { MemberProfileMenu } from "../components/MemberProfileMenu";
 import { DAO_ADDRESS, DAO_CHAIN } from "../utils/constants";
+import { useDHConnect } from "@daohaus/connect";
 
 const Actions = styled.div`
   display: flex;
@@ -82,6 +83,7 @@ const ActionContainer = styled.div`
 export type MembersTableType = MolochV3Members[number];
 
 export const Members = () => {
+  const { address } = useDHConnect();
   const { dao } = useDao();
   const { members, paging, loadNextPage, sortMembers } = useMembers();
   const { connectedMember } = useConnectedMember();
@@ -219,7 +221,7 @@ export const Members = () => {
         },
       },
     ],
-    [dao, "0x5", "0x9789ac55e21939f3cc771325c6a23e849718204"]
+    [dao]
   );
 
   const handleColumnSort = (
@@ -234,14 +236,20 @@ export const Members = () => {
       title="Members"
       actions={
         <Actions>
-          <ButtonRouterLink
-            to={`/new-proposal?formLego=ISSUE`}
-            color="secondary"
-            fullWidth={isMd}
-            linkType="no-icon-external"
-          >
-            Accept Offer
-          </ButtonRouterLink>
+          {address && (
+            <ButtonRouterLink
+              to={`/new-proposal?formLego=NEW_MEMBER&defaultValues=${JSON.stringify(
+                {
+                  recipient: address,
+                }
+              )}`}
+              color="secondary"
+              fullWidth={isMd}
+              linkType="no-icon-external"
+            >
+              Accept Offer
+            </ButtonRouterLink>
+          )}
           {connectedMember && (
             <ButtonRouterLink
               to={`/members/${connectedMember.memberAddress}`}
