@@ -110,9 +110,7 @@ export const ProposalCardOverview = ({
         {charLimit(proposal.description, 145)}
       </ParMd>
       {isMd && (
-        <StyledRouterLink
-          to={`/molochV3/${daochain}/${daoid}/proposals/${proposal.proposalId}`}
-        >
+        <StyledRouterLink to={`/proposals/${proposal.proposalId}`}>
           <Button
             color="secondary"
             size="sm"
@@ -130,7 +128,7 @@ export const ProposalCardOverview = ({
         <MemberCard
           explorerNetworkId={daochain as keyof Keychain}
           minWidth="4rem"
-          profileUrl={`/molochv3/${daochain}/${daoid}/members/${proposal.createdBy}`}
+          profileUrl={`/members/${proposal.createdBy}`}
           profile={
             submitterProfile || {
               address: proposal.createdBy,
@@ -234,9 +232,7 @@ export const OverviewHeader = ({
               | {formatShortDateTimeFromSeconds(proposal.createdAt)}
             </ParSm>
           </HeaderContainer>
-          <StyledRouterLink
-            to={`/molochV3/${daochain}/${daoid}/proposals/${proposal.proposalId}`}
-          >
+          <StyledRouterLink to={`/proposals/${proposal.proposalId}`}>
             <Button color="secondary" size="sm" disabled={loading}>
               View Details
             </Button>

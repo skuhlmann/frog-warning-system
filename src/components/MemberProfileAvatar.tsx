@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { AccountProfile } from '@daohaus/utils';
-import { Keychain } from '@daohaus/keychain-utils';
+import { useCallback, useEffect, useState } from "react";
+import styled from "styled-components";
+import { AccountProfile } from "@daohaus/utils";
+import { Keychain } from "@daohaus/keychain-utils";
 
-import { MemberCard } from '@daohaus/ui';
+import { MemberCard } from "@daohaus/ui";
 
-import { fetchProfile } from '../utils/cacheProfile';
+import { fetchProfile } from "../utils/cacheProfile";
 
 type MemberProfileProps = {
   memberAddress: string;
@@ -25,8 +25,7 @@ export const MemberProfileAvatar = ({
   daoid,
 }: MemberProfileProps) => {
   const [memberProfile, setMemberProfile] = useState<AccountProfile>();
-  const customProfileURI =
-    daoid && daoid && `/molochv3/${daochain}/${daoid}/members/${memberAddress}`;
+  const customProfileURI = daoid && daoid && `/members/${memberAddress}`;
 
   const fetchMemberProfile = useCallback(
     async (address: string, setter: typeof setMemberProfile) => {

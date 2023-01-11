@@ -92,7 +92,7 @@ export const MetadataSettings = ({ dao }: MetadataSettingsProps) => {
       <MetaCardHeader>
         <H3>Metadata</H3>
         {connectedMember && Number(connectedMember.shares) && (
-          <Link href={`/molochv3/${daochain}/${daoid}/settings/update`}>
+          <Link href={`/settings/update`}>
             <Button color="secondary">Update Settings</Button>
           </Link>
         )}

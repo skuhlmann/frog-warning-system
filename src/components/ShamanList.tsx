@@ -63,7 +63,7 @@ export const ShamanList = ({ shamen }: ShamanListProps) => {
             <div className="manage">
               <DataSm>{shaman.permissions}</DataSm>
               <StyledLink
-                href={`/molochv3/${daochain}/${daoid}/new-proposal?formLego=UPDATE_SHAMAN&defaultValues=${JSON.stringify(
+                href={`/new-proposal?formLego=UPDATE_SHAMAN&defaultValues=${JSON.stringify(
                   {
                     shamanAddress: shaman.shamanAddress,
                     shamanPermission: shaman.permissions,

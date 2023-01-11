@@ -119,7 +119,7 @@ export const GovernanceSettings = ({ dao }: GovernanceSettingsProps) => {
       <GovernanceCardHeader>
         <H3>Governance Settings</H3>
         <StyledButtonLink
-          href={`/molochv3/${daochain}/${daoid}/new-proposal?formLego=UPDATE_GOV_SETTINGS&defaultValues=${JSON.stringify(
+          href={`/new-proposal?formLego=UPDATE_GOV_SETTINGS&defaultValues=${JSON.stringify(
             defaultValues
           )}`}
         >
@@ -185,7 +185,7 @@ export const GovernanceSettings = ({ dao }: GovernanceSettingsProps) => {
       <TokensHeader>
         <H3 className="tokens">DAO Tokens</H3>
         <StyledButtonLink
-          href={`/molochv3/${daochain}/${daoid}/new-proposal?formLego=TOKEN_SETTINGS&defaultValues=${JSON.stringify(
+          href={`/new-proposal?formLego=TOKEN_SETTINGS&defaultValues=${JSON.stringify(
             defaultValues
           )}`}
         >

@@ -73,7 +73,7 @@ export const MemberProfileMenu = ({
   memberAddress,
 }: MemberProfileMenuProps) => {
   const daoid = DAO_ADDRESS;
-  const doachain = DAO_CHAIN;
+  const daochain = DAO_CHAIN;
   const { connectedMember } = useConnectedMember();
 
   const enableActions = useMemo(() => {
@@ -111,9 +111,7 @@ export const MemberProfileMenu = ({
               </DialogTrigger>
             </DropdownMenuItem>
             <DropdownMenuItem key="ragequit" asChild>
-              <ProfileMenuLink
-                href={`/molochv3/${daochain}/${daoid}/members/ragequit`}
-              >
+              <ProfileMenuLink href={`/members/ragequit`}>
                 Rage Quit
               </ProfileMenuLink>
             </DropdownMenuItem>
@@ -132,7 +130,7 @@ export const MemberProfileMenu = ({
             <DropdownMenuItem key="guildkick" asChild>
               <ProfileMenuLink
                 className={enableActions ? "" : "disabled"}
-                href={`/molochv3/${daochain}/${daoid}/new-proposal?formLego=GUILDKICK&defaultValues=${JSON.stringify(
+                href={`/new-proposal?formLego=GUILDKICK&defaultValues=${JSON.stringify(
                   {
                     memberAddress: memberAddress,
                   }
