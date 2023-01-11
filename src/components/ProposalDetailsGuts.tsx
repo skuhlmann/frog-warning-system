@@ -1,19 +1,19 @@
-import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import { ParMd, Link, Theme, border, DataIndicator } from '@daohaus/ui';
+import styled from "styled-components";
+import { ParMd, Link, Theme, border, DataIndicator } from "@daohaus/ui";
 import {
   dynamicDecimals,
   formatShortDateTimeFromSeconds,
   formatValueTo,
   fromWei,
-} from '@daohaus/utils';
+} from "@daohaus/utils";
 
-import { Keychain, ValidNetwork } from '@daohaus/keychain-utils';
+import { Keychain, ValidNetwork } from "@daohaus/keychain-utils";
 
-import { MemberProfileAvatar } from './MemberProfileAvatar';
-import { ProposalWarning } from './ProposalWarning';
-import { useDHConnect } from '@daohaus/connect';
-import { MolochV3Proposal } from '@daohaus/moloch-v3-data';
+import { MemberProfileAvatar } from "./MemberProfileAvatar";
+import { ProposalWarning } from "./ProposalWarning";
+import { useDHConnect } from "@daohaus/connect";
+import { MolochV3Proposal } from "@daohaus/moloch-v3-data";
+import { DAO_ADDRESS, DAO_CHAIN } from "../utils/constants";
 
 const OverviewContainer = styled.div`
   display: flex;
@@ -52,7 +52,8 @@ export const ProposalDetailsGuts = ({
   decodeError,
   proposal,
 }: ProposalDetailsGutsProps) => {
-  const { daochain, daoid } = useParams();
+  const daochain = DAO_CHAIN;
+  const daoid = DAO_ADDRESS;
   const { networks } = useDHConnect();
   return (
     <OverviewContainer>
@@ -80,7 +81,7 @@ export const ProposalDetailsGuts = ({
           data={
             Number(proposal.expiration)
               ? formatShortDateTimeFromSeconds(proposal.expiration)
-              : '--'
+              : "--"
           }
           size="sm"
         />
@@ -91,7 +92,7 @@ export const ProposalDetailsGuts = ({
           label="Proposal Offering"
           data={formatValueTo({
             value: fromWei(proposal.proposalOffering),
-            format: 'number',
+            format: "number",
             unit: networks?.[daochain as ValidNetwork]?.symbol,
             decimals: dynamicDecimals({
               baseUnits: Number(proposal.proposalOffering),

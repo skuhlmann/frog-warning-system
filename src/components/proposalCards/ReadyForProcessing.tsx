@@ -4,7 +4,6 @@ import { MolochV3Proposal } from "@daohaus/moloch-v3-data";
 import { useBreakpoint, useToast, widthQuery } from "@daohaus/ui";
 import styled from "styled-components";
 import { ActionTemplate, GasDisplay, Verdict } from "./ActionPrimitives";
-import { useParams } from "react-router-dom";
 import { useDHConnect } from "@daohaus/connect";
 import { useDao } from "@daohaus/moloch-v3-context";
 import { createContract, useTxBuilder } from "@daohaus/tx-builder";

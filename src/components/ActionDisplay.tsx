@@ -1,11 +1,11 @@
-import { ArgType, isEthAddress } from '@daohaus/utils';
+import { ArgType, isEthAddress } from "@daohaus/utils";
 
-import { isValidNetwork, ValidNetwork } from '@daohaus/keychain-utils';
+import { isValidNetwork, ValidNetwork } from "@daohaus/keychain-utils";
 import {
   DecodedAction,
   DecodedMultiTX,
   isActionError,
-} from '@daohaus/tx-builder';
+} from "@daohaus/tx-builder";
 import {
   AddressDisplay,
   Bold,
@@ -14,15 +14,16 @@ import {
   H4,
   useBreakpoint,
   widthQuery,
-} from '@daohaus/ui';
-import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
+} from "@daohaus/ui";
+import styled from "styled-components";
 
-import { ProposalWarning } from './ProposalWarning';
+import { ProposalWarning } from "./ProposalWarning";
 import {
+  DAO_ADDRESS,
+  DAO_CHAIN,
   DAO_METHOD_TO_PROPOSAL_TYPE,
   SENSITIVE_PROPOSAL_TYPES,
-} from '../utils/constants';
+} from "../utils/constants";
 
 const DisplayContainer = styled.div`
   margin-top: 2rem;
@@ -56,7 +57,8 @@ export const ActionDisplay = ({
   actions: DecodedMultiTX;
   proposalType?: string;
 }) => {
-  const { daochain, daoid } = useParams();
+  const daochain = DAO_CHAIN;
+  const daoid = DAO_ADDRESS;
   const network = isValidNetwork(daochain) ? daochain : undefined;
   const isMobile = useBreakpoint(widthQuery.sm);
 
@@ -75,7 +77,7 @@ export const ActionDisplay = ({
           <ProposalWarning
             proposalType={proposalType}
             decodeError={false}
-            txHash={''}
+            txHash={""}
           />
         </WarningContainer>
       );
@@ -131,7 +133,7 @@ export const ActionDisplay = ({
                   <DataSm className="space">
                     <Bold>
                       PARAM
-                      {index + 1}:{' '}
+                      {index + 1}:{" "}
                     </Bold>
                     {arg.name}
                   </DataSm>
@@ -198,10 +200,10 @@ const ValueDisplay = ({
       />
     );
   }
-  if (typeof argValue === 'boolean') {
+  if (typeof argValue === "boolean") {
     return <DataSm className="space">{`${argValue}`}</DataSm>;
   }
-  if (typeof argValue === 'string' || typeof argValue === 'number') {
+  if (typeof argValue === "string" || typeof argValue === "number") {
     return <DataSm className="space">{argValue}</DataSm>;
   }
 

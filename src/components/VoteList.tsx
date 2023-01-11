@@ -1,16 +1,16 @@
-import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from "styled-components";
 import {
   formatShortDateTimeFromSeconds,
   formatValueTo,
   fromWei,
-} from '@daohaus/utils';
-import { Keychain } from '@daohaus/keychain-utils';
+} from "@daohaus/utils";
+import { Keychain } from "@daohaus/keychain-utils";
 
-import { DataMd, ParMd, widthQuery } from '@daohaus/ui';
+import { DataMd, ParMd, widthQuery } from "@daohaus/ui";
 
-import { MemberProfileAvatar } from './MemberProfileAvatar';
-import { MolochV3Proposal } from '@daohaus/moloch-v3-data';
+import { MemberProfileAvatar } from "./MemberProfileAvatar";
+import { MolochV3Proposal } from "@daohaus/moloch-v3-data";
+import { DAO_ADDRESS, DAO_CHAIN } from "../utils/constants";
 
 const MainContainer = styled.div`
   display: flex;
@@ -43,11 +43,12 @@ const VoteContainer = styled.div`
 
 type VoteListProps = {
   proposal: MolochV3Proposal;
-  votes: MolochV3Proposal['votes'];
+  votes: MolochV3Proposal["votes"];
 };
 
 export const VoteList = ({ votes, proposal }: VoteListProps) => {
-  const { daochain, daoid } = useParams();
+  const daochain = DAO_CHAIN;
+  const daoid = DAO_ADDRESS;
   return (
     <MainContainer>
       <VotesContainer>
@@ -61,11 +62,11 @@ export const VoteList = ({ votes, proposal }: VoteListProps) => {
                 memberAddress={vote.member.memberAddress}
               />
               <DataMd>
-                {vote.approved ? 'Yes' : 'No'} -{' '}
+                {vote.approved ? "Yes" : "No"} -{" "}
                 {formatValueTo({
                   value: fromWei(vote.balance),
                   decimals: 2,
-                  format: 'numberShort',
+                  format: "numberShort",
                 })}
               </DataMd>
             </VoteContainer>
@@ -79,13 +80,13 @@ export const VoteList = ({ votes, proposal }: VoteListProps) => {
           {formatValueTo({
             value: fromWei(proposal.yesBalance),
             decimals: 2,
-            format: 'numberShort',
-          })}{' '}
-          Yes /{' '}
+            format: "numberShort",
+          })}{" "}
+          Yes /{" "}
           {formatValueTo({
             value: fromWei(proposal.noBalance),
             decimals: 2,
-            format: 'numberShort',
+            format: "numberShort",
           })}
           No
         </DataMd>

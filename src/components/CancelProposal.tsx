@@ -1,19 +1,19 @@
-import React, { useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useMemo } from "react";
 import {
   handleErrorMessage,
   isGovernor,
   PROPOSAL_STATUS,
   TXLego,
-} from '@daohaus/utils';
-import { MolochV3Proposal } from '@daohaus/moloch-v3-data';
-import { useDHConnect } from '@daohaus/connect';
-import { useTxBuilder } from '@daohaus/tx-builder';
-import { Spinner, useToast } from '@daohaus/ui';
-import { useDao } from '@daohaus/moloch-v3-context';
+} from "@daohaus/utils";
+import { MolochV3Proposal } from "@daohaus/moloch-v3-data";
+import { useDHConnect } from "@daohaus/connect";
+import { useTxBuilder } from "@daohaus/tx-builder";
+import { Spinner, useToast } from "@daohaus/ui";
+import { useDao } from "@daohaus/moloch-v3-context";
 
-import { ACTION_TX } from '../legos/tx';
-import { GatedButton } from './proposalCards/GatedButton';
+import { ACTION_TX } from "../legos/tx";
+import { GatedButton } from "./proposalCards/GatedButton";
+import { DAO_CHAIN } from "../utils/constants";
 
 export const CancelProposal = ({
   proposal,
@@ -22,7 +22,7 @@ export const CancelProposal = ({
   proposal: MolochV3Proposal;
   onSuccess: () => void;
 }) => {
-  const { daochain } = useParams();
+  const daochain = DAO_CHAIN;
   const { fireTransaction } = useTxBuilder();
   const { chainId, address } = useDHConnect();
   const { errorToast, defaultToast, successToast } = useToast();
@@ -41,26 +41,26 @@ export const CancelProposal = ({
           const errMsg = handleErrorMessage({
             error,
           });
-          errorToast({ title: 'Cancel Failed', description: errMsg });
+          errorToast({ title: "Cancel Failed", description: errMsg });
           setIsLoading(false);
         },
         onTxSuccess: () => {
           defaultToast({
-            title: 'Cancel Success',
-            description: 'Please wait for subgraph to sync',
+            title: "Cancel Success",
+            description: "Please wait for subgraph to sync",
           });
         },
         onPollError: (error) => {
           const errMsg = handleErrorMessage({
             error,
           });
-          errorToast({ title: 'Poll Error', description: errMsg });
+          errorToast({ title: "Poll Error", description: errMsg });
           setIsLoading(false);
         },
         onPollSuccess: () => {
           successToast({
-            title: 'Cancel Success',
-            description: 'Proposal cancelled',
+            title: "Cancel Success",
+            description: "Proposal cancelled",
           });
           setIsLoading(false);
           refreshAll();
@@ -73,7 +73,7 @@ export const CancelProposal = ({
   const isConnectedToDao =
     chainId === daochain
       ? true
-      : 'You are not connected to the same network as the DAO';
+      : "You are not connected to the same network as the DAO";
 
   const addressCanCancel = useMemo(() => {
     const isProposer =
@@ -106,7 +106,7 @@ export const CancelProposal = ({
       onClick={handleCancel}
       // centerAlign
     >
-      {isLoading ? <Spinner size="2rem" strokeWidth=".2rem" /> : 'Cancel'}
+      {isLoading ? <Spinner size="2rem" strokeWidth=".2rem" /> : "Cancel"}
     </GatedButton>
   );
 };
