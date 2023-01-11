@@ -1,12 +1,12 @@
-import { useMemo } from 'react';
-import { useParams } from 'react-router-dom';
-import { RegisterOptions, useFormContext } from 'react-hook-form';
-import { toWholeUnits, handleBaseUnits } from '@daohaus/utils';
-import { Buildable, Button, WrappedInput } from '@daohaus/ui';
-import { isValidNetwork } from '@daohaus/keychain-utils';
+import { useMemo } from "react";
+import { RegisterOptions, useFormContext } from "react-hook-form";
+import { toWholeUnits, handleBaseUnits } from "@daohaus/utils";
+import { Buildable, Button, WrappedInput } from "@daohaus/ui";
+import { isValidNetwork } from "@daohaus/keychain-utils";
 
-import { useDao } from '@daohaus/moloch-v3-context';
-import { getNetworkToken } from '../../utils/tokenData';
+import { useDao } from "@daohaus/moloch-v3-context";
+import { getNetworkToken } from "../../utils/tokenData";
+import { DAO_CHAIN } from "../../utils/constants";
 
 // enum InputStates {
 //   Loading,
@@ -21,8 +21,9 @@ export const RequestNativeToken = (
     safeAddressId?: string;
   }>
 ) => {
-  const { id = 'valueRequested', safeAddressId = 'safeAddress' } = props;
-  const { daochain } = useParams();
+  const { id = "valueRequested", safeAddressId = "safeAddress" } = props;
+  const daochain = DAO_CHAIN;
+
   const { watch, setValue } = useFormContext();
   const { dao } = useDao();
 
@@ -43,7 +44,7 @@ export const RequestNativeToken = (
     setValue(
       id,
       toWholeUnits(
-        networkTokenData?.daoBalance || '0',
+        networkTokenData?.daoBalance || "0",
         networkTokenData?.decimals
       )
     );
@@ -62,9 +63,9 @@ export const RequestNativeToken = (
       defaultValue="0"
       rightAddon={
         <Button color="secondary" size="sm" onClick={setMax}>
-          Max:{' '}
+          Max:{" "}
           {toWholeUnits(
-            networkTokenData?.daoBalance || '0',
+            networkTokenData?.daoBalance || "0",
             networkTokenData?.decimals
           )}
         </Button>

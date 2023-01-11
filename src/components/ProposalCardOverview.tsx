@@ -1,15 +1,15 @@
-import { useCallback, useEffect, useState } from 'react';
-import { RiErrorWarningLine, RiTimeLine } from 'react-icons/ri/index.js';
-import { useParams, Link as RouterLink } from 'react-router-dom';
-import styled, { useTheme } from 'styled-components';
+import { useCallback, useEffect, useState } from "react";
+import { RiErrorWarningLine, RiTimeLine } from "react-icons/ri/index.js";
+import { Link as RouterLink } from "react-router-dom";
+import styled, { useTheme } from "styled-components";
 import {
   AccountProfile,
   charLimit,
   formatShortDateTimeFromSeconds,
-} from '@daohaus/utils';
-import { Keychain } from '@daohaus/keychain-utils';
+} from "@daohaus/utils";
+import { Keychain } from "@daohaus/keychain-utils";
 
-import { MolochV3Proposal } from '@daohaus/moloch-v3-data';
+import { MolochV3Proposal } from "@daohaus/moloch-v3-data";
 import {
   Button,
   ParLg,
@@ -21,11 +21,15 @@ import {
   Theme,
   Icon,
   MemberCard,
-} from '@daohaus/ui';
+} from "@daohaus/ui";
 
-import { fetchProfile } from '../utils/cacheProfile';
-import { getProposalTypeLabel } from '../utils/general';
-import { SENSITIVE_PROPOSAL_TYPES } from '../utils/constants';
+import { fetchProfile } from "../utils/cacheProfile";
+import { getProposalTypeLabel } from "../utils/general";
+import {
+  DAO_ADDRESS,
+  DAO_CHAIN,
+  SENSITIVE_PROPOSAL_TYPES,
+} from "../utils/constants";
 
 const OverviewBox = styled.div`
   display: flex;
@@ -72,7 +76,8 @@ export const ProposalCardOverview = ({
   loading,
   proposal,
 }: ProposalCardOverviewProps) => {
-  const { daochain, daoid } = useParams();
+  const daochain = DAO_CHAIN;
+  const daoid = DAO_ADDRESS;
   const theme = useTheme();
   const isMobile = useBreakpoint(widthQuery.sm);
   const isMd = useBreakpoint(widthQuery.md);
@@ -175,8 +180,8 @@ export const OverviewHeader = ({
   loading: boolean;
   proposal: MolochV3Proposal;
 }) => {
-  const { daochain, daoid } = useParams();
-
+  const daochain = DAO_CHAIN;
+  const daoid = DAO_ADDRESS;
   const theme = useTheme();
   const isMobile = useBreakpoint(widthQuery.md);
   return (
@@ -225,7 +230,7 @@ export const OverviewHeader = ({
                 warning={SENSITIVE_PROPOSAL_TYPES[proposal.proposalType]}
               >
                 {getProposalTypeLabel(proposal.proposalType)}
-              </StyledPropType>{' '}
+              </StyledPropType>{" "}
               | {formatShortDateTimeFromSeconds(proposal.createdAt)}
             </ParSm>
           </HeaderContainer>

@@ -3,20 +3,20 @@ import {
   ignoreEmptyVal,
   toWholeUnits,
   ValidateField,
-} from '@daohaus/utils';
-import { isValidNetwork } from '@daohaus/keychain-utils';
+} from "@daohaus/utils";
+import { isValidNetwork } from "@daohaus/keychain-utils";
 
-import { Buildable, Button, WrappedInputSelect } from '@daohaus/ui';
-import { useMemo } from 'react';
-import { RegisterOptions, useFormContext } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
-import { useDao } from '@daohaus/moloch-v3-context';
-import { getErc20s } from '../../utils/tokenData';
+import { Buildable, Button, WrappedInputSelect } from "@daohaus/ui";
+import { useMemo } from "react";
+import { RegisterOptions, useFormContext } from "react-hook-form";
+import { useDao } from "@daohaus/moloch-v3-context";
+import { getErc20s } from "../../utils/tokenData";
+import { DAO_CHAIN } from "../../utils/constants";
 
 export enum InputStates {
   Loading,
-  InvalidNetwork = 'Invalid Network',
-  CorruptTokenData = 'Corrupt Token Data',
+  InvalidNetwork = "Invalid Network",
+  CorruptTokenData = "Corrupt Token Data",
 }
 
 export const RequestERC20 = (
@@ -26,11 +26,12 @@ export const RequestERC20 = (
     safeAddressId?: string;
   }>
 ) => {
-  const { daochain } = useParams();
+  const daochain = DAO_CHAIN;
+
   const {
-    amtId = 'paymentTokenAmt',
-    addressId = 'paymentTokenAddress',
-    safeAddressId = 'safeAddress',
+    amtId = "paymentTokenAmt",
+    addressId = "paymentTokenAddress",
+    safeAddressId = "safeAddress",
   } = props;
   const { dao } = useDao();
   const { watch, setValue } = useFormContext();
@@ -45,7 +46,7 @@ export const RequestERC20 = (
         return v.safeAddress === safeAddress;
       });
 
-      console.log('selectedSafe', selectedSafe);
+      console.log("selectedSafe", selectedSafe);
       return selectedSafe && getErc20s(selectedSafe);
     }
     return null;
@@ -70,7 +71,7 @@ export const RequestERC20 = (
 
   const tokenBalance = selectedToken?.daoBalance
     ? toWholeUnits(selectedToken?.daoBalance, selectedToken?.decimals)
-    : '0';
+    : "0";
 
   const setMax = () => {
     if (!selectedToken) return;
@@ -86,7 +87,7 @@ export const RequestERC20 = (
           selectedToken &&
           ignoreEmptyVal(val, (val) =>
             Number(val) > Number(selectedToken?.daoBalance || 0)
-              ? 'Amount exceeds DAO Balance'
+              ? "Amount exceeds DAO Balance"
               : true
           )
         );

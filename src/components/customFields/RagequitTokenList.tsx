@@ -1,12 +1,12 @@
-import { useMemo } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useMemo } from "react";
+import { useFormContext } from "react-hook-form";
 import {
   formatValueTo,
   memberTokenBalanceShare,
   memberUsdValueShare,
   NETWORK_TOKEN_ETH_ADDRESS,
-} from '@daohaus/utils';
-import { getNetwork } from '@daohaus/keychain-utils';
+} from "@daohaus/utils";
+import { getNetwork } from "@daohaus/keychain-utils";
 
 import {
   Buildable,
@@ -15,15 +15,15 @@ import {
   WrappedCheckbox,
   Checkbox,
   DataSm,
-} from '@daohaus/ui';
+} from "@daohaus/ui";
 
-import { useConnectedMember, useDao } from '@daohaus/moloch-v3-context';
-import { CheckboxProps, CheckedState } from '@radix-ui/react-checkbox';
-import styled from 'styled-components';
-import { TokenBalance } from '@daohaus/utils';
-import { useParams } from 'react-router-dom';
-import { sortTokensForRageQuit } from '../../utils/general';
-import { MolochV3Dao } from '@daohaus/moloch-v3-data';
+import { useConnectedMember, useDao } from "@daohaus/moloch-v3-context";
+import { CheckboxProps, CheckedState } from "@radix-ui/react-checkbox";
+import styled from "styled-components";
+import { TokenBalance } from "@daohaus/utils";
+import { sortTokensForRageQuit } from "../../utils/general";
+import { MolochV3Dao } from "@daohaus/moloch-v3-data";
+import { DAO_CHAIN } from "../../utils/constants";
 
 const TokenListContainer = styled.div`
   display: flex;
@@ -51,13 +51,13 @@ export const RagequitTokenList = (props: Buildable<Field>) => {
   const { id } = props;
   const { dao } = useDao();
   const { connectedMember } = useConnectedMember();
-  const { daochain } = useParams();
+  const daochain = DAO_CHAIN;
   const { setValue, watch } = useFormContext();
 
   const [sharesToBurn, lootToBurn, tokens] = watch([
-    'sharesToBurn',
-    'lootToBurn',
-    'tokens',
+    "sharesToBurn",
+    "lootToBurn",
+    "tokens",
   ]);
 
   const networkData = useMemo(() => {
@@ -65,7 +65,7 @@ export const RagequitTokenList = (props: Buildable<Field>) => {
     return getNetwork(daochain);
   }, [daochain]);
 
-  const treasury: MolochV3Dao['vaults'][number] | undefined = useMemo(() => {
+  const treasury: MolochV3Dao["vaults"][number] | undefined = useMemo(() => {
     if (dao) {
       return (
         dao.vaults.find((v) => v.safeAddress === dao.safeAddress) || undefined
@@ -130,7 +130,7 @@ export const RagequitTokenList = (props: Buildable<Field>) => {
                   lootToBurn || 0,
                   token.token?.decimals || 18
                 ),
-                format: 'number',
+                format: "number",
               })}
             </DataSm>,
           ];
@@ -147,7 +147,7 @@ export const RagequitTokenList = (props: Buildable<Field>) => {
                   lootToBurn || 0
                 ),
                 decimals: 2,
-                format: 'currency',
+                format: "currency",
               })}
             </DataSm>,
           ];

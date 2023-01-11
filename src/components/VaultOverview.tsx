@@ -1,5 +1,4 @@
-import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from "styled-components";
 import {
   AddressDisplay,
   Card,
@@ -11,12 +10,13 @@ import {
   DataIndicator,
   widthQuery,
   Tag,
-} from '@daohaus/ui';
-import { formatValueTo, generateGnosisUiLink } from '@daohaus/utils';
-import { Keychain } from '@daohaus/keychain-utils';
+} from "@daohaus/ui";
+import { formatValueTo, generateGnosisUiLink } from "@daohaus/utils";
+import { Keychain } from "@daohaus/keychain-utils";
 
-import { DaoVault, MolochV3Dao } from '@daohaus/moloch-v3-data';
-import { VaultMenu } from './VaultMenu';
+import { DaoVault, MolochV3Dao } from "@daohaus/moloch-v3-data";
+import { VaultMenu } from "./VaultMenu";
+import { DAO_CHAIN } from "../utils/constants";
 
 const VaultOverviewCard = styled(Card)`
   background-color: ${({ theme }: { theme: Theme }) => theme.secondary.step3};
@@ -70,7 +70,7 @@ type VaultOverviewProps = {
 };
 
 export const VaultOverview = ({ dao, vault }: VaultOverviewProps) => {
-  const { daochain } = useParams();
+  const daochain = DAO_CHAIN;
   const isTreasury = vault.safeAddress === dao.safeAddress;
   return (
     <VaultOverviewCard>
@@ -84,13 +84,13 @@ export const VaultOverview = ({ dao, vault }: VaultOverviewProps) => {
               copy
               explorerNetworkId={daochain as keyof Keychain}
             />
-            {isTreasury && <Tag tagColor='pink'>Ragequittable</Tag>}
+            {isTreasury && <Tag tagColor="pink">Ragequittable</Tag>}
           </TagSection>
         </div>
-        <div className='right-section'>
-          <div className='safe-link'>
+        <div className="right-section">
+          <div className="safe-link">
             <Link
-              linkType='external'
+              linkType="external"
               href={generateGnosisUiLink({
                 chainId: daochain as keyof Keychain,
                 address: vault.safeAddress,
@@ -109,14 +109,14 @@ export const VaultOverview = ({ dao, vault }: VaultOverviewProps) => {
       </VaultCardHeader>
       <DataGrid>
         <DataIndicator
-          label='Balance'
+          label="Balance"
           data={formatValueTo({
             value: vault.fiatTotal,
             decimals: 2,
-            format: 'currencyShort',
+            format: "currencyShort",
           })}
         />
-        <DataIndicator label='Tokens' data={vault.tokenBalances.length} />
+        <DataIndicator label="Tokens" data={vault.tokenBalances.length} />
       </DataGrid>
     </VaultOverviewCard>
   );

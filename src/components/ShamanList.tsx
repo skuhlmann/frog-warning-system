@@ -1,9 +1,9 @@
-import styled from 'styled-components';
-import { AddressDisplay, Button, DataSm, Link, widthQuery } from '@daohaus/ui';
+import styled from "styled-components";
+import { AddressDisplay, Button, DataSm, Link, widthQuery } from "@daohaus/ui";
 
-import { useParams } from 'react-router-dom';
-import { Keychain } from '@daohaus/keychain-utils';
-import { MolochV3Dao } from '@daohaus/moloch-v3-data';
+import { Keychain } from "@daohaus/keychain-utils";
+import { MolochV3Dao } from "@daohaus/moloch-v3-data";
+import { DAO_ADDRESS, DAO_CHAIN } from "../utils/constants";
 
 const ShamanContainer = styled.div`
   display: flex;
@@ -35,15 +35,16 @@ const StyledLink = styled(Link)`
 `;
 
 type ShamanListProps = {
-  shamen: MolochV3Dao['shamen'];
+  shamen: MolochV3Dao["shamen"];
 };
 
 export const ShamanList = ({ shamen }: ShamanListProps) => {
-  const { daochain, daoid } = useParams();
+  const daochain = DAO_CHAIN;
+  const daoid = DAO_ADDRESS;
   return (
     <>
       <ShamanContainer>
-        <div className='contract'>
+        <div className="contract">
           <DataSm>Contract</DataSm>
         </div>
         <div>
@@ -51,15 +52,15 @@ export const ShamanList = ({ shamen }: ShamanListProps) => {
         </div>
       </ShamanContainer>
       {shamen &&
-        shamen.map(shaman => (
+        shamen.map((shaman) => (
           <ShamanContainer key={shaman.id}>
-            <span className='contract'>
+            <span className="contract">
               <AddressDisplay
                 address={shaman.shamanAddress}
                 explorerNetworkId={daochain as keyof Keychain}
               />
             </span>
-            <div className='manage'>
+            <div className="manage">
               <DataSm>{shaman.permissions}</DataSm>
               <StyledLink
                 href={`/molochv3/${daochain}/${daoid}/new-proposal?formLego=UPDATE_SHAMAN&defaultValues=${JSON.stringify(
@@ -69,7 +70,7 @@ export const ShamanList = ({ shamen }: ShamanListProps) => {
                   }
                 )}`}
               >
-                <Button color='secondary' size='sm'>
+                <Button color="secondary" size="sm">
                   Manage
                 </Button>
               </StyledLink>

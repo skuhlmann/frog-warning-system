@@ -1,9 +1,10 @@
-import { useParams, Link as RouterLink } from 'react-router-dom';
-import { RiArrowRightSLine } from 'react-icons/ri/index.js';
-import styled from 'styled-components';
-import { Bold, border, DataSm, ParMd, Tabs, Theme } from '@daohaus/ui';
+import { Link as RouterLink } from "react-router-dom";
+import { RiArrowRightSLine } from "react-icons/ri/index.js";
+import styled from "styled-components";
+import { Bold, border, DataSm, ParMd, Tabs, Theme } from "@daohaus/ui";
 
-import { CustomFormLego } from '../legos/config';
+import { CustomFormLego } from "../legos/config";
+import { DAO_ADDRESS, DAO_CHAIN } from "../utils/constants";
 
 const ListContainer = styled.div`
   margin-top: 2.5rem;
@@ -57,7 +58,8 @@ type NewProposalListProps = {
 };
 
 const ProposalList = ({ proposals }: { proposals: CustomFormLego[] }) => {
-  const { daochain, daoid } = useParams();
+  const daochain = DAO_CHAIN;
+  const daoid = DAO_ADDRESS;
 
   return (
     <div>
@@ -91,7 +93,7 @@ export const NewProposalList = ({
       <Tabs
         tabList={[
           {
-            label: 'Basics',
+            label: "Basics",
             Component: () => <ProposalList proposals={basicProposals} />,
           },
           // {

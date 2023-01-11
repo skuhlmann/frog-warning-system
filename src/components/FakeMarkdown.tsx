@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 import {
   Buildable,
@@ -6,20 +6,20 @@ import {
   Field,
   SuccessMessage,
   WrappedTextArea,
-} from '@daohaus/ui';
-import { useDao } from '@daohaus/moloch-v3-context';
-import { useParams } from 'react-router-dom';
-import { ReactSetter } from '@daohaus/utils';
+} from "@daohaus/ui";
+import { useDao } from "@daohaus/moloch-v3-context";
+import { ReactSetter } from "@daohaus/utils";
 import {
   ENDPOINTS,
   isValidNetwork,
   ValidNetwork,
-} from '@daohaus/keychain-utils';
-import { gql, request } from 'graphql-request';
-import { useFormBuilder } from '@daohaus/form-builder';
-import { FieldValues, UseFormSetValue } from 'react-hook-form';
+} from "@daohaus/keychain-utils";
+import { gql, request } from "graphql-request";
+import { useFormBuilder } from "@daohaus/form-builder";
+import { FieldValues, UseFormSetValue } from "react-hook-form";
+import { DAO_CHAIN } from "../utils/constants";
 
-const PUB_ID = 'pubId';
+const PUB_ID = "pubId";
 enum FetchStatus {
   Idle,
   Fetching,
@@ -73,14 +73,14 @@ const handleFetchPubId = async (
     console.error(e);
     if (!shouldUpdate) return;
     setFetchStatus(FetchStatus.Error);
-    setValue(PUB_ID, '');
+    setValue(PUB_ID, "");
   }
 };
 
 export const FakeMarkdown = (props: Buildable<Field>) => {
   const { setValue, watch } = useFormBuilder();
   const { dao } = useDao();
-  const { daochain } = useParams();
+  const daochain = DAO_CHAIN;
 
   const pubId = watch(PUB_ID);
 
@@ -105,28 +105,28 @@ export const FakeMarkdown = (props: Buildable<Field>) => {
 
   const helperText =
     fetchStatus === FetchStatus.Idle || fetchStatus === FetchStatus.Fetching
-      ? 'Loading...'
+      ? "Loading..."
       : undefined;
 
   const successText =
     fetchStatus === FetchStatus.Success
       ? ({
-          type: 'success',
+          type: "success",
           message: `Tabula PubID Found`,
         } as SuccessMessage)
       : undefined;
 
   const errorText = (): ErrorMessage | undefined => {
     if (FetchStatus.Error === fetchStatus) {
-      return { type: 'error', message: 'Error fetching PubId' };
+      return { type: "error", message: "Error fetching PubId" };
     }
     if (FetchStatus.NoPubId === fetchStatus) {
-      return { type: 'error', message: 'No PubId found for this safe address' };
+      return { type: "error", message: "No PubId found for this safe address" };
     }
     if (FetchStatus.WrongNetwork === fetchStatus) {
       return {
-        type: 'error',
-        message: 'Tabula Graph endpoint not found for this chain',
+        type: "error",
+        message: "Tabula Graph endpoint not found for this chain",
       };
     }
     return undefined;

@@ -1,8 +1,7 @@
-import { useMemo } from 'react';
-import { RiMore2Fill } from 'react-icons/ri/index.js';
-import { useParams } from 'react-router-dom';
-import styled, { useTheme } from 'styled-components';
-import { useConnectedMember } from '@daohaus/moloch-v3-context';
+import { useMemo } from "react";
+import { RiMore2Fill } from "react-icons/ri/index.js";
+import styled, { useTheme } from "styled-components";
+import { useConnectedMember } from "@daohaus/moloch-v3-context";
 import {
   Dropdown,
   DropdownMenuItem,
@@ -10,13 +9,14 @@ import {
   Theme,
   DropdownLink,
   Button,
-} from '@daohaus/ui';
-import { getNetwork } from '@daohaus/keychain-utils';
+} from "@daohaus/ui";
+import { getNetwork } from "@daohaus/keychain-utils";
+import { DAO_ADDRESS, DAO_CHAIN } from "../utils/constants";
 
 export const VaultMenuTrigger = styled(Button)`
   padding: 0 4px 0 4px;
 
-  &[data-state='open'] {
+  &[data-state="open"] {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
@@ -40,7 +40,8 @@ type VaultMenuProps = {
 };
 
 export const VaultMenu = ({ ragequittable, safeAddress }: VaultMenuProps) => {
-  const { daoid, daochain } = useParams();
+  const daochain = DAO_CHAIN;
+  const daoid = DAO_ADDRESS;
   const { connectedMember } = useConnectedMember();
   const theme = useTheme();
 
@@ -57,30 +58,30 @@ export const VaultMenu = ({ ragequittable, safeAddress }: VaultMenuProps) => {
 
   return (
     <Dropdown
-      menuMinWidth='17.8rem'
+      menuMinWidth="17.8rem"
       trigger={
-        <VaultMenuTrigger IconLeft={RiMore2Fill} size='sm' variant='ghost' />
+        <VaultMenuTrigger IconLeft={RiMore2Fill} size="sm" variant="ghost" />
       }
-      side='left'
+      side="left"
       menuBg={theme.secondary.step6}
     >
       <>
-        <DropdownMenuItem key='erc20' asChild>
+        <DropdownMenuItem key="erc20" asChild>
           <VaultMenuLink
             href={`/molochv3/${daochain}/${daoid}/new-proposal?formLego=${
               ragequittable
-                ? 'TRANSFER_ERC20'
+                ? "TRANSFER_ERC20"
                 : `TRANSFER_ERC20_SIDECAR&defaultValues={"safeAddress":"${safeAddress}"}`
             }`}
           >
             Transfer ERC-20
           </VaultMenuLink>
         </DropdownMenuItem>
-        <DropdownMenuItem key='eth' asChild>
+        <DropdownMenuItem key="eth" asChild>
           <VaultMenuLink
             href={`/molochv3/${daochain}/${daoid}/new-proposal?formLego=${
               ragequittable
-                ? 'TRANSFER_NETWORK_TOKEN'
+                ? "TRANSFER_NETWORK_TOKEN"
                 : `TRANSFER_NETWORK_TOKEN_SIDECAR&defaultValues={"safeAddress":"${safeAddress}"}`
             }`}
           >

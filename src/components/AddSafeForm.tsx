@@ -1,12 +1,12 @@
-import { FormBuilder } from '@daohaus/form-builder';
-import { useDao } from '@daohaus/moloch-v3-context';
-import { useParams } from 'react-router-dom';
+import { FormBuilder } from "@daohaus/form-builder";
+import { useDao } from "@daohaus/moloch-v3-context";
 
-import { FORM } from '../legos/forms';
+import { FORM } from "../legos/forms";
+import { DAO_CHAIN } from "../utils/constants";
 
 export const AddSafeForm = ({ onSuccess }: { onSuccess: () => void }) => {
   const { refreshAll } = useDao();
-  const { daochain } = useParams();
+  const daochain = DAO_CHAIN;
 
   const onFormComplete = () => {
     refreshAll?.();

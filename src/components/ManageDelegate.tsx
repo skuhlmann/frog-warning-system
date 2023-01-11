@@ -1,10 +1,10 @@
-import { useMemo } from 'react';
-import { FormBuilder } from '@daohaus/form-builder';
-import { useConnectedMember, useDao } from '@daohaus/moloch-v3-context';
+import { useMemo } from "react";
+import { FormBuilder } from "@daohaus/form-builder";
+import { useConnectedMember, useDao } from "@daohaus/moloch-v3-context";
 
-import { CustomFields } from '../legos/config';
-import { FORM } from '../legos/forms';
-import { useParams } from 'react-router-dom';
+import { CustomFields } from "../legos/config";
+import { FORM } from "../legos/forms";
+import { DAO_CHAIN } from "../utils/constants";
 
 type ManageDelegateProps = {
   defaultMember?: string;
@@ -13,7 +13,7 @@ type ManageDelegateProps = {
 export const ManageDelegate = ({ defaultMember }: ManageDelegateProps) => {
   const { connectedMember } = useConnectedMember();
   const { refreshAll } = useDao();
-  const { daochain } = useParams();
+  const daochain = DAO_CHAIN;
 
   const defaultValues = useMemo(() => {
     if (defaultMember) {

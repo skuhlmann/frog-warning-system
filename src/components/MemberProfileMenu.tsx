@@ -1,8 +1,7 @@
-import { useMemo } from 'react';
-import { RiMore2Fill } from 'react-icons/ri/index.js';
-import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import { useConnectedMember } from '@daohaus/moloch-v3-context';
+import { useMemo } from "react";
+import { RiMore2Fill } from "react-icons/ri/index.js";
+import styled from "styled-components";
+import { useConnectedMember } from "@daohaus/moloch-v3-context";
 import {
   Dropdown,
   DropdownMenuItem,
@@ -14,14 +13,15 @@ import {
   DropdownLink,
   DropdownText,
   Button,
-} from '@daohaus/ui';
+} from "@daohaus/ui";
 
-import ManageDelegate from './ManageDelegate';
+import ManageDelegate from "./ManageDelegate";
+import { DAO_ADDRESS, DAO_CHAIN } from "../utils/constants";
 
 export const ProfileMenuTrigger = styled(Button)`
   padding: 0 4px 0 4px;
 
-  &[data-state='open'] {
+  &[data-state="open"] {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
@@ -41,7 +41,7 @@ export const ProfileMenuLink = styled(DropdownLink)`
 
 const ProfileMenuText = styled(DropdownText)`
   border-radius: 2px;
-  color: ${props => props.theme.secondary.step12};
+  color: ${(props) => props.theme.secondary.step12};
   font-weight: ${font.weight.bold};
   cursor: pointer;
   display: flex;
@@ -55,13 +55,13 @@ const ProfileMenuText = styled(DropdownText)`
   }
 
   :hover {
-    background-color: ${props => props.theme.secondary.step4};
-    border-color: ${props => props.theme.secondary.step8};
+    background-color: ${(props) => props.theme.secondary.step4};
+    border-color: ${(props) => props.theme.secondary.step8};
     text-decoration: none;
   }
 
   &.disabled {
-    color: ${props => props.theme.secondary.step11};
+    color: ${(props) => props.theme.secondary.step11};
   }
 `;
 
@@ -72,7 +72,8 @@ type MemberProfileMenuProps = {
 export const MemberProfileMenu = ({
   memberAddress,
 }: MemberProfileMenuProps) => {
-  const { daoid, daochain } = useParams();
+  const daoid = DAO_ADDRESS;
+  const doachain = DAO_CHAIN;
   const { connectedMember } = useConnectedMember();
 
   const enableActions = useMemo(() => {
@@ -92,24 +93,24 @@ export const MemberProfileMenu = ({
   return (
     <Dialog>
       <Dropdown
-        menuMinWidth='17.8rem'
+        menuMinWidth="17.8rem"
         trigger={
           <ProfileMenuTrigger
             IconLeft={RiMore2Fill}
-            size='sm'
-            variant='ghost'
+            size="sm"
+            variant="ghost"
           />
         }
-        side='left'
+        side="left"
       >
         {isMenuForConnectedMember && (
           <>
-            <DropdownMenuItem key='delegate' asChild>
+            <DropdownMenuItem key="delegate" asChild>
               <DialogTrigger asChild>
                 <ProfileMenuText>Delegate</ProfileMenuText>
               </DialogTrigger>
             </DropdownMenuItem>
-            <DropdownMenuItem key='ragequit' asChild>
+            <DropdownMenuItem key="ragequit" asChild>
               <ProfileMenuLink
                 href={`/molochv3/${daochain}/${daoid}/members/ragequit`}
               >
@@ -121,16 +122,16 @@ export const MemberProfileMenu = ({
 
         {!isMenuForConnectedMember && (
           <>
-            <DropdownMenuItem key='delegateTo' asChild>
+            <DropdownMenuItem key="delegateTo" asChild>
               <DialogTrigger asChild>
-                <ProfileMenuText className={enableActions ? '' : 'disabled'}>
+                <ProfileMenuText className={enableActions ? "" : "disabled"}>
                   Delegate To
                 </ProfileMenuText>
               </DialogTrigger>
             </DropdownMenuItem>
-            <DropdownMenuItem key='guildkick' asChild>
+            <DropdownMenuItem key="guildkick" asChild>
               <ProfileMenuLink
-                className={enableActions ? '' : 'disabled'}
+                className={enableActions ? "" : "disabled"}
                 href={`/molochv3/${daochain}/${daoid}/new-proposal?formLego=GUILDKICK&defaultValues=${JSON.stringify(
                   {
                     memberAddress: memberAddress,
@@ -143,7 +144,7 @@ export const MemberProfileMenu = ({
           </>
         )}
       </Dropdown>
-      <DialogContent title='Manage Delegate'>
+      <DialogContent title="Manage Delegate">
         <ManageDelegate
           defaultMember={!isMenuForConnectedMember ? memberAddress : undefined}
         />
