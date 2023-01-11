@@ -1,6 +1,18 @@
 import { FormLego } from "@daohaus/form-builder";
+import { CustomFormLego } from "./config";
 import { FIELD } from "./fields";
 import { TX } from "./tx";
+
+export const getFormLegoById = (
+  id: CustomFormLego["id"]
+): CustomFormLego | undefined => {
+  const allForms = { ...FORM };
+  const formKey = Object.keys(allForms).find((key) => {
+    return allForms[key].id === id;
+  });
+  if (!formKey) return;
+  return allForms[formKey];
+};
 
 export const FORM: Record<string, FormLego> = {
   SIGNAL: {
