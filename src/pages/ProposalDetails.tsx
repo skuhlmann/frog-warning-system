@@ -106,11 +106,13 @@ export function ProposalDetails() {
       const multicallMeta = TX[proposalType]?.args?.find(
         (tx) => (tx as MulticallArg).type === "multicall"
       );
+
       const proposalActions = await decodeProposalActions({
         chainId,
         actionData,
         actionsMeta: multicallMeta && (multicallMeta as MulticallArg).actions,
       });
+
       if (shouldUpdate) {
         setActionData(proposalActions);
         setDecodeError(proposalActions.some((action) => isActionError(action)));

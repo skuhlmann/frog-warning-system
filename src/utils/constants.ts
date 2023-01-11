@@ -1,6 +1,7 @@
 export const DAO_NAME = "FDD";
 export const DAO_ADDRESS = "0x24f7812b7ea1ebf27c98e44b487dd1267d8eacb8";
 export const DAO_CHAIN = "0x5";
+export const SAFE_ADDRESS = "0x36945b167363976a26ea2f64190770e2bb5dd093";
 
 export const PROPOSAL_FILTERS: { [key: string]: string } = {
   unsponsored: "Unsponsored",

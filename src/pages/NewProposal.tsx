@@ -5,12 +5,12 @@ import { FormBuilder } from "@daohaus/form-builder";
 import { getFormLegoById } from "../legos/forms";
 import { CustomFields } from "../legos/config";
 import { useDao } from "@daohaus/moloch-v3-context";
-import { DAO_ADDRESS, DAO_CHAIN } from "../utils/constants";
+import { DAO_CHAIN } from "../utils/constants";
 
 export function NewProposal() {
   const location = useLocation();
+
   const navigate = useNavigate();
-  const daoid = DAO_ADDRESS;
   const daochain = DAO_CHAIN;
   const { refreshAll } = useDao();
 
