@@ -1,36 +1,37 @@
-import { useCallback, useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import { useCallback, useEffect, useState } from "react";
+import styled from "styled-components";
+import { useParams } from "react-router-dom";
 import {
   BiColumnLayout,
   Card,
   SingleColumnLayout,
   Spinner,
   widthQuery,
-} from '@daohaus/ui';
-import { MolochV3Proposal } from '@daohaus/moloch-v3-data';
-import { MulticallArg } from '@daohaus/utils';
+} from "@daohaus/ui";
+import { MolochV3Proposal } from "@daohaus/moloch-v3-data";
+import { MulticallArg } from "@daohaus/utils";
 import {
   isValidNetwork,
   ValidNetwork,
   Keychain,
-} from '@daohaus/keychain-utils';
+} from "@daohaus/keychain-utils";
 
-import { useDHConnect } from '@daohaus/connect';
+import { useDHConnect } from "@daohaus/connect";
 
-import { loadProposal } from '../utils/dataFetchHelpers';
-import { ProposalDetailsGuts } from '../components/ProposalDetailsGuts';
-import { ProposalHistory } from '../components/ProposalHistory';
-import { ActionLifeCycleFns, getProposalTypeLabel } from '../utils/general';
-import { ProposalActions } from '../components/proposalCards/ProposalActions';
-import { CancelProposal } from '../components/CancelProposal';
+import { loadProposal } from "../utils/dataFetchHelpers";
+import { ProposalDetailsGuts } from "../components/ProposalDetailsGuts";
+import { ProposalHistory } from "../components/ProposalHistory";
+import { ActionLifeCycleFns, getProposalTypeLabel } from "../utils/general";
+import { ProposalActions } from "../components/proposalCards/ProposalActions";
+import { CancelProposal } from "../components/CancelProposal";
 import {
   DecodedMultiTX,
   decodeProposalActions,
   isActionError,
-} from '@daohaus/tx-builder';
-import { ActionDisplay } from '../components/ActionDisplay';
-import { TX } from '../legos/tx';
+} from "@daohaus/tx-builder";
+import { ActionDisplay } from "../components/ActionDisplay";
+import { TX } from "../legos/tx";
+import { DAO_ADDRESS, DAO_CHAIN } from "../utils/constants";
 
 // generate a random hex string that is 900 characters long
 
@@ -65,7 +66,9 @@ const ActionContainer = styled.div`
 `;
 
 export function ProposalDetails() {
-  const { daoid, daochain, proposalId } = useParams();
+  const daochain = DAO_CHAIN;
+  const daoid = DAO_ADDRESS;
+  const { proposalId } = useParams();
   const { address } = useDHConnect();
 
   const [proposal, setProposal] = useState<MolochV3Proposal | undefined>();
@@ -101,7 +104,7 @@ export function ProposalDetails() {
       proposalType: string
     ) => {
       const multicallMeta = TX[proposalType]?.args?.find(
-        (tx) => (tx as MulticallArg).type === 'multicall'
+        (tx) => (tx as MulticallArg).type === "multicall"
       );
       const proposalActions = await decodeProposalActions({
         chainId,

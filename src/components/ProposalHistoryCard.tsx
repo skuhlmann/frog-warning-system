@@ -1,12 +1,11 @@
-import { MouseEvent, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { RiArrowUpSLine, RiArrowDownSLine } from 'react-icons/ri/index.js';
-import styled from 'styled-components';
+import { MouseEvent, useState } from "react";
+import { RiArrowUpSLine, RiArrowDownSLine } from "react-icons/ri/index.js";
+import styled from "styled-components";
 
-import { formatValueTo, fromWei } from '@daohaus/utils';
-import { Keychain } from '@daohaus/keychain-utils';
+import { formatValueTo, fromWei } from "@daohaus/utils";
+import { Keychain } from "@daohaus/keychain-utils";
 
-import { ExplorerLink } from '@daohaus/connect';
+import { ExplorerLink } from "@daohaus/connect";
 import {
   Bold,
   Button,
@@ -19,15 +18,16 @@ import {
   Theme,
   widthQuery,
   useBreakpoint,
-} from '@daohaus/ui';
+} from "@daohaus/ui";
 
 import {
   ProposalHistoryElement,
   ProposalHistoryElementData,
-} from '../utils/historyHelpers';
-import { MemberProfileAvatar } from './MemberProfileAvatar';
-import { VoteList } from './VoteList';
-import { MolochV3Proposal } from '@daohaus/moloch-v3-data';
+} from "../utils/historyHelpers";
+import { MemberProfileAvatar } from "./MemberProfileAvatar";
+import { VoteList } from "./VoteList";
+import { MolochV3Proposal } from "@daohaus/moloch-v3-data";
+import { DAO_ADDRESS, DAO_CHAIN } from "../utils/constants";
 
 const ElementContainer = styled.div`
   display: flex;
@@ -95,7 +95,7 @@ const DataPoint = ({
   daochain?: string;
   daoid?: string;
 }) => {
-  if (data.dataType === 'member') {
+  if (data.dataType === "member") {
     return (
       <div>
         <ParMd>{data.label}</ParMd>
@@ -108,7 +108,7 @@ const DataPoint = ({
     );
   }
 
-  if (data.dataType === 'dataIndicator') {
+  if (data.dataType === "dataIndicator") {
     return <DataIndicator label={data.label} data={data.data} />;
   }
 
@@ -125,7 +125,8 @@ export const ProposalHistoryCard = ({
   proposal,
 }: ProposalHistoryCardProps) => {
   const isMobile = useBreakpoint(widthQuery.sm);
-  const { daochain, daoid } = useParams();
+  const daochain = DAO_CHAIN;
+  const daoid = DAO_ADDRESS;
   const [open, setOpen] = useState<boolean>(false);
 
   const handleToggle = (event: MouseEvent<HTMLDivElement>) => {
@@ -141,10 +142,10 @@ export const ProposalHistoryCard = ({
           Number(fromWei(proposal.yesBalance)) +
           Number(fromWei(proposal.noBalance)),
         decimals: 0,
-        format: 'numberShort',
-        separator: '',
+        format: "numberShort",
+        separator: "",
       })
-    : '0';
+    : "0";
 
   return (
     <ElementContainer>
