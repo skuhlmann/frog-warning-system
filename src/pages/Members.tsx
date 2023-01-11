@@ -235,7 +235,7 @@ export const Members = () => {
       actions={
         <Actions>
           <ButtonRouterLink
-            to={`/molochv3/${"0x5"}/${"0x9789ac55e21939f3cc771325c6a23e8497182042"}/new-proposal?formLego=ISSUE`}
+            to={`/new-proposal?formLego=ISSUE`}
             color="secondary"
             fullWidth={isMd}
             linkType="no-icon-external"

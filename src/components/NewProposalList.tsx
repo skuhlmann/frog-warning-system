@@ -65,9 +65,7 @@ const ProposalList = ({ proposals }: { proposals: CustomFormLego[] }) => {
     <div>
       {proposals.map((proposalLego: CustomFormLego) => (
         <ListItemContainer key={proposalLego.id}>
-          <ListItemLink
-            to={`/molochv3/${daochain}/${daoid}/new-proposal?formLego=${proposalLego.id}`}
-          >
+          <ListItemLink to={`/new-proposal?formLego=${proposalLego.id}`}>
             <ListItemHoverContainer>
               <ListItem>
                 <ParMd>

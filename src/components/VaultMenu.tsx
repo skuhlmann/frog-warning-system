@@ -68,7 +68,7 @@ export const VaultMenu = ({ ragequittable, safeAddress }: VaultMenuProps) => {
       <>
         <DropdownMenuItem key="erc20" asChild>
           <VaultMenuLink
-            href={`/molochv3/${daochain}/${daoid}/new-proposal?formLego=${
+            href={`/new-proposal?formLego=${
               ragequittable
                 ? "TRANSFER_ERC20"
                 : `TRANSFER_ERC20_SIDECAR&defaultValues={"safeAddress":"${safeAddress}"}`
@@ -79,7 +79,7 @@ export const VaultMenu = ({ ragequittable, safeAddress }: VaultMenuProps) => {
         </DropdownMenuItem>
         <DropdownMenuItem key="eth" asChild>
           <VaultMenuLink
-            href={`/molochv3/${daochain}/${daoid}/new-proposal?formLego=${
+            href={`/new-proposal?formLego=${
               ragequittable
                 ? "TRANSFER_NETWORK_TOKEN"
                 : `TRANSFER_NETWORK_TOKEN_SIDECAR&defaultValues={"safeAddress":"${safeAddress}"}`
