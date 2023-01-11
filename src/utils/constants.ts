@@ -1,5 +1,6 @@
-export const DAO_NAME = "Frog Warning System";
-export const DAO_ADDRESS = "0x9789ac55e21939f3cc771325c6a23e8497182042";
+export const DAO_NAME = "FDD";
+export const DAO_ADDRESS = "0x24f7812b7ea1ebf27c98e44b487dd1267d8eacb8";
+export const DAO_CHAIN = "0x5";
 
 export const PROPOSAL_FILTERS: { [key: string]: string } = {
   unsponsored: "Unsponsored",
