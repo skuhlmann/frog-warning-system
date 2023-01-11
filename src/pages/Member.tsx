@@ -39,9 +39,10 @@ import { Profile } from "../components/Profile";
 import { fetchProfile } from "../utils/cacheProfile";
 import { loadMember } from "../utils/dataFetchHelpers";
 import { useDHConnect } from "@daohaus/connect";
+import { DAO_ADDRESS, DAO_CHAIN } from "../utils/constants";
 
-const daochain = "0x5";
-const daoid = "0x9789ac55e21939f3cc771325c6a23e8497182042";
+const daochain = DAO_CHAIN;
+const daoid = DAO_ADDRESS;
 
 const ProfileCard = styled(Card)`
   width: 64rem;

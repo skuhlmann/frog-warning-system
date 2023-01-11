@@ -1,6 +1,5 @@
-import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import { indigoDark } from '@radix-ui/colors';
+import styled from "styled-components";
+import { indigoDark } from "@radix-ui/colors";
 
 import {
   breakpoints,
@@ -12,21 +11,22 @@ import {
   DataIndicator,
   widthQuery,
   ProfileAvatar,
-} from '@daohaus/ui';
-import { AccountProfile } from '@daohaus/utils';
-import { Keychain } from '@daohaus/keychain-utils';
+} from "@daohaus/ui";
+import { AccountProfile } from "@daohaus/utils";
+import { Keychain } from "@daohaus/keychain-utils";
 
 import {
   formatLongDateFromSeconds,
   formatValueTo,
   fromWei,
   votingPowerPercentage,
-} from '@daohaus/utils';
-import { useDao } from '@daohaus/moloch-v3-context';
+} from "@daohaus/utils";
+import { useDao } from "@daohaus/moloch-v3-context";
 
-import { MemberProfileMenu } from './MemberProfileMenu';
-import { MemberProfileAvatar } from './MemberProfileAvatar';
-import { MolochV3Member } from '@daohaus/moloch-v3-data';
+import { MemberProfileMenu } from "./MemberProfileMenu";
+import { MemberProfileAvatar } from "./MemberProfileAvatar";
+import { MolochV3Member } from "@daohaus/moloch-v3-data";
+import { DAO_CHAIN } from "../utils/constants";
 
 const AvatarLarge = styled(ProfileAvatar)`
   height: 12rem;
@@ -106,24 +106,24 @@ type ProfileProps = {
 
 export const Profile = ({ profile, membership }: ProfileProps) => {
   const { dao } = useDao();
-  const { daochain } = useParams();
+  const daochain = DAO_CHAIN;
 
   return (
     <PContainer>
       <PSubContainer>
         <ProfileMetadataContainer>
           <AvatarLarge
-            src={profile?.image || ''}
-            size='lg'
-            alt='profile image'
+            src={profile?.image || ""}
+            size="lg"
+            alt="profile image"
             address={profile.address}
           />
           <Container>
             <ProfileNameContainer>
-              {profile?.name && <H5>{profile?.name || ''}</H5>}
+              {profile?.name && <H5>{profile?.name || ""}</H5>}
               {profile?.emoji && (
-                <ParLg as='span' role='img' aria-label='profile emoji'>
-                  {profile?.emoji || ''}
+                <ParLg as="span" role="img" aria-label="profile emoji">
+                  {profile?.emoji || ""}
                 </ParLg>
               )}
             </ProfileNameContainer>
@@ -136,7 +136,7 @@ export const Profile = ({ profile, membership }: ProfileProps) => {
               />
             )}
             {membership && (
-              <DataXs as='span'>
+              <DataXs as="span">
                 Joined {formatLongDateFromSeconds(membership?.createdAt)}
               </DataXs>
             )}
@@ -150,30 +150,30 @@ export const Profile = ({ profile, membership }: ProfileProps) => {
         <>
           <DataGrid>
             <DataIndicator
-              label='Power'
+              label="Power"
               data={formatValueTo({
                 value: votingPowerPercentage(
-                  dao?.totalShares || '0',
+                  dao?.totalShares || "0",
                   membership.delegateShares
                 ),
                 decimals: 2,
-                format: 'percent',
+                format: "percent",
               })}
             />
             <DataIndicator
-              label='Voting Tokens'
+              label="Voting Tokens"
               data={formatValueTo({
                 value: fromWei(membership.shares),
                 decimals: 2,
-                format: 'number',
+                format: "number",
               })}
             />
             <DataIndicator
-              label='Non-Voting Tokens'
+              label="Non-Voting Tokens"
               data={formatValueTo({
                 value: fromWei(membership.loot),
                 decimals: 2,
-                format: 'number',
+                format: "number",
               })}
             />
           </DataGrid>

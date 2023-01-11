@@ -1,21 +1,21 @@
-import { useMemo } from 'react';
-import styled from 'styled-components';
-import { Column, Row } from 'react-table';
+import { useMemo } from "react";
+import styled from "styled-components";
+import { Column, Row } from "react-table";
 import {
   formatDateFromSeconds,
   formatValueTo,
   fromWei,
   sharesDelegatedToMember,
   votingPowerPercentage,
-} from '@daohaus/utils';
-import { Keychain } from '@daohaus/keychain-utils';
+} from "@daohaus/utils";
+import { Keychain } from "@daohaus/keychain-utils";
 
 import {
   useMembers,
   useDao,
   useConnectedMember,
-} from '@daohaus/moloch-v3-context';
-import { Member_OrderBy, MolochV3Members } from '@daohaus/moloch-v3-data';
+} from "@daohaus/moloch-v3-context";
+import { Member_OrderBy, MolochV3Members } from "@daohaus/moloch-v3-data";
 import {
   SingleColumnLayout,
   Card,
@@ -24,13 +24,14 @@ import {
   Spinner,
   useBreakpoint,
   Tooltip,
-} from '@daohaus/ui';
+} from "@daohaus/ui";
 
-import { ButtonRouterLink } from '../components/ButtonRouterLink';
-import { DaoTable } from '../components/DaohausTable';
-import { MembersOverview } from '../components/MembersOverview';
-import { MemberProfileAvatar } from '../components/MemberProfileAvatar';
-import { MemberProfileMenu } from '../components/MemberProfileMenu';
+import { ButtonRouterLink } from "../components/ButtonRouterLink";
+import { DaoTable } from "../components/DaohausTable";
+import { MembersOverview } from "../components/MembersOverview";
+import { MemberProfileAvatar } from "../components/MemberProfileAvatar";
+import { MemberProfileMenu } from "../components/MemberProfileMenu";
+import { DAO_ADDRESS, DAO_CHAIN } from "../utils/constants";
 
 const Actions = styled.div`
   display: flex;
@@ -88,39 +89,39 @@ export const Members = () => {
 
   const tableData: MolochV3Members | undefined = useMemo(() => {
     if (members) {
-      return members.filter(member => member !== undefined);
+      return members.filter((member) => member !== undefined);
     }
   }, [members]);
 
   const columns = useMemo<Column<MembersTableType>[]>(
     () => [
       {
-        Header: 'Member',
-        accessor: 'memberAddress',
+        Header: "Member",
+        accessor: "memberAddress",
         Cell: ({ value }: { value: string }) => {
           return (
             <MemberProfileAvatar
-              daochain={'0x5' as keyof Keychain}
+              daochain={DAO_CHAIN as keyof Keychain}
               memberAddress={value}
-              daoid={'0x9789ac55e21939f3cc771325c6a23e8497182042'}
+              daoid={DAO_ADDRESS}
             />
           );
         },
       },
       {
         Header: () => {
-          return <div className='hide-sm'>Join Date</div>;
+          return <div className="hide-sm">Join Date</div>;
         },
-        accessor: 'createdAt',
+        accessor: "createdAt",
         Cell: ({ value }: { value: string }) => {
-          return <div className='hide-sm'>{formatDateFromSeconds(value)}</div>;
+          return <div className="hide-sm">{formatDateFromSeconds(value)}</div>;
         },
       },
       {
         Header: () => {
-          return <div className='hide-sm'>Power</div>;
+          return <div className="hide-sm">Power</div>;
         },
-        accessor: 'delegateShares',
+        accessor: "delegateShares",
         Cell: ({
           value,
           row,
@@ -133,17 +134,17 @@ export const Members = () => {
             row.original.shares
           );
           return (
-            <div className='hide-sm'>
-              {votingPowerPercentage(dao?.totalShares || '0', value)}
-              {' %'}
+            <div className="hide-sm">
+              {votingPowerPercentage(dao?.totalShares || "0", value)}
+              {" %"}
               {delegatedShares > 0 && (
                 <Tooltip
                   content={`${formatValueTo({
                     value: fromWei(delegatedShares.toFixed()),
                     decimals: 2,
-                    format: 'number',
+                    format: "number",
                   })} voting tokens are delegated to this member`}
-                  side='bottom'
+                  side="bottom"
                 />
               )}
             </div>
@@ -154,14 +155,14 @@ export const Members = () => {
         Header: () => {
           return <>Voting</>;
         },
-        accessor: 'shares',
+        accessor: "shares",
         Cell: ({ value }: { value: string }) => {
           return (
             <div>
               {formatValueTo({
                 value: fromWei(value),
                 decimals: 2,
-                format: 'number',
+                format: "number",
               })}
             </div>
           );
@@ -171,14 +172,14 @@ export const Members = () => {
         Header: () => {
           return <div>Non-Voting</div>;
         },
-        accessor: 'loot',
+        accessor: "loot",
         Cell: ({ value }: { value: string }) => {
           return (
             <div>
               {formatValueTo({
                 value: fromWei(value),
                 decimals: 2,
-                format: 'number',
+                format: "number",
               })}
             </div>
           );
@@ -186,9 +187,9 @@ export const Members = () => {
       },
       {
         Header: () => {
-          return <div className='hide-sm'>Delegated To</div>;
+          return <div className="hide-sm">Delegated To</div>;
         },
-        accessor: 'delegatingTo',
+        accessor: "delegatingTo",
         Cell: ({
           value,
           row,
@@ -197,9 +198,9 @@ export const Members = () => {
           row: Row<MembersTableType>;
         }) => {
           return (
-            <div className='hide-sm'>
+            <div className="hide-sm">
               {value === row.original.memberAddress ? (
-                '--'
+                "--"
               ) : (
                 <AddressDisplay address={value} truncate />
               )}
@@ -208,7 +209,7 @@ export const Members = () => {
         },
       },
       {
-        accessor: 'id',
+        accessor: "id",
         Cell: ({ row }: { row: Row<MembersTableType> }) => {
           return (
             <ActionContainer>
@@ -218,26 +219,26 @@ export const Members = () => {
         },
       },
     ],
-    [dao, '0x5', '0x9789ac55e21939f3cc771325c6a23e849718204']
+    [dao, "0x5", "0x9789ac55e21939f3cc771325c6a23e849718204"]
   );
 
   const handleColumnSort = (
     orderBy: string,
-    orderDirection: 'asc' | 'desc'
+    orderDirection: "asc" | "desc"
   ) => {
     sortMembers({ orderBy: orderBy as Member_OrderBy, orderDirection });
   };
 
   return (
     <SingleColumnLayout
-      title='Members'
+      title="Members"
       actions={
         <Actions>
           <ButtonRouterLink
-            to={`/molochv3/${'0x5'}/${'0x9789ac55e21939f3cc771325c6a23e8497182042'}/new-proposal?formLego=ISSUE`}
-            color='secondary'
+            to={`/molochv3/${"0x5"}/${"0x9789ac55e21939f3cc771325c6a23e8497182042"}/new-proposal?formLego=ISSUE`}
+            color="secondary"
             fullWidth={isMd}
-            linkType='no-icon-external'
+            linkType="no-icon-external"
           >
             Accept Offer
           </ButtonRouterLink>
@@ -245,7 +246,7 @@ export const Members = () => {
             <ButtonRouterLink
               to={`/members/${connectedMember.memberAddress}`}
               fullWidth={isMd}
-              linkType='no-icon-external'
+              linkType="no-icon-external"
               // centerAlign={isMd}
             >
               View Profile
@@ -265,12 +266,12 @@ export const Members = () => {
             handleColumnSort={handleColumnSort}
             sortableColumns={
               isMd
-                ? ['loot', 'shares']
-                : ['createdAt', 'shares', 'loot', 'delegateShares']
+                ? ["loot", "shares"]
+                : ["createdAt", "shares", "loot", "delegateShares"]
             }
           />
         ) : (
-          <Spinner size={isMd ? '8rem' : '16rem'} padding='6rem' />
+          <Spinner size={isMd ? "8rem" : "16rem"} padding="6rem" />
         )}
       </MemberContainer>
     </SingleColumnLayout>

@@ -1,26 +1,26 @@
-import React, { MouseEvent } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { MouseEvent } from "react";
 
-import { formatShares, handleErrorMessage, TXLego } from '@daohaus/utils';
-import { MolochV3Proposal } from '@daohaus/moloch-v3-data';
-import { useDHConnect } from '@daohaus/connect';
-import { useTxBuilder } from '@daohaus/tx-builder';
-import { ParMd, TintSecondary, useToast } from '@daohaus/ui';
+import { formatShares, handleErrorMessage, TXLego } from "@daohaus/utils";
+import { MolochV3Proposal } from "@daohaus/moloch-v3-data";
+import { useDHConnect } from "@daohaus/connect";
+import { useTxBuilder } from "@daohaus/tx-builder";
+import { ParMd, TintSecondary, useToast } from "@daohaus/ui";
 
-import { useConnectedMember, useDao } from '@daohaus/moloch-v3-context';
-import { ACTION_TX } from '../../legos/tx';
+import { useConnectedMember, useDao } from "@daohaus/moloch-v3-context";
+import { ACTION_TX } from "../../legos/tx";
 import {
   ActionTemplate,
   VoteBox,
   VoteDownButton,
   VoteUpButton,
-} from './ActionPrimitives';
-import { VotingBar } from '../VotingBar';
-import { ActionLifeCycleFns } from '../../utils/general';
+} from "./ActionPrimitives";
+import { VotingBar } from "../VotingBar";
+import { ActionLifeCycleFns } from "../../utils/general";
+import { DAO_CHAIN } from "../../utils/constants";
 
 enum Vote {
-  Yes = 'yes',
-  No = 'no',
+  Yes = "yes",
+  No = "no",
 }
 
 export const HasNotVoted = ({
@@ -32,7 +32,7 @@ export const HasNotVoted = ({
   proposal: MolochV3Proposal;
   readableTime?: string;
 }) => {
-  const { daochain } = useParams();
+  const daochain = DAO_CHAIN;
   const { chainId } = useDHConnect();
   const { connectedMember } = useConnectedMember();
   const { fireTransaction } = useTxBuilder();
@@ -57,14 +57,14 @@ export const HasNotVoted = ({
           const errMsg = handleErrorMessage({
             error,
           });
-          errorToast({ title: 'Vote Failed', description: errMsg });
+          errorToast({ title: "Vote Failed", description: errMsg });
           lifeCycleFnsOverride?.onTxError?.(error);
           setIsLoading(false);
         },
         onTxSuccess: (txHash: string) => {
           defaultToast({
-            title: 'Vote Success',
-            description: 'Please wait for subgraph to sync',
+            title: "Vote Success",
+            description: "Please wait for subgraph to sync",
           });
           lifeCycleFnsOverride?.onTxSuccess?.(txHash);
         },
@@ -72,14 +72,14 @@ export const HasNotVoted = ({
           const errMsg = handleErrorMessage({
             error,
           });
-          errorToast({ title: 'Poll Error', description: errMsg });
+          errorToast({ title: "Poll Error", description: errMsg });
           lifeCycleFnsOverride?.onPollError?.(error);
           setIsLoading(false);
         },
         onPollSuccess: () => {
           successToast({
-            title: 'Vote Success',
-            description: 'Proposal sponsored',
+            title: "Vote Success",
+            description: "Proposal sponsored",
           });
           refreshAll();
           lifeCycleFnsOverride?.onPollSuccess?.(undefined);
@@ -96,15 +96,15 @@ export const HasNotVoted = ({
 
   const hasShares = Number(connectedMember?.delegateShares)
     ? true
-    : 'You must have voting tokens to vote';
+    : "You must have voting tokens to vote";
 
   const isConnectedToDao =
     chainId === daochain
       ? true
-      : 'You are not connected to the same network as the DAO';
+      : "You are not connected to the same network as the DAO";
   const isNotLoading = !isLoading
     ? true
-    : 'Please wait for transaction to complete';
+    : "Please wait for transaction to complete";
   return (
     <ActionTemplate
       proposal={proposal}

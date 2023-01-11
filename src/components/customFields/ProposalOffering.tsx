@@ -1,16 +1,16 @@
-import { fromWei } from '@daohaus/utils';
-import { isValidNetwork } from '@daohaus/keychain-utils';
+import { fromWei } from "@daohaus/utils";
+import { isValidNetwork } from "@daohaus/keychain-utils";
 
-import { useConnectedMember, useDao } from '@daohaus/moloch-v3-context';
-import { Buildable, ParMd, TintSecondary } from '@daohaus/ui';
-import { useEffect, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
-import { useDHConnect } from '@daohaus/connect';
+import { useConnectedMember, useDao } from "@daohaus/moloch-v3-context";
+import { Buildable, ParMd, TintSecondary } from "@daohaus/ui";
+import { useEffect, useState } from "react";
+import { useFormContext } from "react-hook-form";
+import { useDHConnect } from "@daohaus/connect";
+import { DAO_CHAIN } from "../../utils/constants";
 
 export const ProposalOffering = (props: Buildable<{ id?: string }>) => {
-  const { id = 'proposalOffering' } = props;
-  const { daochain } = useParams();
+  const { id = "proposalOffering" } = props;
+  const daochain = DAO_CHAIN;
   const { networks } = useDHConnect();
   const { dao } = useDao();
   const { connectedMember } = useConnectedMember();
@@ -31,7 +31,7 @@ export const ProposalOffering = (props: Buildable<{ id?: string }>) => {
       return;
     }
 
-    setValue(id, '0');
+    setValue(id, "0");
     setRequiresOffering(false);
     return;
   }, [dao, connectedMember, setValue, id]);
@@ -41,9 +41,9 @@ export const ProposalOffering = (props: Buildable<{ id?: string }>) => {
 
   return (
     <ParMd>
-      Proposal Offering:{' '}
+      Proposal Offering:{" "}
       <TintSecondary>
-        {' '}
+        {" "}
         {fromWei(dao.proposalOffering)} {networkTokenSymbol}
       </TintSecondary>
     </ParMd>

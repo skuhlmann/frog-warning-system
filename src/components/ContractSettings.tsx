@@ -1,15 +1,15 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import {
   H3,
   AddressDisplay,
   ParSm,
   useBreakpoint,
   widthQuery,
-} from '@daohaus/ui';
+} from "@daohaus/ui";
 
-import { useParams } from 'react-router-dom';
-import { Keychain } from '@daohaus/keychain-utils';
-import { MolochV3Dao } from '@daohaus/moloch-v3-data';
+import { Keychain } from "@daohaus/keychain-utils";
+import { MolochV3Dao } from "@daohaus/moloch-v3-data";
+import { DAO_CHAIN } from "../utils/constants";
 
 const MetaCardHeader = styled.div`
   display: flex;
@@ -32,7 +32,7 @@ type ContractSettingsProps = {
 };
 
 export const ContractSettings = ({ dao }: ContractSettingsProps) => {
-  const { daochain } = useParams();
+  const daochain = DAO_CHAIN;
   const isMobile = useBreakpoint(widthQuery.sm);
 
   return (

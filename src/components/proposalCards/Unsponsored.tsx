@@ -3,10 +3,10 @@ import {
   handleErrorMessage,
   isNumberish,
   TXLego,
-} from '@daohaus/utils';
-import { MolochV3Proposal } from '@daohaus/moloch-v3-data';
-import { useDHConnect } from '@daohaus/connect';
-import { useTxBuilder } from '@daohaus/tx-builder';
+} from "@daohaus/utils";
+import { MolochV3Proposal } from "@daohaus/moloch-v3-data";
+import { useDHConnect } from "@daohaus/connect";
+import { useTxBuilder } from "@daohaus/tx-builder";
 import {
   Italic,
   ParSm,
@@ -14,17 +14,17 @@ import {
   useBreakpoint,
   useToast,
   widthQuery,
-} from '@daohaus/ui';
-import React, { useMemo } from 'react';
-import { useParams } from 'react-router-dom';
-import { useTheme } from 'styled-components';
-import { useConnectedMember, useDao } from '@daohaus/moloch-v3-context';
-import { PROP_CARD_HELP } from '../../data/copy';
-import { ACTION_TX } from '../../legos/tx';
-import { VotingBar } from '../VotingBar';
-import { ActionTemplate } from './ActionPrimitives';
-import { GatedButton } from './GatedButton';
-import { ActionLifeCycleFns } from '../../utils/general';
+} from "@daohaus/ui";
+import React, { useMemo } from "react";
+import { useTheme } from "styled-components";
+import { useConnectedMember, useDao } from "@daohaus/moloch-v3-context";
+import { PROP_CARD_HELP } from "../../data/copy";
+import { ACTION_TX } from "../../legos/tx";
+import { VotingBar } from "../VotingBar";
+import { ActionTemplate } from "./ActionPrimitives";
+import { GatedButton } from "./GatedButton";
+import { ActionLifeCycleFns } from "../../utils/general";
+import { DAO_CHAIN } from "../../utils/constants";
 
 export const Unsponsored = ({
   lifeCycleFnsOverride,
@@ -33,7 +33,7 @@ export const Unsponsored = ({
   lifeCycleFnsOverride?: ActionLifeCycleFns;
   proposal: MolochV3Proposal;
 }) => {
-  const { daochain } = useParams();
+  const daochain = DAO_CHAIN;
   const { fireTransaction } = useTxBuilder();
   const { connectedMember } = useConnectedMember();
   const { chainId } = useDHConnect();
@@ -57,14 +57,14 @@ export const Unsponsored = ({
           const errMsg = handleErrorMessage({
             error,
           });
-          errorToast({ title: 'Sponsor Failed', description: errMsg });
+          errorToast({ title: "Sponsor Failed", description: errMsg });
           lifeCycleFnsOverride?.onTxError?.(error);
           setIsLoading(false);
         },
         onTxSuccess: (txHash: string) => {
           defaultToast({
-            title: 'Sponsor Success',
-            description: 'Please wait for subgraph to sync',
+            title: "Sponsor Success",
+            description: "Please wait for subgraph to sync",
           });
           lifeCycleFnsOverride?.onTxSuccess?.(txHash);
         },
@@ -72,14 +72,14 @@ export const Unsponsored = ({
           const errMsg = handleErrorMessage({
             error,
           });
-          errorToast({ title: 'Poll Error', description: errMsg });
+          errorToast({ title: "Poll Error", description: errMsg });
           lifeCycleFnsOverride?.onPollError?.(error);
           setIsLoading(false);
         },
         onPollSuccess: () => {
           successToast({
-            title: 'Sponsor Success',
-            description: 'Proposal sponsored',
+            title: "Sponsor Success",
+            description: "Proposal sponsored",
           });
           refreshAll();
           lifeCycleFnsOverride?.onPollSuccess?.(undefined);
@@ -101,13 +101,13 @@ export const Unsponsored = ({
             dao.sponsorThreshold
           )} voting stake tokens are required to sponsor this proposal.`;
     }
-    return 'Subgraph data not loading or is not in sync';
+    return "Subgraph data not loading or is not in sync";
   }, [dao, connectedMember]);
 
   const isConnectedToDao =
     chainId === daochain
       ? true
-      : 'You are not connected to the same network as the DAO';
+      : "You are not connected to the same network as the DAO";
 
   return (
     <ActionTemplate
@@ -125,7 +125,7 @@ export const Unsponsored = ({
             {isLoading ? (
               <Spinner size="2rem" strokeWidth=".2rem" />
             ) : (
-              'Sponsor Proposal'
+              "Sponsor Proposal"
             )}
           </GatedButton>
         </>

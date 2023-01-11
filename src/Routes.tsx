@@ -11,7 +11,7 @@ import { MolochV3DaoProvider } from "@daohaus/moloch-v3-context";
 import Member from "./pages/Member";
 import { ConvertShares } from "./pages/ConvertShares";
 import { HeaderAvatar } from "./components/HeaderAvatar";
-import { DAO_ADDRESS, DAO_NAME } from "./utils/constants";
+import { DAO_ADDRESS, DAO_CHAIN, DAO_NAME } from "./utils/constants";
 
 export const Routes = () => {
   const { pathname } = useLocation();
@@ -34,7 +34,7 @@ export const Routes = () => {
       <MolochV3DaoProvider
         address={address}
         daoid={DAO_ADDRESS}
-        daochain="0x5"
+        daochain={DAO_CHAIN}
         graphApiKeys={{}}
       >
         <Router>

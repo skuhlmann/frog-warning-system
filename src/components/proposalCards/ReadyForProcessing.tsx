@@ -1,28 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 
-import { MolochV3Proposal } from '@daohaus/moloch-v3-data';
-import { useBreakpoint, useToast, widthQuery } from '@daohaus/ui';
-import styled from 'styled-components';
-import { ActionTemplate, GasDisplay, Verdict } from './ActionPrimitives';
-import { useParams } from 'react-router-dom';
-import { useDHConnect } from '@daohaus/connect';
-import { useDao } from '@daohaus/moloch-v3-context';
-import { createContract, useTxBuilder } from '@daohaus/tx-builder';
+import { MolochV3Proposal } from "@daohaus/moloch-v3-data";
+import { useBreakpoint, useToast, widthQuery } from "@daohaus/ui";
+import styled from "styled-components";
+import { ActionTemplate, GasDisplay, Verdict } from "./ActionPrimitives";
+import { useParams } from "react-router-dom";
+import { useDHConnect } from "@daohaus/connect";
+import { useDao } from "@daohaus/moloch-v3-context";
+import { createContract, useTxBuilder } from "@daohaus/tx-builder";
 import {
   getProcessingGasLimit,
   handleErrorMessage,
   ReactSetter,
   roundedPercentage,
   TXLego,
-} from '@daohaus/utils';
-import { isValidNetwork, ValidNetwork } from '@daohaus/keychain-utils';
+} from "@daohaus/utils";
+import { isValidNetwork, ValidNetwork } from "@daohaus/keychain-utils";
 
-import { ACTION_TX } from '../../legos/tx';
-import { GatedButton } from './GatedButton';
-import { VotingBar } from '../VotingBar';
-import { LOCAL_ABI } from '@daohaus/abis';
+import { ACTION_TX } from "../../legos/tx";
+import { GatedButton } from "./GatedButton";
+import { VotingBar } from "../VotingBar";
+import { LOCAL_ABI } from "@daohaus/abis";
 
-import { ActionLifeCycleFns } from '../../utils/general';
+import { ActionLifeCycleFns } from "../../utils/general";
+import { DAO_ADDRESS, DAO_CHAIN } from "../../utils/constants";
 
 const ProcessBox = styled.div`
   display: flex;
@@ -58,15 +59,15 @@ const checkCanProcess = async ({
       address: daoid,
       abi: LOCAL_ABI.BAAL,
       chainId: daochain,
-    })['state'](prevProposalId);
+    })["state"](prevProposalId);
 
     setCanProcess(
       eligibableStatuses.some((status) => status === state)
         ? true
-        : 'Another proposal in the DAO needs to executed first.'
+        : "Another proposal in the DAO needs to executed first."
     );
   } catch (error) {
-    setCanProcess('Network Error. Could not check for Proposal status');
+    setCanProcess("Network Error. Could not check for Proposal status");
   }
 };
 
@@ -77,7 +78,8 @@ export const ReadyForProcessing = ({
   lifeCycleFnsOverride?: ActionLifeCycleFns;
   proposal: MolochV3Proposal;
 }) => {
-  const { daochain, daoid } = useParams();
+  const daochain = DAO_CHAIN;
+  const daoid = DAO_ADDRESS;
   const { chainId } = useDHConnect();
   const { fireTransaction } = useTxBuilder();
   const { errorToast, defaultToast, successToast } = useToast();
@@ -85,7 +87,7 @@ export const ReadyForProcessing = ({
   const isMobile = useBreakpoint(widthQuery.sm);
 
   const [canProcess, setCanProcess] = React.useState<string | true>(
-    'Checking execution data.'
+    "Checking execution data."
   );
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -109,14 +111,14 @@ export const ReadyForProcessing = ({
           const errMsg = handleErrorMessage({
             error,
           });
-          errorToast({ title: 'Execution Failed', description: errMsg });
+          errorToast({ title: "Execution Failed", description: errMsg });
           lifeCycleFnsOverride?.onTxError?.(error);
           setIsLoading(false);
         },
         onTxSuccess: (txHash: string) => {
           defaultToast({
-            title: 'Execution Success',
-            description: 'Please wait for subgraph to sync',
+            title: "Execution Success",
+            description: "Please wait for subgraph to sync",
           });
           lifeCycleFnsOverride?.onTxSuccess?.(txHash);
         },
@@ -124,14 +126,14 @@ export const ReadyForProcessing = ({
           const errMsg = handleErrorMessage({
             error,
           });
-          errorToast({ title: 'Poll Error', description: errMsg });
+          errorToast({ title: "Poll Error", description: errMsg });
           lifeCycleFnsOverride?.onPollError?.(error);
           setIsLoading(false);
         },
         onPollSuccess: () => {
           successToast({
-            title: 'Execution Success',
-            description: 'Proposal executed',
+            title: "Execution Success",
+            description: "Proposal executed",
           });
           refreshAll();
           lifeCycleFnsOverride?.onPollSuccess?.(undefined);
@@ -155,10 +157,10 @@ export const ReadyForProcessing = ({
   const isConnectedToDao =
     chainId === daochain
       ? true
-      : 'You are not connected to the same network as the DAO';
+      : "You are not connected to the same network as the DAO";
   const isNotLoading = !isLoading
     ? true
-    : 'Please wait for transaction to complete';
+    : "Please wait for transaction to complete";
 
   const percentYes = roundedPercentage(
     Number(proposal.yesBalance),

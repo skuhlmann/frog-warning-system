@@ -1,26 +1,26 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import styled, { useTheme } from 'styled-components';
-import { MdOutlineGavel } from 'react-icons/md';
+import React, { useEffect, useMemo, useState } from "react";
+import styled, { useTheme } from "styled-components";
+import { MdOutlineGavel } from "react-icons/md";
 
-import { Italic, ParMd, Tooltip, useBreakpoint, widthQuery } from '@daohaus/ui';
+import { Italic, ParMd, Tooltip, useBreakpoint, widthQuery } from "@daohaus/ui";
 import {
   RiGasStationLine,
   RiThumbDownLine,
   RiThumbUpLine,
-} from 'react-icons/ri/index.js';
-import { mintDark, tomatoDark } from '@radix-ui/colors';
-import { GatedButton } from './GatedButton';
-import { MolochV3Proposal } from '@daohaus/moloch-v3-data';
+} from "react-icons/ri/index.js";
+import { mintDark, tomatoDark } from "@radix-ui/colors";
+import { GatedButton } from "./GatedButton";
+import { MolochV3Proposal } from "@daohaus/moloch-v3-data";
 import {
   checkHasQuorum,
   getGasCostEstimate,
   percentage,
   toWholeUnits,
-} from '@daohaus/utils';
-import { ValidNetwork, HAUS_RPC } from '@daohaus/keychain-utils';
+} from "@daohaus/utils";
+import { ValidNetwork, HAUS_RPC } from "@daohaus/keychain-utils";
 
-import { useParams } from 'react-router-dom';
-import { useDHConnect } from '@daohaus/connect';
+import { useDHConnect } from "@daohaus/connect";
+import { DAO_CHAIN } from "../../utils/constants";
 
 const TemplateBox = styled.div`
   display: flex;
@@ -67,10 +67,10 @@ const QuorumDisplay = ({
     <Tooltip
       triggerEl={
         <QuorumBox>
-          <MdOutlineGavel color={theme.secondary.step11} size="1.4rem" />{' '}
+          <MdOutlineGavel color={theme.secondary.step11} size="1.4rem" />{" "}
           <ParMd color={theme.secondary.step11}>
             {Number(yesPerc).toFixed(0)}/{daoQuorum}%
-          </ParMd>{' '}
+          </ParMd>{" "}
         </QuorumBox>
       }
       content={`DAO must meet a quorum of ${daoQuorum}% to pass a proposal.`}
@@ -111,7 +111,7 @@ export const ProposalFail = ({ text }: { text: string }) => {
 
 export const Verdict = ({
   passed,
-  appendText = '',
+  appendText = "",
 }: {
   passed: boolean;
   appendText?: string;
@@ -166,16 +166,16 @@ export const ActionTemplate = ({
   const theme = useTheme();
   const isMobile = useBreakpoint(widthQuery.sm);
   const displayUI = useMemo(() => {
-    if (typeof statusDisplay === 'string') {
+    if (typeof statusDisplay === "string") {
       return <ParMd>{statusDisplay}</ParMd>;
     }
     return statusDisplay;
   }, [statusDisplay]);
   const helperUI = useMemo(() => {
-    if (typeof helperDisplay === 'string') {
+    if (typeof helperDisplay === "string") {
       return (
         <ParMd color={theme.secondary.step11}>
-          {' '}
+          {" "}
           <Italic>{helperDisplay}</Italic>
         </ParMd>
       );
@@ -183,7 +183,7 @@ export const ActionTemplate = ({
     return helperDisplay;
   }, [helperDisplay, theme]);
 
-  const hideQuorum = proposal.dao.quorumPercent === '0';
+  const hideQuorum = proposal.dao.quorumPercent === "0";
   const yesPerc = percentage(
     Number(proposal.yesBalance),
     Number(proposal.dao.totalShares)
@@ -217,7 +217,8 @@ const GasBox = styled.div`
 
 export const GasDisplay = ({ gasAmt }: { gasAmt: string | number }) => {
   const theme = useTheme();
-  const { daochain } = useParams();
+  const daochain = DAO_CHAIN;
+
   const [estimate, setEstimate] = useState<string | undefined>();
   const { networks } = useDHConnect();
 

@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
-import { BsCheckCircle } from 'react-icons/bs';
-import { FaQrcode } from 'react-icons/fa';
-import { useFormContext } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import { ValidNetwork } from '@daohaus/keychain-utils';
-import { useDao } from '@daohaus/moloch-v3-context';
+import { useEffect, useState } from "react";
+import { BsCheckCircle } from "react-icons/bs";
+import { FaQrcode } from "react-icons/fa";
+import { useFormContext } from "react-hook-form";
+import styled from "styled-components";
+import { ValidNetwork } from "@daohaus/keychain-utils";
+import { useDao } from "@daohaus/moloch-v3-context";
 import {
   border,
   Buildable,
@@ -19,12 +18,13 @@ import {
   Spinner,
   Theme,
   WrappedInput,
-} from '@daohaus/ui';
-import { FieldSpacer } from '@daohaus/form-builder';
+} from "@daohaus/ui";
+import { FieldSpacer } from "@daohaus/form-builder";
 
-import { useWalletConnect } from '../../hook/walletConnect';
+import { useWalletConnect } from "../../hook/walletConnect";
 
-import WalletConnectLogo from '../../assets/wallet_connect.svg';
+import WalletConnectLogo from "../../assets/wallet_connect.svg";
+import { DAO_CHAIN } from "../../utils/constants";
 
 enum Status {
   DISCONNECTED,
@@ -79,7 +79,7 @@ export const WalletConnectLink = ({
 }: Buildable<Field>) => {
   const { dao } = useDao();
   const { register, setValue, watch } = useFormContext();
-  const { daochain } = useParams();
+  const daochain = DAO_CHAIN;
   const {
     wcConnector,
     txPayload,
@@ -89,24 +89,24 @@ export const WalletConnectLink = ({
     txError,
   } = useWalletConnect();
 
-  const inputId = 'wcLink';
+  const inputId = "wcLink";
 
   const [connectionStatus, setConnectionStatus] = useState(Status.DISCONNECTED);
 
   const wcLink = watch(inputId);
 
   useEffect(() => {
-    register('txTo');
-    register('txData');
-    register('txValue');
-    register('txOperation');
+    register("txTo");
+    register("txData");
+    register("txValue");
+    register("txOperation");
   }, [register]);
 
   useEffect(() => {
     if (
       dao &&
       daochain &&
-      wcLink?.startsWith('wc:') &&
+      wcLink?.startsWith("wc:") &&
       connectionStatus === Status.DISCONNECTED
     ) {
       setConnectionStatus(Status.CONNECTING);
@@ -119,8 +119,8 @@ export const WalletConnectLink = ({
   }, [connectionStatus, dao, daochain, wcConnect, wcLink]);
 
   const clean = () => {
-    [inputId, 'txTo', 'txData', 'txValue', 'txOperation'].forEach((formInput) =>
-      setValue(formInput, '')
+    [inputId, "txTo", "txData", "txValue", "txOperation"].forEach((formInput) =>
+      setValue(formInput, "")
     );
     setConnectionStatus(Status.DISCONNECTED);
   };
@@ -134,15 +134,15 @@ export const WalletConnectLink = ({
 
   useEffect(() => {
     if (txPayload?.params?.length) {
-      setValue('txTo', txPayload.params[0].to);
-      setValue('txData', txPayload.params[0].data);
-      setValue('txValue', txPayload.params[0].value || '0');
-      setValue('txOperation', txPayload.params[0].operation || '0');
+      setValue("txTo", txPayload.params[0].to);
+      setValue("txData", txPayload.params[0].data);
+      setValue("txValue", txPayload.params[0].value || "0");
+      setValue("txOperation", txPayload.params[0].operation || "0");
     }
   }, [setValue, txPayload]);
 
   return (
-    <FieldWrapper id={'walletConnectWrapper'} full label="WalletConnect Link">
+    <FieldWrapper id={"walletConnectWrapper"} full label="WalletConnect Link">
       <HighlightInputText
         id="walletConnectDesc"
         description="Connect your DAO Safe to a dApp via WalletConnect and trigger transactions."
@@ -154,7 +154,7 @@ export const WalletConnectLink = ({
         id={inputId}
         disabled={connectionStatus === Status.CONNECTED}
         rules={rules}
-        error={txError ? { type: 'error', message: txError } : undefined}
+        error={txError ? { type: "error", message: txError } : undefined}
       />
       <WalletConectContainer>
         <img

@@ -1,8 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
-import { useMembers } from '@daohaus/moloch-v3-context';
-import { Keychain } from '@daohaus/keychain-utils';
+import { useCallback, useEffect, useState } from "react";
+import { useFormContext } from "react-hook-form";
+import { useMembers } from "@daohaus/moloch-v3-context";
+import { Keychain } from "@daohaus/keychain-utils";
 
 import {
   Buildable,
@@ -12,9 +11,10 @@ import {
   OptionType,
   WrappedInput,
   WrappedSelect,
-} from '@daohaus/ui';
+} from "@daohaus/ui";
 
-import { isActiveMember } from '../../utils/dataFetchHelpers';
+import { isActiveMember } from "../../utils/dataFetchHelpers";
+import { DAO_ADDRESS, DAO_CHAIN } from "../../utils/constants";
 
 type SelectApplicantProps = Buildable<
   Field & {
@@ -30,19 +30,20 @@ export const SelectApplicant = ({
   const [memberList, setMemberList] = useState<Array<OptionType>>([]);
   const [memberLoading, setMemberLoading] = useState(false);
   const [valError, setValError] = useState<ErrorMessage | undefined>();
-  const { daochain, daoid } = useParams();
+  const daochain = DAO_CHAIN;
+  const daoaddress = DAO_ADDRESS;
   const { register, setValue, watch } = useFormContext();
   const { members } = useMembers();
   const inputValue = watch(props.id);
 
-  register('memberShares');
-  register('memberLoot');
+  register("memberShares");
+  register("memberLoot");
 
   const Component = textMode ? WrappedInput : WrappedSelect;
 
   const cleanup = useCallback(() => {
-    setValue('memberShares', '');
-    setValue('memberLoot', '');
+    setValue("memberShares", "");
+    setValue("memberLoot", "");
     setValError(undefined);
   }, [setValue]);
 
@@ -55,8 +56,8 @@ export const SelectApplicant = ({
           address: memberAddress,
           setMemberLoading,
         });
-        setValue('memberShares', rs.member?.shares || '0');
-        setValue('memberLoot', rs.member?.loot || '0');
+        setValue("memberShares", rs.member?.shares || "0");
+        setValue("memberLoot", rs.member?.loot || "0");
         if (validateMember && rs.error) setValError(rs.error);
       }
     },
@@ -70,11 +71,11 @@ export const SelectApplicant = ({
         variant="outline"
         size="sm"
         onClick={() => {
-          setValue(props.id, '');
+          setValue(props.id, "");
           toggleTextMode(!textMode);
         }}
       >
-        {textMode ? 'Select Member' : 'Input Address'}
+        {textMode ? "Select Member" : "Input Address"}
       </Button>
     );
   };
