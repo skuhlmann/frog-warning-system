@@ -12,6 +12,7 @@ import Member from "./pages/Member";
 import { ConvertShares } from "./pages/ConvertShares";
 import { HeaderAvatar } from "./components/HeaderAvatar";
 import { DAO_ADDRESS, DAO_CHAIN, DAO_NAME } from "./utils/constants";
+import NewProposal from "./pages/NewProposal";
 
 export const Routes = () => {
   const { pathname } = useLocation();
@@ -42,6 +43,7 @@ export const Routes = () => {
           <Route path="/members" element={<Members />} />
           <Route path="/members/:memberAddress" element={<Member />} />
           <Route path="/proposals" element={<Proposals />} />
+          <Route path="new-proposal" element={<NewProposal />} />
           <Route path="/treasury" element={<Treasury />} />
           <Route path="/operations" element={<Operations />} />
           <Route path="/trading" element={<Trading />} />
