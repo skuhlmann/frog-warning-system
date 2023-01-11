@@ -153,4 +153,45 @@ export const FORM: Record<string, CustomFormLego> = {
       // ...PROPOSAL_SETTINGS_FIELDS,
     ],
   },
+  RAGEQUIT: {
+    id: "RAGEQUIT",
+    title: "Ragequit",
+    subtitle: "Members",
+    fields: [
+      {
+        id: "tokenAmounts",
+        type: "formSegment",
+        title: "Step 1. Select voting and/or non-voting tokens to ragequit",
+        fields: [
+          {
+            id: "sharesToBurn",
+            type: "ragequitToken",
+          },
+          { id: "lootToBurn", type: "ragequitToken" },
+        ],
+      },
+      {
+        id: "tokenAddresses",
+        type: "formSegment",
+        title:
+          "Step 2. Select treasury tokens you want to receive in exchange for your DAO tokens",
+        fields: [{ id: "tokens", type: "ragequitTokenList" }],
+      },
+      {
+        id: "checkRender",
+        type: "checkRender",
+        gateLabel: "Ragequit to different address (optional)",
+        components: [
+          {
+            id: "to",
+            type: "input",
+            label: "Address to send funds",
+            expectType: "ethAddress",
+            placeholder: "0x...",
+          },
+        ],
+      },
+    ],
+    tx: TX.RAGEQUIT,
+  },
 };

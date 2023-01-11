@@ -94,7 +94,6 @@ export const ValueRow = styled.div`
 `;
 
 export function Member() {
-  console.log("yolo");
   const { memberAddress } = useParams();
   const { dao } = useDao();
   const { successToast } = useToast();
