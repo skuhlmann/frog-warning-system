@@ -9,7 +9,6 @@ import { Trading } from "./pages/Trading";
 import { Settings } from "./pages/Settings";
 import { MolochV3DaoProvider } from "@daohaus/moloch-v3-context";
 import Member from "./pages/Member";
-import { ConvertShares } from "./pages/ConvertShares";
 import { HeaderAvatar } from "./components/HeaderAvatar";
 import {
   DAO_ADDRESS,
@@ -22,6 +21,7 @@ import NewProposal from "./pages/NewProposal";
 import RageQuit from "./pages/RageQuit";
 import { TXBuilder } from "@daohaus/tx-builder";
 import { HomeContainer } from "./pages/HomeContainer";
+import UpdateSettings from "./pages/UpdateSettings";
 
 export const Routes = () => {
   const { pathname } = useLocation();
@@ -59,7 +59,7 @@ export const Routes = () => {
             <Route path="/operations" element={<Operations />} />
             <Route path="/trading" element={<Trading />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/convert" element={<ConvertShares />} />
+            <Route path="settings/update" element={<UpdateSettings />} />
             <Route path="members/ragequit" element={<RageQuit />} />
           </Route>
         </Router>

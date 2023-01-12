@@ -266,7 +266,13 @@ export function Member() {
             </ButtonRouterLink>
             {currentMember && currentMember.memberAddress === memberAddress && (
               <ButtonRouterLink
-                to={`/convert`}
+                to={`/new-proposal?formLego=CONVERT&defaultValues=${JSON.stringify(
+                  {
+                    connectedAddress: currentMember.memberAddress,
+                    memberShares: currentMember.shares,
+                    title: "Convert Shares Proposal",
+                  }
+                )}`}
                 color="secondary"
                 linkType="no-icon-external"
               >
