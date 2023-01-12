@@ -84,7 +84,7 @@ export function Treasury() {
           (vault) =>
             dao &&
             vault && (
-              <>
+              <div key={vault.id}>
                 <VaultExplainer>
                   <ParMd>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -95,7 +95,7 @@ export function Treasury() {
                 <VaultContainer key={vault.id}>
                   <VaultOverview dao={dao} vault={vault} />
                 </VaultContainer>
-              </>
+              </div>
             )
         )}
     </SingleColumnLayout>

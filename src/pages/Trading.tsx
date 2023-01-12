@@ -92,7 +92,7 @@ export function Trading() {
           (vault) =>
             dao &&
             vault && (
-              <>
+              <div key={vault.id}>
                 <VaultExplainer>
                   <ParMd>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -103,7 +103,7 @@ export function Trading() {
                 <VaultContainer key={vault.id}>
                   <VaultOverview dao={dao} vault={vault} />
                 </VaultContainer>
-              </>
+              </div>
             )
         )}
     </SingleColumnLayout>
