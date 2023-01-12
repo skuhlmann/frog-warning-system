@@ -1,3 +1,4 @@
+import { SUMMON_COPY } from "../data/copy";
 import { CustomFormLego } from "./config";
 import { FIELD } from "./fields";
 import { TX } from "./tx";
@@ -153,45 +154,248 @@ export const FORM: Record<string, CustomFormLego> = {
       // ...PROPOSAL_SETTINGS_FIELDS,
     ],
   },
-  RAGEQUIT: {
-    id: "RAGEQUIT",
-    title: "Ragequit",
-    subtitle: "Members",
+  METADATA_SETTINGS: {
+    id: "METADATA_SETTINGS",
+    title: "Update Metadata Settings",
+    subtitle: "Settings",
+    requiredFields: { name: true },
+    tx: TX.UPDATE_METADATA_SETTINGS,
     fields: [
+      FIELD.NAME,
+      FIELD.DESCRIPTION,
       {
-        id: "tokenAmounts",
+        ...FIELD.DESCRIPTION,
+        id: "long_description",
+        label: "Long Description",
+      },
+      { ...FIELD.LINK, id: "icon", label: "Icon" },
+      {
+        id: "links",
         type: "formSegment",
-        title: "Step 1. Select voting and/or non-voting tokens to ragequit",
+        title: "Add links to important content for your DAO",
+        fields: [
+          { ...FIELD.LINK, id: "discord", label: "Discord" },
+          { ...FIELD.METADATA_LINK, id: "github", label: "Github" },
+          { ...FIELD.METADATA_LINK, id: "blog", label: "Blog" },
+          { ...FIELD.METADATA_LINK, id: "telegram", label: "Telegram" },
+          { ...FIELD.METADATA_LINK, id: "twitter", label: "Twitter" },
+          { ...FIELD.METADATA_LINK, id: "web", label: "Website" },
+          { ...FIELD.METADATA_LINK, id: "custom1", label: "Custom Link 1" },
+          { ...FIELD.METADATA_LINK, id: "custom2", label: "Custom Link 2" },
+          { ...FIELD.METADATA_LINK, id: "custom3", label: "Custom Link 3" },
+        ],
+      },
+      FIELD.TAGS,
+    ],
+  },
+  UPDATE_GOV_SETTINGS: {
+    id: "UPDATE_GOV_SETTINGS",
+    title: "Update Governance Settings",
+    subtitle: "Governance Proposal",
+    description: "Change proposal timing or advanced governance settings.",
+    tx: TX.UPDATE_GOV_SETTINGS,
+    requiredFields: {
+      title: true,
+      description: true,
+      votingPeriod: true,
+      gracePeriod: true,
+      quorum: true,
+      minRetention: true,
+      sponsorThreshold: true,
+      newOffering: true,
+    },
+    fields: [
+      FIELD.TITLE,
+      FIELD.DESCRIPTION,
+      FIELD.LINK,
+      {
+        id: "timing",
+        type: "formSegment",
+        title: "Proposal Timing",
+        description: "Update your timing for Voting and Grace periods.",
         fields: [
           {
-            id: "sharesToBurn",
-            type: "ragequitToken",
+            id: "timingSplit",
+            type: "splitColumn",
+            rows: [
+              {
+                rowId: "timingRows",
+                left: {
+                  id: "votingPeriod",
+                  type: "timePicker",
+                  label: "Voting Period",
+                  info: SUMMON_COPY.VOTING_PERIOD,
+                },
+                right: {
+                  id: "gracePeriod",
+                  type: "timePicker",
+                  label: "Grace Period",
+                  info: SUMMON_COPY.GRACE_PERIOD,
+                },
+              },
+            ],
           },
-          { id: "lootToBurn", type: "ragequitToken" },
         ],
       },
       {
-        id: "tokenAddresses",
+        id: "advanced",
         type: "formSegment",
-        title:
-          "Step 2. Select treasury tokens you want to receive in exchange for your DAO tokens",
-        fields: [{ id: "tokens", type: "ragequitTokenList" }],
-      },
-      {
-        id: "checkRender",
-        type: "checkRender",
-        gateLabel: "Ragequit to different address (optional)",
-        components: [
+        title: "Advanced Governance",
+        description: "Modify some advanced governance features.",
+        fields: [
           {
-            id: "to",
-            type: "input",
-            label: "Address to send funds",
-            expectType: "ethAddress",
-            placeholder: "0x...",
+            id: "advancedSplit",
+            type: "splitColumn",
+            rows: [
+              {
+                rowId: "row1",
+                left: {
+                  id: "quorum",
+                  type: "input",
+                  expectType: "percent",
+                  label: "Quorum %",
+                  placeholder: "20",
+                  info: SUMMON_COPY.QUORUM,
+                },
+                right: {
+                  id: "minRetention",
+                  type: "input",
+                  label: "Min Retention",
+                  expectType: "percent",
+                  placeholder: "66",
+                  info: SUMMON_COPY.MIN_RETENTION,
+                },
+              },
+              {
+                rowId: "row2",
+                left: {
+                  id: "sponsorThreshold",
+                  type: "toWeiInput",
+                  expectType: "number",
+                  label: "Sponsor Threshold",
+                  placeholder: "1",
+                  info: SUMMON_COPY.SPONSOR_THRESHOLD,
+                },
+                right: {
+                  id: "newOffering",
+                  type: "toWeiInput",
+                  label: "New Offering",
+                  expectType: "number",
+                  placeholder: "0",
+                  info: SUMMON_COPY.NEW_OFFERING,
+                },
+              },
+            ],
           },
         ],
       },
+      // ...PROPOSAL_SETTINGS_FIELDS,
     ],
-    tx: TX.RAGEQUIT,
+  },
+  TOKEN_SETTINGS: {
+    id: "TOKEN_SETTINGS",
+    title: "Update Token Settings",
+    subtitle: "Token Proposal",
+    description: "Change transferability of voting or non-voting tokens.",
+    tx: TX.TOKEN_SETTINGS,
+    requiredFields: {
+      title: true,
+      description: true,
+    },
+    fields: [
+      FIELD.TITLE,
+      FIELD.DESCRIPTION,
+      FIELD.LINK,
+      {
+        id: "tokenSettings",
+        type: "formSegment",
+        title: "DAO Tokens",
+        description: "Update Token Transferability",
+        fields: [
+          {
+            id: "split",
+            type: "splitColumn",
+            rows: [
+              {
+                rowId: "row1",
+                left: {
+                  id: "vStake",
+                  type: "switch",
+                  label: "Voting Token",
+                  info: SUMMON_COPY.STAKE_TRANSFER,
+                  switches: [
+                    {
+                      id: "vStake",
+                      fieldLabel: {
+                        off: "Transferable",
+                        on: "Not Transferable",
+                      },
+                    },
+                  ],
+                },
+                right: {
+                  id: "nvStake",
+                  type: "switch",
+                  label: "Non-Voting Token",
+                  info: SUMMON_COPY.NV_STAKE_TRANSFER,
+                  switches: [
+                    {
+                      id: "nvStake",
+                      fieldLabel: {
+                        off: "Transferable",
+                        on: "Not Transferable",
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        ],
+      },
+      // ...PROPOSAL_SETTINGS_FIELDS,
+    ],
+  },
+  UPDATE_SHAMAN: {
+    id: "UPDATE_SHAMAN",
+    title: "Update Shaman Settings",
+    description: "Reduce shaman permissions level.",
+    subtitle: "Shaman Proposal",
+    requiredFields: {
+      title: true,
+      description: true,
+      shamanAddress: true,
+      shamanPermission: true,
+    },
+    tx: TX.ADD_SHAMAN,
+    fields: [
+      FIELD.TITLE,
+      FIELD.DESCRIPTION,
+      FIELD.LINK,
+      { ...FIELD.SHAMAN_ADDRESS, disabled: true },
+      FIELD.SHAMAN_DELUXE,
+      // ...PROPOSAL_SETTINGS_FIELDS,
+    ],
+  },
+  ADD_SHAMAN: {
+    id: "ADD_SHAMAN",
+    title: "Add Shaman",
+    description: "Grant DAO permissions to an external contract.",
+    subtitle: "Shaman Proposal",
+    requiredFields: {
+      title: true,
+      description: true,
+      shamanAddress: true,
+      shamanPermission: true,
+    },
+    tx: TX.ADD_SHAMAN,
+    fields: [
+      FIELD.TITLE,
+      FIELD.DESCRIPTION,
+      FIELD.LINK,
+      FIELD.SHAMAN_ADDRESS,
+      FIELD.SHAMAN_PERMISSION,
+      // ...PROPOSAL_SETTINGS_FIELDS,
+    ],
   },
 };

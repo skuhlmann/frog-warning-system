@@ -22,6 +22,7 @@ import NewProposal from "./pages/NewProposal";
 import RageQuit from "./pages/RageQuit";
 import { TXBuilder } from "@daohaus/tx-builder";
 import { HomeContainer } from "./pages/HomeContainer";
+import UpdateSettings from "./pages/UpdateSettings";
 
 export const Routes = () => {
   const { pathname } = useLocation();
@@ -59,6 +60,7 @@ export const Routes = () => {
             <Route path="/operations" element={<Operations />} />
             <Route path="/trading" element={<Trading />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="settings/update" element={<UpdateSettings />} />
             <Route path="/convert" element={<ConvertShares />} />
             <Route path="members/ragequit" element={<RageQuit />} />
           </Route>
