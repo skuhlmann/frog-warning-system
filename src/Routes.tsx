@@ -21,6 +21,7 @@ import ProposalDetails from "./pages/ProposalDetails";
 import NewProposal from "./pages/NewProposal";
 import RageQuit from "./pages/RageQuit";
 import { TXBuilder } from "@daohaus/tx-builder";
+import { HomeContainer } from "./pages/HomeContainer";
 
 export const Routes = () => {
   const { pathname } = useLocation();
@@ -46,15 +47,9 @@ export const Routes = () => {
         daochain={DAO_CHAIN}
         graphApiKeys={{}}
       >
-        <TXBuilder
-          provider={provider}
-          chainId={DAO_CHAIN}
-          daoId={DAO_ADDRESS}
-          safeId={SAFE_ADDRESS}
-          appState={{}}
-        >
-          <Router>
-            <Route path="/" element={<Home />} />
+        <Router>
+          <Route path="/" element={<HomeContainer />}>
+            <Route index element={<Home />} />
             <Route path="/members" element={<Members />} />
             <Route path="/members/:memberAddress" element={<Member />} />
             <Route path="/proposals" element={<Proposals />} />
@@ -66,8 +61,8 @@ export const Routes = () => {
             <Route path="/settings" element={<Settings />} />
             <Route path="/convert" element={<ConvertShares />} />
             <Route path="members/ragequit" element={<RageQuit />} />
-          </Router>
-        </TXBuilder>
+          </Route>
+        </Router>
       </MolochV3DaoProvider>
     </DHLayout>
   );
