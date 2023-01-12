@@ -104,21 +104,16 @@ export const FORM: Record<string, CustomFormLego> = {
     subtitle: "Convert Proposal",
     description: "Change your voting tokens into non-voting tokens.",
     tx: TX.CONVERT,
+    log: true,
     requiredFields: {
       title: true,
-      memberAddress: true,
+      sharesToBurn: true,
     },
     fields: [
-      FIELD.CONVERT_TOKEN,
       FIELD.TITLE,
+      FIELD.CONVERT_TOKEN,
       FIELD.DESCRIPTION,
-      // {
-      //   ...FIELD.APPLICANT,
-      //   id: "memberAddress",
-      //   label: "Member",
-      //   // @ts-expect-error: doing object spread, even if the field definition has the property
-      //   daoMemberOnly: true,
-      // },
+      FIELD.LINK,
       // ...PROPOSAL_SETTINGS_FIELDS,
     ],
   },

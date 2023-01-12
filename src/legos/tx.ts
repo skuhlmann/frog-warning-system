@@ -619,72 +619,6 @@ export const TX: Record<string, TXLego> = {
     actions: [], // TODO: refactor: argtype
     formActions: true,
   }),
-};
-
-export const TABULA_TX: Record<string, TXLego> = {
-  CREATE_PUBLICATION: buildMultiCallTX({
-    id: "CREATE_PUBLICATION",
-    JSONDetails: {
-      type: "JSONDetails",
-      jsonSchema: {
-        title: ".formValues.title",
-        description: ".formValues.description",
-        contentURI: `.formValues.link`,
-        contentURIType: { type: "static", value: "url" },
-        proposalType: { type: "static", value: "Create Publication Proposal" },
-      },
-    },
-    actions: [
-      {
-        contract: CONTRACT.POSTER,
-        method: "post",
-        args: [
-          {
-            type: "JSONDetails",
-            jsonSchema: {
-              action: { type: "static", value: TABULA_TAGS.PUB_ACTION },
-              title: ".formValues.pubName",
-              tags: ".formValues.tags",
-              description: ".formValues.pubDescription",
-              image: ".formValues.pubImage",
-            },
-          },
-          { type: "static", value: TABULA_TAGS.PUBLICATION },
-        ],
-      },
-    ],
-  }),
-  CREATE_ARTICLE: buildMultiCallTX({
-    id: "CREATE_ARTICLE",
-    JSONDetails: {
-      type: "JSONDetails",
-      jsonSchema: {
-        title: ".formValues.title",
-        description: ".formValues.description",
-        contentURI: `.formValues.link`,
-        contentURIType: { type: "static", value: "url" },
-        proposalType: { type: "static", value: "Create Article Proposal" },
-      },
-    },
-    actions: [
-      {
-        contract: CONTRACT.POSTER,
-        method: "post",
-        args: [
-          {
-            type: "JSONDetails",
-            jsonSchema: {
-              action: { type: "static", value: TABULA_TAGS.ARTICLE_ACTION },
-              publicationId: ".formValues.pubId",
-              article: { type: "ipfsPinata", content: ".formValues.article" },
-              title: ".formValues.articleTitle",
-            },
-          },
-          { type: "static", value: TABULA_TAGS.PUBLICATION },
-        ],
-      },
-    ],
-  }),
   CONVERT: buildMultiCallTX({
     id: "CONVERT",
     JSONDetails: {
@@ -705,11 +639,11 @@ export const TABULA_TX: Record<string, TXLego> = {
         args: [
           {
             type: "nestedArray",
-            args: [".connectedAddress"],
+            args: [".formValues.connectedAddress"],
           },
           {
             type: "nestedArray",
-            args: [".memberShares"],
+            args: [".formValues.sharesToBurn"],
           },
         ],
       },
@@ -719,11 +653,11 @@ export const TABULA_TX: Record<string, TXLego> = {
         args: [
           {
             type: "nestedArray",
-            args: [".connectedAddress"],
+            args: [".formValues.connectedAddress"],
           },
           {
             type: "nestedArray",
-            args: [".memberShares"],
+            args: [".formValues.sharesToBurn"],
           },
         ],
       },

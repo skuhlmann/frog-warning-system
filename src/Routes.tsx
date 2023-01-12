@@ -9,7 +9,6 @@ import { Trading } from "./pages/Trading";
 import { Settings } from "./pages/Settings";
 import { MolochV3DaoProvider } from "@daohaus/moloch-v3-context";
 import Member from "./pages/Member";
-import { ConvertShares } from "./pages/ConvertShares";
 import { HeaderAvatar } from "./components/HeaderAvatar";
 import {
   DAO_ADDRESS,
@@ -61,7 +60,6 @@ export const Routes = () => {
             <Route path="/trading" element={<Trading />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="settings/update" element={<UpdateSettings />} />
-            <Route path="/convert" element={<ConvertShares />} />
             <Route path="members/ragequit" element={<RageQuit />} />
           </Route>
         </Router>
