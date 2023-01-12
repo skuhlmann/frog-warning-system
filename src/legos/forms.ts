@@ -509,4 +509,28 @@ export const FORM: Record<string, CustomFormLego> = {
       // ...PROPOSAL_SETTINGS_FIELDS,
     ],
   },
+  GUILDKICK: {
+    id: "GUILDKICK",
+    title: "Remove Member",
+    subtitle: "Token Proposal",
+    description: "Change a member’s voting tokens into non-voting tokens.",
+    tx: TX.GUILDKICK,
+    requiredFields: {
+      title: true,
+      memberAddress: true,
+    },
+    fields: [
+      FIELD.TITLE,
+      FIELD.DESCRIPTION,
+      FIELD.LINK,
+      {
+        ...FIELD.APPLICANT,
+        id: "memberAddress",
+        label: "Member",
+        // @ts-expect-error: doing object spread, even if the field definition has the property
+        daoMemberOnly: true,
+      },
+      // ...PROPOSAL_SETTINGS_FIELDS,
+    ],
+  },
 };
