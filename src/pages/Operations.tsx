@@ -96,6 +96,8 @@ export function Operations() {
     >
       {dao?.vaults
         .filter((v) => VAULT_NAMES.includes(v.name))
+        .sort()
+        .reverse()
         .map(
           (vault) =>
             dao &&

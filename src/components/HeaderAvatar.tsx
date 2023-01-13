@@ -1,5 +1,5 @@
-import { H4, ProfileAvatar } from '@daohaus/ui';
-import styled from 'styled-components';
+import { H4, ProfileAvatar } from "@daohaus/ui";
+import styled from "styled-components";
 
 const DaoNavContainer = styled.div`
   display: flex;

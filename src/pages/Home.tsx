@@ -14,9 +14,9 @@ import { ButtonRouterLink } from "../components/ButtonRouterLink";
 const Cards = styled.div`
   padding: 5em 0 5em 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 1.7rem;
-  width: 80%;
 `;
 
 const HomeCard = styled(Card)`
