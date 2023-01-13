@@ -70,7 +70,7 @@ export function Treasury() {
             <ButtonRouterLink
               to={`/new-proposal?formLego=FUND_TRADING&defaultValues=${JSON.stringify(
                 {
-                  // recipient: 0x6fca7ec5be61d97c4553c82956bcc76b9d2ca3f9,
+                  recipient: '0x6fca7ec5be61d97c4553c82956bcc76b9d2ca3f9',
                 }
               )}`}
               fullWidth={isMd}
