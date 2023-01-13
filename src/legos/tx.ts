@@ -629,7 +629,10 @@ export const TX: Record<string, TXLego> = {
         link: ".formValues.link",
         contentURI: `.formValues.link`,
         contentURIType: { type: "static", value: "url" },
-        proposalType: { type: "static", value: "CONVERT" },
+        proposalType: {
+          type: "static",
+          value: ProposalTypeIds.IssueSharesLoot,
+        },
       },
     },
     actions: [
