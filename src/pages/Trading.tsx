@@ -65,23 +65,25 @@ export function Trading() {
       title="Trading"
       actions={
         <Actions>
-          <ButtonRouterLink
-            to={`/new-proposal?formLego=ISSUE`}
-            color="secondary"
-            fullWidth={isMd}
-            linkType="no-icon-external"
-          >
-            Delegate Trader
-          </ButtonRouterLink>
           {connectedMember && (
-            <ButtonRouterLink
-              to={`/members/${connectedMember.memberAddress}`}
-              fullWidth={isMd}
-              linkType="no-icon-external"
-              // centerAlign={isMd}
-            >
-              Take Profit
-            </ButtonRouterLink>
+            <>
+              <ButtonRouterLink
+                to={`/new-proposal?formLego=ISSUE`}
+                color="secondary"
+                fullWidth={isMd}
+                linkType="no-icon-external"
+              >
+                Delegate Trader
+              </ButtonRouterLink>
+              <ButtonRouterLink
+                to={`/members/${connectedMember.memberAddress}`}
+                fullWidth={isMd}
+                linkType="no-icon-external"
+                color="secondary"
+              >
+                Take Profit
+              </ButtonRouterLink>
+            </>
           )}
         </Actions>
       }
