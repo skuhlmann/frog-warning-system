@@ -394,10 +394,11 @@ export const FORM: Record<string, CustomFormLego> = {
     ],
   },
   TRANSFER_ERC20: {
-    id: 'TRANSFER_ERC20',
-    title: 'ERC-20 Token Transfer',
+    id: 'FUND_TRADING',
+    title: 'Fund Trading',
     subtitle: 'Funding Proposal',
-    description: 'Request ERC-20 tokens from the DAO treasury.',
+    description:
+      'Transfer ERC-20 tokens from the DAO treasury to the Trading safe.',
     tx: TX.ISSUE_ERC20,
     requiredFields: {
       title: true,
