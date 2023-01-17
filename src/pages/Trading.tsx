@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import styled from 'styled-components';
+import { useState } from "react";
+import styled from "styled-components";
 
 import {
   Button,
@@ -11,10 +11,10 @@ import {
   SingleColumnLayout,
   useBreakpoint,
   widthQuery,
-} from '@daohaus/ui';
-import { ButtonRouterLink } from '../components/ButtonRouterLink';
-import { useConnectedMember, useDao } from '@daohaus/moloch-v3-context';
-import { VaultOverview } from '../components/VaultOverview';
+} from "@daohaus/ui";
+import { ButtonRouterLink } from "../components/ButtonRouterLink";
+import { useConnectedMember, useDao } from "@daohaus/moloch-v3-context";
+import { VaultOverview } from "../components/VaultOverview";
 
 const Actions = styled.div`
   display: flex;
@@ -42,7 +42,7 @@ const VaultContainer = styled(Card)`
   }
 `;
 
-const VAULT_NAMES = ['Trading'];
+const VAULT_NAMES = ["Trading"];
 
 export function Trading() {
   const { dao } = useDao();
@@ -62,14 +62,16 @@ export function Trading() {
 
   return (
     <SingleColumnLayout
-      title='Trading'
+      title="Trading"
       actions={
         <Actions>
           <ButtonRouterLink
-            to={`/new-proposal?formLego=ISSUE`}
-            color='secondary'
+            to={`/new-proposal?formLego=ADD_SIGNER_TO_SIDECAR&defaultValues=${JSON.stringify(
+              { safeAddress: "0x6fca7ec5be61d97c4553c82956bcc76b9d2ca3f9" }
+            )}`}
+            color="secondary"
             fullWidth={isMd}
-            linkType='no-icon-external'
+            linkType="no-icon-external"
           >
             Delegate Trader
           </ButtonRouterLink>
@@ -77,13 +79,13 @@ export function Trading() {
             <ButtonRouterLink
               to={`/new-proposal?formLego=TAKE_PROFIT&defaultValues=${JSON.stringify(
                 {
-                  recipient: '0x36945b167363976a26ea2f64190770e2bb5dd093',
-                  safeAddress: '0x6fca7ec5be61d97c4553c82956bcc76b9d2ca3f9',
+                  recipient: "0x36945b167363976a26ea2f64190770e2bb5dd093",
+                  safeAddress: "0x6fca7ec5be61d97c4553c82956bcc76b9d2ca3f9",
                 }
               )}`}
-              color='secondary'
+              color="secondary"
               fullWidth={isMd}
-              linkType='no-icon-external'
+              linkType="no-icon-external"
             >
               Take Profit
             </ButtonRouterLink>
@@ -92,9 +94,9 @@ export function Trading() {
       }
     >
       {dao?.vaults
-        .filter(v => VAULT_NAMES.includes(v.name))
+        .filter((v) => VAULT_NAMES.includes(v.name))
         .map(
-          vault =>
+          (vault) =>
             dao &&
             vault && (
               <div key={vault.id}>
