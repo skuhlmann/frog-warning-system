@@ -58,6 +58,13 @@ const checkCanProcess = async ({
       address: daoid,
       abi: LOCAL_ABI.BAAL,
       chainId: daochain,
+      rpcs: {
+        "0x1": `https://${import.meta.env.VITE_RIVET_KEY}.eth.rpc.rivet.cloud/`,
+        "0x5": `https://${
+          import.meta.env.VITE_RIVET_KEY
+        }.goerli.rpc.rivet.cloud/`,
+        "0x64": "https://rpc.gnosischain.com/",
+      },
     })["state"](prevProposalId);
 
     setCanProcess(
