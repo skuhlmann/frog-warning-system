@@ -14,6 +14,7 @@ import {
   isValidNetwork,
   ValidNetwork,
   Keychain,
+  HAUS_RPC,
 } from "@daohaus/keychain-utils";
 
 import { useDHConnect } from "@daohaus/connect";
@@ -107,10 +108,28 @@ export function ProposalDetails() {
         (tx) => (tx as MulticallArg).type === "multicall"
       );
 
+      console.log(
+        "import.meta.env.VITE_RIVET_KEY",
+        import.meta.env.VITE_RIVET_KEY
+      );
+
       const proposalActions = await decodeProposalActions({
         chainId,
         actionData,
         actionsMeta: multicallMeta && (multicallMeta as MulticallArg).actions,
+        rpcs: {
+          "0x1": `https://${
+            import.meta.env.VITE_RIVET_KEY
+          }.eth.rpc.rivet.cloud/`,
+          "0x5": `https://${
+            import.meta.env.VITE_RIVET_KEY
+          }.goerli.rpc.rivet.cloud/`,
+          "0x64": HAUS_RPC["0x64"],
+        },
+        explorerKeys: {
+          "0x1": import.meta.env.VITE_EXPLORER_KEY,
+          "0x5": import.meta.env.VITE_EXPLORER_KEY,
+        },
       });
 
       if (shouldUpdate) {

@@ -25,6 +25,10 @@ export const HomeContainer = () => {
         }.goerli.rpc.rivet.cloud/`,
         "0x64": HAUS_RPC["0x64"],
       }}
+      explorerKeys={{
+        "0x1": import.meta.env.VITE_EXPLORER_KEY,
+        "0x5": import.meta.env.VITE_EXPLORER_KEY,
+      }}
     >
       <Outlet />
     </TXBuilder>
