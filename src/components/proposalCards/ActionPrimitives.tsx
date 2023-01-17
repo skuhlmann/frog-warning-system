@@ -17,7 +17,7 @@ import {
   percentage,
   toWholeUnits,
 } from "@daohaus/utils";
-import { ValidNetwork, HAUS_RPC } from "@daohaus/keychain-utils";
+import { ValidNetwork, HAUS_RPC, Keychain } from "@daohaus/keychain-utils";
 
 import { useDHConnect } from "@daohaus/connect";
 import { DAO_CHAIN } from "../../utils/constants";
@@ -224,10 +224,17 @@ export const GasDisplay = ({ gasAmt }: { gasAmt: string | number }) => {
 
   useEffect(() => {
     const getGasEst = async () => {
-      if (gasAmt) {
+      const rpc: Keychain = {
+        "0x1": `https://${import.meta.env.VITE_RIVET_KEY}.eth.rpc.rivet.cloud/`,
+        "0x5": `https://${
+          import.meta.env.VITE_RIVET_KEY
+        }.goerli.rpc.rivet.cloud/`,
+        "0x64": HAUS_RPC["0x64"],
+      };
+      if (gasAmt && rpc[daochain as ValidNetwork]) {
         const est = await getGasCostEstimate(
           gasAmt,
-          HAUS_RPC[daochain as ValidNetwork]
+          rpc[daochain as ValidNetwork] || "0x5"
         );
         const estEth = toWholeUnits(est.toFixed());
         setEstimate(Number(estEth).toFixed(6));

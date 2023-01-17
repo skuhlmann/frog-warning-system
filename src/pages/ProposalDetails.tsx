@@ -108,11 +108,6 @@ export function ProposalDetails() {
         (tx) => (tx as MulticallArg).type === "multicall"
       );
 
-      console.log(
-        "import.meta.env.VITE_RIVET_KEY",
-        import.meta.env.VITE_RIVET_KEY
-      );
-
       const proposalActions = await decodeProposalActions({
         chainId,
         actionData,
