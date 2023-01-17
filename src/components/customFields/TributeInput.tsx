@@ -1,15 +1,15 @@
-import { LOCAL_ABI } from '@daohaus/abis';
+import { LOCAL_ABI } from "@daohaus/abis";
 import {
   handleErrorMessage,
   isEthAddress,
   ReactSetter,
   toBaseUnits,
   toWholeUnits,
-} from '@daohaus/utils';
-import { CONTRACT_KEYCHAINS, isValidNetwork } from '@daohaus/keychain-utils';
-import { useDHConnect } from '@daohaus/connect';
-import { FieldSpacer } from '@daohaus/form-builder';
-import { createContract, useTxBuilder } from '@daohaus/tx-builder';
+} from "@daohaus/utils";
+import { CONTRACT_KEYCHAINS, isValidNetwork } from "@daohaus/keychain-utils";
+import { useDHConnect } from "@daohaus/connect";
+import { FieldSpacer } from "@daohaus/form-builder";
+import { createContract, useTxBuilder } from "@daohaus/tx-builder";
 import {
   Buildable,
   Button,
@@ -18,11 +18,11 @@ import {
   SuccessMessage,
   useToast,
   WrappedInput,
-} from '@daohaus/ui';
+} from "@daohaus/ui";
 
-import { useEffect, useState } from 'react';
-import { RegisterOptions, useFormContext, useWatch } from 'react-hook-form';
-import { TX } from '../../legos/tx';
+import { useEffect, useState } from "react";
+import { RegisterOptions, useFormContext, useWatch } from "react-hook-form";
+import { TX } from "../../legos/tx";
 
 type TokenData = {
   allowance: string;
@@ -33,13 +33,13 @@ type TokenData = {
 };
 
 enum TokenFetchStates {
-  Idle = '',
-  Loading = 'Loading Token Data...',
-  NotEthAddress = 'Not a valid Ethereum address',
-  NotValidNetwork = 'Not a valid network',
-  NotConnected = 'Connection Error',
-  Error = 'Error fetching token data',
-  Success = 'Success',
+  Idle = "",
+  Loading = "Loading Token Data...",
+  NotEthAddress = "Not a valid Ethereum address",
+  NotValidNetwork = "Not a valid network",
+  NotConnected = "Connection Error",
+  Error = "Error fetching token data",
+  Success = "Success",
 }
 const fetchUserERC20 = async ({
   tokenAddress,
@@ -77,6 +77,13 @@ const fetchUserERC20 = async ({
     address: tokenAddress,
     chainId,
     abi: LOCAL_ABI.ERC20,
+    rpcs: {
+      "0x1": `https://${import.meta.env.VITE_RIVET_KEY}.eth.rpc.rivet.cloud/`,
+      "0x5": `https://${
+        import.meta.env.VITE_RIVET_KEY
+      }.goerli.rpc.rivet.cloud/`,
+      "0x64": "https://rpc.gnosischain.com/",
+    },
   });
 
   try {
@@ -97,7 +104,7 @@ const fetchUserERC20 = async ({
       setTokenData(tokenData);
       setFetchState(TokenFetchStates.Success);
 
-      allowance.toString() === '0'
+      allowance.toString() === "0"
         ? setNeedsApproval(true)
         : setNeedsApproval(false);
     }
@@ -110,7 +117,7 @@ const fetchUserERC20 = async ({
 export const TributeInput = (
   props: Buildable<{ addressId?: string; amtId?: string }>
 ) => {
-  const { addressId = 'tokenAddress', amtId = 'tokenAmount' } = props;
+  const { addressId = "tokenAddress", amtId = "tokenAmount" } = props;
 
   const { control, setValue } = useFormContext();
   const { address, chainId } = useDHConnect();
@@ -141,7 +148,7 @@ export const TributeInput = (
   const tokenName =
     tokenData?.tokenName && fetchState === TokenFetchStates.Success
       ? ({
-          type: 'success',
+          type: "success",
           message: `Token: ${tokenData.tokenName}`,
         } as SuccessMessage)
       : undefined;
@@ -149,7 +156,7 @@ export const TributeInput = (
   const tokenError =
     fetchState === TokenFetchStates.Error
       ? ({
-          type: 'error',
+          type: "error",
           message: TokenFetchStates.Error,
         } as ErrorMessage)
       : undefined;
@@ -157,7 +164,7 @@ export const TributeInput = (
   const tokenAmtRules: RegisterOptions = {
     required: true,
     setValueAs: (val) => {
-      if (val === '') return '';
+      if (val === "") return "";
       return toBaseUnits(val);
     },
     ...props.rules,
@@ -217,10 +224,10 @@ export const TributeInput = (
 };
 
 enum TxStates {
-  Idle = 'Idle',
-  Loading = 'Loading',
-  Error = 'Error',
-  Success = 'Token Approved!',
+  Idle = "Idle",
+  Loading = "Loading",
+  Error = "Error",
+  Success = "Token Approved!",
 }
 
 const TemporaryWarning = ({
@@ -265,10 +272,10 @@ const TemporaryWarning = ({
   return (
     <FieldAlert
       className="warning"
-      message={`You must approve ${tokenName || 'Token'} to submit`}
+      message={`You must approve ${tokenName || "Token"} to submit`}
     >
       <Button size="sm" onClick={handleApprove}>
-        {txState === TxStates.Loading ? 'Loading...' : 'Approve'}
+        {txState === TxStates.Loading ? "Loading..." : "Approve"}
       </Button>
     </FieldAlert>
   );

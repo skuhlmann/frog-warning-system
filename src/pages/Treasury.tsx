@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import styled from 'styled-components';
+import { useState } from "react";
+import styled from "styled-components";
 
 import {
   Card,
@@ -7,10 +7,10 @@ import {
   SingleColumnLayout,
   useBreakpoint,
   widthQuery,
-} from '@daohaus/ui';
-import { ButtonRouterLink } from '../components/ButtonRouterLink';
-import { useConnectedMember, useDao } from '@daohaus/moloch-v3-context';
-import { VaultOverview } from '../components/VaultOverview';
+} from "@daohaus/ui";
+import { ButtonRouterLink } from "../components/ButtonRouterLink";
+import { useConnectedMember, useDao } from "@daohaus/moloch-v3-context";
+import { VaultOverview } from "../components/VaultOverview";
 
 const Actions = styled.div`
   display: flex;
@@ -55,14 +55,14 @@ export function Treasury() {
 
   return (
     <SingleColumnLayout
-      title='Treasury'
+      title="Treasury"
       actions={
         <Actions>
           <ButtonRouterLink
             to={`/new-proposal?formLego=ISSUE`}
-            color='secondary'
+            color="secondary"
             fullWidth={isMd}
-            linkType='no-icon-external'
+            linkType="no-icon-external"
           >
             Approve Spending
           </ButtonRouterLink>
@@ -70,11 +70,12 @@ export function Treasury() {
             <ButtonRouterLink
               to={`/new-proposal?formLego=FUND_TRADING&defaultValues=${JSON.stringify(
                 {
-                  recipient: '0x6fca7ec5be61d97c4553c82956bcc76b9d2ca3f9',
+                  recipient: "0x6fca7ec5be61d97c4553c82956bcc76b9d2ca3f9",
                 }
               )}`}
               fullWidth={isMd}
-              linkType='no-icon-external'
+              linkType="no-icon-external"
+              color="secondary"
             >
               Fund Trading
             </ButtonRouterLink>
@@ -83,9 +84,9 @@ export function Treasury() {
       }
     >
       {dao?.vaults
-        .filter(v => Number(v.ragequittable))
+        .filter((v) => Number(v.ragequittable))
         .map(
-          vault =>
+          (vault) =>
             dao &&
             vault && (
               <div key={vault.id}>

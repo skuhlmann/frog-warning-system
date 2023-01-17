@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from "uuid";
 import { FormBuilderFactory, useFormBuilder } from "@daohaus/form-builder";
 import { Keychain } from "@daohaus/keychain-utils";
 import {
-  cacheABI,
   fetchABI,
   getCode,
   txActionToMetaTx,
@@ -38,6 +37,7 @@ import { JsonFragment } from "@ethersproject/abi";
 
 import { CollapsibleFormSegment } from "../customLayouts/CollapsibleFormSegment";
 import { DAO_CHAIN } from "../../utils/constants";
+import { cacheABI } from "../../utils/cacheAbi";
 
 const MainContainer = styled.div`
   display: block;
@@ -223,6 +223,15 @@ const Action = ({
       const code = await getCode({
         contractAddress: address,
         chainId,
+        rpcs: {
+          "0x1": `https://${
+            import.meta.env.VITE_RIVET_KEY
+          }.eth.rpc.rivet.cloud/`,
+          "0x5": `https://${
+            import.meta.env.VITE_RIVET_KEY
+          }.goerli.rpc.rivet.cloud/`,
+          "0x64": "https://rpc.gnosischain.com/",
+        },
       });
       if (code === "0x") {
         setEOA(true);
@@ -236,6 +245,15 @@ const Action = ({
       const fetchedAbi = await fetchABI({
         contractAddress: address,
         chainId: daochain as keyof Keychain,
+        rpcs: {
+          "0x1": `https://${
+            import.meta.env.VITE_RIVET_KEY
+          }.eth.rpc.rivet.cloud/`,
+          "0x5": `https://${
+            import.meta.env.VITE_RIVET_KEY
+          }.goerli.rpc.rivet.cloud/`,
+          "0x64": "https://rpc.gnosischain.com/",
+        },
       });
 
       if (!fetchedAbi) {

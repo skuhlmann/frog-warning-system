@@ -5,6 +5,7 @@ import { useDao } from "@daohaus/moloch-v3-context";
 import { TXBuilder } from "@daohaus/tx-builder";
 
 import { DAO_ADDRESS, DAO_CHAIN, SAFE_ADDRESS } from "../utils/constants";
+import { HAUS_RPC } from "@daohaus/keychain-utils";
 
 export const HomeContainer = () => {
   const { provider } = useDHConnect();
@@ -17,6 +18,17 @@ export const HomeContainer = () => {
       daoId={DAO_ADDRESS}
       safeId={SAFE_ADDRESS}
       appState={{ dao }}
+      rpcs={{
+        "0x1": `https://${import.meta.env.VITE_RIVET_KEY}.eth.rpc.rivet.cloud/`,
+        "0x5": `https://${
+          import.meta.env.VITE_RIVET_KEY
+        }.goerli.rpc.rivet.cloud/`,
+        "0x64": HAUS_RPC["0x64"],
+      }}
+      explorerKeys={{
+        "0x1": import.meta.env.VITE_EXPLORER_KEY,
+        "0x5": import.meta.env.VITE_EXPLORER_KEY,
+      }}
     >
       <Outlet />
     </TXBuilder>
