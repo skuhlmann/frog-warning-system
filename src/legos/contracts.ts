@@ -3,6 +3,7 @@ import { ContractLego } from "@daohaus/utils";
 import { CONTRACT_KEYCHAINS } from "@daohaus/keychain-utils";
 
 import GNOSIS_MODULE_OVERRIDE from "../abis/gnosisModule.json";
+import DISPERSE_ABI from "../abis/disperse.json";
 
 export const CONTRACT: Record<string, ContractLego> = {
   POSTER: {
@@ -68,5 +69,15 @@ export const CONTRACT: Record<string, ContractLego> = {
     contractName: "GNOSIS_MODULE",
     abi: GNOSIS_MODULE_OVERRIDE,
     targetAddress: ".formValues.safeAddress",
+  },
+  DISPERSE: {
+    type: "static",
+    contractName: "DISPERSE",
+    abi: DISPERSE_ABI,
+    targetAddress: {
+      "0x1": "0xD152f549545093347A162Dce210e7293f1452150",
+      "0x5": "0xD152f549545093347A162Dce210e7293f1452150",
+      "0x64": "0xD152f549545093347A162Dce210e7293f1452150",
+    },
   },
 };

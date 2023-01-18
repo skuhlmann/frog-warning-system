@@ -17,6 +17,7 @@ import { MetadataLink } from "../components/customFields/MetadataLink";
 import { SafeSelect } from "../components/customFields/SafeSelect";
 import { MultisendActions } from "../components/customFields/MultisendActions";
 import { ConvertToken } from "../components/customFields/ConvertToken";
+import { DisperseERC20 } from "../components/customFields/DisperseERC20";
 
 export const CustomFields = {
   ...CoreFieldLookup,
@@ -25,6 +26,7 @@ export const CustomFields = {
   tributeInput: TributeInput,
   requestNativeToken: RequestNativeToken,
   requestERC20: RequestERC20,
+  disperseERC20: DisperseERC20,
   shamanPermissionDeluxe: ShamanDeluxe,
   tagsInput: TagsInput,
   fakeMarkdown: FakeMarkdown,

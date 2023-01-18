@@ -27,6 +27,7 @@ export enum ProposalTypeIds {
   WalletConnect = "WALLETCONNECT",
   Multicall = "MULTICALL",
   AddSigner = "ADD_SIGNER",
+  RunPayroll = "RUN_PAYROLL",
 }
 
 export const PROPOSAL_TYPE_LABELS: { [key: string]: string } = {
@@ -42,6 +43,7 @@ export const PROPOSAL_TYPE_LABELS: { [key: string]: string } = {
   WALLETCONNECT: "WalletConnect Proposal",
   MULTICALL: "Multicall Proposal",
   ADD_SIGNER: "Add Safe Signer Proposal",
+  RUN_PAYROLL: "Run Payroll Proposal",
 };
 
 export const PROPOSAL_TYPE_WARNINGS: { [key: string]: string } = {
@@ -60,6 +62,8 @@ export const PROPOSAL_TYPE_WARNINGS: { [key: string]: string } = {
   WALLETCONNECT: "Proposal interacts with external contracts and applications.",
   ADD_SIGNER:
     "Proposal adds a signer to one of the DAO non-ragequittable vaults",
+  RUN_PAYROLL:
+    "Proposal sends funds from the payroll vault to multiple addresses",
   MULTICALL: "TODO: Proposal description", // TOOD:
   ERROR_CANNOT_DECODE:
     "Cannot decode contract details for this proposal. Please proceed with extreme caution!",
