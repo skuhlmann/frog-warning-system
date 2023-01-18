@@ -87,7 +87,11 @@ export function Operations() {
           </ButtonRouterLink>
           {connectedMember && (
             <ButtonRouterLink
-              to={`/members/${connectedMember.memberAddress}`}
+              to={`/new-proposal?formLego=DISPERSE_ERC20_SIDECAR&defaultValues=${JSON.stringify(
+                {
+                  safeAddress: "0xcea38773f5b72960bd22b6e18e94417b437428f7",
+                }
+              )}`}
               fullWidth={isMd}
               linkType="no-icon-external"
               color="secondary"
