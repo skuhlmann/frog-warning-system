@@ -710,7 +710,7 @@ export const FORM: Record<string, CustomFormLego> = {
     id: 'DISPERSE_ERC20_SIDECAR',
     title: 'Run Payroll',
     subtitle: 'Token Proposal',
-    description: 'Transfer ERC-20 tokens from the Vendor safe to DAO members.',
+    description: 'Transfer ERC-20 tokens from the Payroll safe to DAO members.',
     tx: TX.DISPERSE_ERC20_SIDECAR,
     log: true,
     requiredFields: {
