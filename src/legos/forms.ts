@@ -100,9 +100,9 @@ export const FORM: Record<string, CustomFormLego> = {
   },
   CONVERT: {
     id: 'CONVERT',
-    title: 'Convert Voting Tokens to Loot Tokens',
-    subtitle: 'Convert Proposal',
-    description: 'Change your voting tokens into non-voting tokens.',
+    title: 'Convert Shares',
+    subtitle: 'Token Proposal',
+    description: 'Convert voting tokens into non-voting tokens.',
     tx: TX.CONVERT,
     log: true,
     requiredFields: {
@@ -111,9 +111,9 @@ export const FORM: Record<string, CustomFormLego> = {
     },
     fields: [
       FIELD.TITLE,
-      FIELD.CONVERT_TOKEN,
       FIELD.DESCRIPTION,
       FIELD.LINK,
+      FIELD.CONVERT_TOKEN,
       // ...PROPOSAL_SETTINGS_FIELDS,
     ],
   },
