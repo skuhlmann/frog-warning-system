@@ -100,9 +100,9 @@ export const FORM: Record<string, CustomFormLego> = {
   },
   CONVERT: {
     id: 'CONVERT',
-    title: 'Convert Voting Tokens to Loot Tokens',
-    subtitle: 'Convert Proposal',
-    description: 'Change your voting tokens into non-voting tokens.',
+    title: 'Convert Shares',
+    subtitle: 'Token Proposal',
+    description: 'Convert voting tokens into non-voting tokens.',
     tx: TX.CONVERT,
     log: true,
     requiredFields: {
@@ -111,9 +111,9 @@ export const FORM: Record<string, CustomFormLego> = {
     },
     fields: [
       FIELD.TITLE,
-      FIELD.CONVERT_TOKEN,
       FIELD.DESCRIPTION,
       FIELD.LINK,
+      FIELD.CONVERT_TOKEN,
       // ...PROPOSAL_SETTINGS_FIELDS,
     ],
   },
@@ -143,7 +143,7 @@ export const FORM: Record<string, CustomFormLego> = {
       },
       {
         ...FIELD.TO_WEI,
-        label: 'Voting Token Requested',
+        label: 'Voting Tokens Requested',
         id: 'sharesRequested',
       },
       // ...PROPOSAL_SETTINGS_FIELDS,
@@ -536,7 +536,7 @@ export const FORM: Record<string, CustomFormLego> = {
   TAKE_PROFIT: {
     id: 'TAKE_PROFIT',
     title: 'Take Profit',
-    subtitle: 'Transfer Proposal',
+    subtitle: 'Token Proposal',
     description:
       'Transfer ERC-20 tokens from the Trading safe to the DAO treasury.',
     tx: TX.ISSUE_ERC20_SIDECAR,
@@ -644,7 +644,8 @@ export const FORM: Record<string, CustomFormLego> = {
   ADD_SIGNER_TO_SIDECAR: {
     id: 'ADD_SIGNER_TO_SIDECAR',
     title: 'Delegate Trader',
-    description: 'Create a proposal to add a signer to the Trading vault',
+    subtitle: 'Role Proposal',
+    description: 'Add signer to the Trading safe multi-signature wallet.',
     tx: TX.ADD_SIGNER_TO_SIDECAR,
     log: true,
     requiredFields: {
@@ -680,7 +681,8 @@ export const FORM: Record<string, CustomFormLego> = {
   DISPERSE_ERC20_SIDECAR: {
     id: 'DISPERSE_ERC20_SIDECAR',
     title: 'Run Payroll',
-    description: 'Create a proposal to send tokens to multiple addresses',
+    subtitle: 'Token Proposal',
+    description: 'Transfer ERC-20 tokens from the Vendor safe to DAO members.',
     tx: TX.DISPERSE_ERC20_SIDECAR,
     log: true,
     requiredFields: {
