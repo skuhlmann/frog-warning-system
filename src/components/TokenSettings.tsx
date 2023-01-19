@@ -26,9 +26,6 @@ import { useMemo } from 'react';
 import { DAO_ADDRESS, DAO_CHAIN } from '../utils/constants';
 
 const GovernanceContainer = styled.div`
-  .tokens {
-    margin-top: 3rem;
-  }
   h4 {
     margin-top: 4rem;
   }
