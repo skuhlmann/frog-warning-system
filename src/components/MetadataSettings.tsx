@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 import {
   H3,
   ParMd,
@@ -12,21 +12,21 @@ import {
   AddressDisplay,
   useBreakpoint,
   widthQuery,
-} from "@daohaus/ui";
+} from '@daohaus/ui';
 
-import { useConnectedMember } from "@daohaus/moloch-v3-context";
-import { TagList } from "../components/TagList";
+import { useConnectedMember } from '@daohaus/moloch-v3-context';
+import { TagList } from '../components/TagList';
 import {
   charLimit,
   formatLongDateFromSeconds,
   ZERO_ADDRESS,
-} from "@daohaus/utils";
-import { Keychain } from "@daohaus/keychain-utils";
+} from '@daohaus/utils';
+import { Keychain } from '@daohaus/keychain-utils';
 
-import { daoProfileHasLinks } from "../utils/settingsHelper";
-import { SettingsLinkList } from "./MetadataLinkLists";
-import { MolochV3Dao } from "@daohaus/moloch-v3-data";
-import { DAO_ADDRESS, DAO_CHAIN } from "../utils/constants";
+import { daoProfileHasLinks } from '../utils/settingsHelper';
+import { SettingsLinkList } from './MetadataLinkLists';
+import { MolochV3Dao } from '@daohaus/moloch-v3-data';
+import { DAO_ADDRESS, DAO_CHAIN } from '../utils/constants';
 
 const MetaCardHeader = styled.div`
   display: flex;
@@ -93,45 +93,45 @@ export const MetadataSettings = ({ dao }: MetadataSettingsProps) => {
         <H3>Metadata</H3>
         {connectedMember && Number(connectedMember.shares) && (
           <Link href={`/settings/update`}>
-            <Button color="secondary">Update Settings</Button>
+            <Button color='secondary'>Update Metadata</Button>
           </Link>
         )}
       </MetaCardHeader>
       <MetaContent>
         <div>
           <ParMd>Icon</ParMd>
-          <div className="icon">
+          <div className='icon'>
             <DaoProfileAvatar address={dao.id} image={dao.avatarImg} />
           </div>
         </div>
-        <div className="section-middle">
+        <div className='section-middle'>
           <DataIndicator
-            label="DAO Name"
+            label='DAO Name'
             data={charLimit(dao.name, 21)}
-            size="sm"
+            size='sm'
           />
           <DataIndicator
-            label="Summon Date"
+            label='Summon Date'
             data={formatLongDateFromSeconds(dao.createdAt)}
-            size="sm"
+            size='sm'
           />
 
-          <DataIndicator label="Description" data={dao.description} size="sm" />
+          <DataIndicator label='Description' data={dao.description} size='sm' />
           {dao.tags && (
-            <div className="tags">
+            <div className='tags'>
               <TagList tags={dao.tags} />
             </div>
           )}
         </div>
-        <div className="links">
+        <div className='links'>
           {daoProfileHasLinks(dao.links) && (
             <SettingsLinkList links={dao.links} />
           )}
           {dao.forwarder !== ZERO_ADDRESS && (
             <WarningContainer>
-              <div className="title">
+              <div className='title'>
                 <ParMd>Forwarder Address</ParMd>
-                <Tooltip content="Forwarder Address is the contract used to sign and send transactions without the original sender paying for gas." />
+                <Tooltip content='Forwarder Address is the contract used to sign and send transactions without the original sender paying for gas.' />
               </div>
               <AddressDisplay
                 address={dao.sharesAddress}
