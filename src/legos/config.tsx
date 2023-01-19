@@ -18,6 +18,7 @@ import { SafeSelect } from "../components/customFields/SafeSelect";
 import { MultisendActions } from "../components/customFields/MultisendActions";
 import { ConvertToken } from "../components/customFields/ConvertToken";
 import { DisperseERC20 } from "../components/customFields/DisperseERC20";
+import { DisperseInput } from "../components/customFields/DisperseInput";
 
 export const CustomFields = {
   ...CoreFieldLookup,
@@ -27,6 +28,7 @@ export const CustomFields = {
   requestNativeToken: RequestNativeToken,
   requestERC20: RequestERC20,
   disperseERC20: DisperseERC20,
+  disperse: DisperseInput,
   shamanPermissionDeluxe: ShamanDeluxe,
   tagsInput: TagsInput,
   fakeMarkdown: FakeMarkdown,

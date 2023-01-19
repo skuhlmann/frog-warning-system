@@ -671,8 +671,7 @@ export const FORM: Record<string, CustomFormLego> = {
     requiredFields: {
       title: true,
       description: true,
-      signer: true,
-      threshold: true,
+      paymentTokenAddress: true,
     },
     fields: [
       FIELD.TITLE,
@@ -680,18 +679,8 @@ export const FORM: Record<string, CustomFormLego> = {
       FIELD.LINK,
       FIELD.DISPERSE_TOKEN,
       {
-        id: "recipients",
-        type: "input",
-        label: "Recipients Addresses",
-        info: "maybe some info on how to format",
-        placeholder: "0x...",
-      },
-      {
-        id: "amounts",
-        type: "input",
-        label: "Amounts",
-        info: "maybe some info on how to format",
-        placeholder: "1",
+        ...FIELD.DISPERSE_ADDRESS_AMOUNTS,
+        info: "Input list with member address and payment amount per row using spaces. Example: \n 0x00000000000000 20",
       },
       // ...PROPOSAL_SETTINGS_FIELDS,
     ],

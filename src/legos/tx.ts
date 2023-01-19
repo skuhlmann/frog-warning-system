@@ -761,7 +761,7 @@ export const TX: Record<string, TXLego> = {
                           type: "static",
                           value: "0xD152f549545093347A162Dce210e7293f1452150",
                         },
-                        ".formValues.amounts",
+                        ".formValues.disperse.total",
                       ],
                     },
                     {
@@ -769,8 +769,8 @@ export const TX: Record<string, TXLego> = {
                       method: "disperseTokenSimple",
                       args: [
                         ".formValues.paymentTokenAddress",
-                        nestInArray(".formValues.recipients"),
-                        nestInArray(".formValues.amounts"),
+                        ".formValues.disperse.recipients",
+                        ".formValues.disperse.values",
                       ],
                     },
                   ],

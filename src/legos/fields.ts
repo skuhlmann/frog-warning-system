@@ -58,6 +58,11 @@ export const FIELD: Record<string, CustomFieldLego> = {
     type: "disperseERC20",
     label: "ERC20 to Disperse",
   },
+  DISPERSE_ADDRESS_AMOUNTS: {
+    id: "disperse",
+    type: "disperse",
+    label: "Addresses & Amounts",
+  },
   REQUEST_TOKEN: {
     id: "payment",
     type: "requestERC20",
