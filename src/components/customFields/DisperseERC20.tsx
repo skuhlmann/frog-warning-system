@@ -29,6 +29,8 @@ export const DisperseERC20 = (
   const paymentTokenAddr = watch(addressId);
   const safeAddress = watch(safeAddressId);
 
+  console.log("paymentTokenAddr", paymentTokenAddr);
+
   const erc20s = useMemo(() => {
     if (dao && isValidNetwork(daochain)) {
       const selectedSafe = dao.vaults.find((v) => {
