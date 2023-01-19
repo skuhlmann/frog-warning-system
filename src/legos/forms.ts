@@ -536,7 +536,7 @@ export const FORM: Record<string, CustomFormLego> = {
   TAKE_PROFIT: {
     id: 'TAKE_PROFIT',
     title: 'Take Profit',
-    subtitle: 'Transfer Proposal',
+    subtitle: 'Token Proposal',
     description:
       'Transfer ERC-20 tokens from the Trading safe to the DAO treasury.',
     tx: TX.ISSUE_ERC20_SIDECAR,
