@@ -143,7 +143,7 @@ export const FORM: Record<string, CustomFormLego> = {
       },
       {
         ...FIELD.TO_WEI,
-        label: 'Voting Token Requested',
+        label: 'Voting Tokens Requested',
         id: 'sharesRequested',
       },
       // ...PROPOSAL_SETTINGS_FIELDS,
@@ -644,7 +644,8 @@ export const FORM: Record<string, CustomFormLego> = {
   ADD_SIGNER_TO_SIDECAR: {
     id: 'ADD_SIGNER_TO_SIDECAR',
     title: 'Delegate Trader',
-    description: 'Create a proposal to add a signer to the Trading vault',
+    subtitle: 'Role Proposal',
+    description: 'Add signer to the Trading safe multi-signature wallet.',
     tx: TX.ADD_SIGNER_TO_SIDECAR,
     log: true,
     requiredFields: {
@@ -680,7 +681,8 @@ export const FORM: Record<string, CustomFormLego> = {
   DISPERSE_ERC20_SIDECAR: {
     id: 'DISPERSE_ERC20_SIDECAR',
     title: 'Run Payroll',
-    description: 'Create a proposal to send tokens to multiple addresses',
+    subtitle: 'Token Proposal',
+    description: 'Transfer ERC-20 tokens from the Vendor safe to DAO members.',
     tx: TX.DISPERSE_ERC20_SIDECAR,
     log: true,
     requiredFields: {
