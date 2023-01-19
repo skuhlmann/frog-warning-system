@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Card, SingleColumnLayout, widthQuery } from '@daohaus/ui';
 
 import { useDao } from '@daohaus/moloch-v3-context';
+import { TokenSettings } from '../components/TokenSettings';
 import { MetadataSettings } from '../components/MetadataSettings';
 import { GovernanceSettings } from '../components/GovernanceSettings';
 import { ShamanSettings } from '../components/ShamanSettings';
@@ -30,11 +31,15 @@ export function Settings() {
           </SettingsContainer>
 
           <SettingsContainer>
-            <ContractSettings dao={dao} />
+            <TokenSettings dao={dao} />
           </SettingsContainer>
 
           <SettingsContainer>
             <GovernanceSettings dao={dao} />
+          </SettingsContainer>
+
+          <SettingsContainer>
+            <ContractSettings dao={dao} />
           </SettingsContainer>
 
           <SettingsContainer>
