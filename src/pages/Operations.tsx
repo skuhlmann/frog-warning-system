@@ -1,5 +1,5 @@
-import { useState } from "react";
-import styled from "styled-components";
+import { useState } from 'react';
+import styled from 'styled-components';
 
 import {
   Button,
@@ -11,10 +11,10 @@ import {
   SingleColumnLayout,
   useBreakpoint,
   widthQuery,
-} from "@daohaus/ui";
-import { ButtonRouterLink } from "../components/ButtonRouterLink";
-import { useConnectedMember, useDao } from "@daohaus/moloch-v3-context";
-import { VaultOverview } from "../components/VaultOverview";
+} from '@daohaus/ui';
+import { ButtonRouterLink } from '../components/ButtonRouterLink';
+import { useConnectedMember, useDao } from '@daohaus/moloch-v3-context';
+import { VaultOverview } from '../components/VaultOverview';
 
 const Actions = styled.div`
   display: flex;
@@ -46,7 +46,7 @@ const VaultExplainer = styled.div`
   margin-bottom: 3rem;
 `;
 
-const VAULT_NAMES = ["Operations", "Payroll", "Vendor"];
+const VAULT_NAMES = ['Operations', 'Payroll', 'Vendor'];
 
 export function Operations() {
   const { dao } = useDao();
@@ -62,39 +62,51 @@ export function Operations() {
 
   return (
     <SingleColumnLayout
-      title="Operations"
+      title='Operations'
       actions={
         <Actions>
           <ButtonRouterLink
             to={`/new-proposal?formLego=ISSUE`}
-            color="secondary"
+            color='secondary'
             fullWidth={isMd}
-            linkType="no-icon-external"
+            linkType='no-icon-external'
           >
             Request Payment
           </ButtonRouterLink>
           <ButtonRouterLink
             to={`/new-proposal?formLego=FUND_VENDOR&defaultValues=${JSON.stringify(
               {
-                recipient: "0x912844e8c53f3ba80ea13db737bbb25a8bf46467",
+                recipient: '0x912844e8c53f3ba80ea13db737bbb25a8bf46467',
               }
             )}`}
-            color="secondary"
+            color='secondary'
             fullWidth={isMd}
-            linkType="no-icon-external"
+            linkType='no-icon-external'
           >
             Fund Vendor
+          </ButtonRouterLink>
+          <ButtonRouterLink
+            to={`/new-proposal?formLego=FUND_PAYROLL&defaultValues=${JSON.stringify(
+              {
+                recipient: '0xcea38773f5b72960bd22b6e18e94417b437428f7',
+              }
+            )}`}
+            color='secondary'
+            fullWidth={isMd}
+            linkType='no-icon-external'
+          >
+            Fund Payroll
           </ButtonRouterLink>
           {connectedMember && (
             <ButtonRouterLink
               to={`/new-proposal?formLego=DISPERSE_ERC20_SIDECAR&defaultValues=${JSON.stringify(
                 {
-                  safeAddress: "0xcea38773f5b72960bd22b6e18e94417b437428f7",
+                  safeAddress: '0xcea38773f5b72960bd22b6e18e94417b437428f7',
                 }
               )}`}
               fullWidth={isMd}
-              linkType="no-icon-external"
-              color="secondary"
+              linkType='no-icon-external'
+              color='secondary'
             >
               Run Payroll
             </ButtonRouterLink>
@@ -103,11 +115,11 @@ export function Operations() {
       }
     >
       {dao?.vaults
-        .filter((v) => VAULT_NAMES.includes(v.name))
+        .filter(v => VAULT_NAMES.includes(v.name))
         .sort()
         .reverse()
         .map(
-          (vault) =>
+          vault =>
             dao &&
             vault && (
               <div key={vault.id}>

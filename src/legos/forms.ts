@@ -476,6 +476,34 @@ export const FORM: Record<string, CustomFormLego> = {
       // ...PROPOSAL_SETTINGS_FIELDS,
     ],
   },
+  FUND_PAYROLL: {
+    id: 'FUND_PAYROLL',
+    title: 'Fund Payroll',
+    subtitle: 'Funding Proposal',
+    description:
+      'Transfer ERC-20 tokens from the DAO treasury to the Payroll safe.',
+    tx: TX.ISSUE_ERC20,
+    requiredFields: {
+      title: true,
+      description: true,
+      payment: true,
+      recipient: true,
+    },
+    fields: [
+      FIELD.TITLE,
+      FIELD.DESCRIPTION,
+      FIELD.LINK,
+      {
+        id: 'recipient',
+        type: 'input',
+        label: 'Recipient',
+        info: 'Address to receive the tokens',
+        placeholder: '0x...',
+      },
+      FIELD.REQUEST_TOKEN,
+      // ...PROPOSAL_SETTINGS_FIELDS,
+    ],
+  },
   APPROVE_SPENDING: {
     id: 'APPROVE_SPENDING',
     title: 'Approve Spending',
