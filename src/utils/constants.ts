@@ -42,8 +42,8 @@ export const PROPOSAL_TYPE_LABELS: { [key: string]: string } = {
   GUILDKICK: 'Token Proposal',
   WALLETCONNECT: 'WalletConnect Proposal',
   MULTICALL: 'Multicall Proposal',
-  ADD_SIGNER: 'Add Safe Signer Proposal',
-  RUN_PAYROLL: 'Run Payroll Proposal',
+  ADD_SIGNER: 'Multisig Proposal',
+  RUN_PAYROLL: 'Payroll Proposal',
 };
 
 export const PROPOSAL_TYPE_WARNINGS: { [key: string]: string } = {
