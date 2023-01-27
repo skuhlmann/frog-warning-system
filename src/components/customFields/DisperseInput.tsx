@@ -1,13 +1,19 @@
 import React from "react";
 
 import { Buildable, Field, WrappedTextArea } from "@daohaus/ui";
-import { RegisterOptions } from "react-hook-form";
+import { RegisterOptions, useFormContext } from "react-hook-form";
 import {
   transformDisperseData,
   validateDisperseData,
 } from "../../utils/disperseHelpers";
 
 export const DisperseInput = (props: Buildable<Field>) => {
+  const { watch } = useFormContext();
+
+  const disperseField = watch("disperse");
+
+  console.log("disperseField", disperseField);
+
   const newRules: RegisterOptions = {
     ...props.rules,
     setValueAs: transformDisperseData,
