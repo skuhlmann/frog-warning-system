@@ -28,6 +28,7 @@ export enum ProposalTypeIds {
   Multicall = 'MULTICALL',
   AddSigner = 'ADD_SIGNER',
   RunPayroll = 'RUN_PAYROLL',
+  ConvertShares = 'CONVERT',
 }
 
 export const PROPOSAL_TYPE_LABELS: { [key: string]: string } = {
@@ -44,6 +45,7 @@ export const PROPOSAL_TYPE_LABELS: { [key: string]: string } = {
   MULTICALL: 'Multicall Proposal',
   ADD_SIGNER: 'Multisig Proposal',
   RUN_PAYROLL: 'Payroll Proposal',
+  CONVERT: 'Token Proposal',
 };
 
 export const PROPOSAL_TYPE_WARNINGS: { [key: string]: string } = {
@@ -64,7 +66,8 @@ export const PROPOSAL_TYPE_WARNINGS: { [key: string]: string } = {
     'Proposal adds a signer to one of the DAO non-ragequittable vaults.',
   RUN_PAYROLL:
     'Proposal sends funds from the payroll safe to multiple addresses.',
-  MULTICALL: 'TODO: Proposal description', // TOOD:
+  CONVERT: 'Proposal converts voting tokens to non-voting tokens.',
+  MULTICALL: 'Proposal aggregates multiple transactions.',
   ERROR_CANNOT_DECODE:
     'Cannot decode contract details for this proposal. Please proceed with extreme caution!',
   ERROR_UNKOWN:
