@@ -66,14 +66,6 @@ export function Operations() {
       actions={
         <Actions>
           <ButtonRouterLink
-            to={`/new-proposal?formLego=ISSUE`}
-            color='secondary'
-            fullWidth={isMd}
-            linkType='no-icon-external'
-          >
-            Request Payment
-          </ButtonRouterLink>
-          <ButtonRouterLink
             to={`/new-proposal?formLego=FUND_VENDOR&defaultValues=${JSON.stringify(
               {
                 recipient: '0x912844e8c53f3ba80ea13db737bbb25a8bf46467',
