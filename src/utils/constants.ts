@@ -15,35 +15,37 @@ export const PROPOSAL_FILTERS: { [key: string]: string } = {
 };
 
 export enum ProposalTypeIds {
-  Signal = "SIGNAL",
-  IssueSharesLoot = "ISSUE",
-  AddShaman = "ADD_SHAMAN",
-  TransferErc20 = "TRANSFER_ERC20",
-  TransferNetworkToken = "TRANSFER_NETWORK_TOKEN",
-  UpdateGovSettings = "UPDATE_GOV_SETTINGS",
-  UpdateTokenSettings = "TOKEN_SETTINGS",
-  TokensForShares = "TOKENS_FOR_SHARES",
-  GuildKick = "GUILDKICK",
-  WalletConnect = "WALLETCONNECT",
-  Multicall = "MULTICALL",
-  AddSigner = "ADD_SIGNER",
-  RunPayroll = "RUN_PAYROLL",
+  Signal = 'SIGNAL',
+  IssueSharesLoot = 'ISSUE',
+  AddShaman = 'ADD_SHAMAN',
+  TransferErc20 = 'TRANSFER_ERC20',
+  TransferNetworkToken = 'TRANSFER_NETWORK_TOKEN',
+  UpdateGovSettings = 'UPDATE_GOV_SETTINGS',
+  UpdateTokenSettings = 'TOKEN_SETTINGS',
+  TokensForShares = 'TOKENS_FOR_SHARES',
+  GuildKick = 'GUILDKICK',
+  WalletConnect = 'WALLETCONNECT',
+  Multicall = 'MULTICALL',
+  AddSigner = 'ADD_SIGNER',
+  RunPayroll = 'RUN_PAYROLL',
+  ConvertShares = 'CONVERT',
 }
 
 export const PROPOSAL_TYPE_LABELS: { [key: string]: string } = {
-  SIGNAL: "Signal Proposal",
-  ISSUE: "Token Proposal",
-  ADD_SHAMAN: "Shaman Proposal",
-  TRANSFER_ERC20: "Funding Proposal",
-  TRANSFER_NETWORK_TOKEN: "Funding Proposal",
-  UPDATE_GOV_SETTINGS: "Governance Proposal",
-  TOKEN_SETTINGS: "Token Proposal",
-  TOKENS_FOR_SHARES: "Token Proposal",
-  GUILDKICK: "Token Proposal",
-  WALLETCONNECT: "WalletConnect Proposal",
-  MULTICALL: "Multicall Proposal",
-  ADD_SIGNER: "Multisig Proposal",
-  RUN_PAYROLL: "Payroll Proposal",
+  SIGNAL: 'Signal Proposal',
+  ISSUE: 'Token Proposal',
+  ADD_SHAMAN: 'Shaman Proposal',
+  TRANSFER_ERC20: 'Funding Proposal',
+  TRANSFER_NETWORK_TOKEN: 'Funding Proposal',
+  UPDATE_GOV_SETTINGS: 'Governance Proposal',
+  TOKEN_SETTINGS: 'Token Proposal',
+  TOKENS_FOR_SHARES: 'Token Proposal',
+  GUILDKICK: 'Token Proposal',
+  WALLETCONNECT: 'WalletConnect Proposal',
+  MULTICALL: 'Multicall Proposal',
+  ADD_SIGNER: 'Multisig Proposal',
+  RUN_PAYROLL: 'Payroll Proposal',
+  CONVERT: 'Token Proposal',
 };
 
 export const PROPOSAL_TYPE_WARNINGS: { [key: string]: string } = {
@@ -63,8 +65,9 @@ export const PROPOSAL_TYPE_WARNINGS: { [key: string]: string } = {
   ADD_SIGNER:
     "Proposal adds a signer to one of the DAO non-ragequittable vaults.",
   RUN_PAYROLL:
-    "Proposal sends funds from the payroll safe to multiple addresses.",
-  MULTICALL: "TODO: Proposal description", // TOOD:
+    'Proposal sends funds from the payroll safe to multiple addresses.',
+  CONVERT: 'Proposal converts voting tokens to non-voting tokens.',
+  MULTICALL: 'Proposal aggregates multiple transactions.',
   ERROR_CANNOT_DECODE:
     "Cannot decode contract details for this proposal. Please proceed with extreme caution!",
   ERROR_UNKOWN:

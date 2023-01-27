@@ -1,4 +1,4 @@
-import { LOCAL_ABI } from "@daohaus/abis";
+import { LOCAL_ABI } from '@daohaus/abis';
 import {
   NestedArray,
   POSTER_TAGS,
@@ -7,74 +7,74 @@ import {
   TXLego,
   ValidArgType,
   TXLegoBase,
-} from "@daohaus/utils";
-import { CONTRACT_KEYCHAINS } from "@daohaus/keychain-utils";
+} from '@daohaus/utils';
+import { CONTRACT_KEYCHAINS } from '@daohaus/keychain-utils';
 
-import { buildMultiCallTX } from "@daohaus/tx-builder";
-import { MaxUint256 } from "@ethersproject/constants";
-import { ProposalTypeIds } from "../utils/constants";
-import { CONTRACT } from "./contracts";
+import { buildMultiCallTX } from '@daohaus/tx-builder';
+import { MaxUint256 } from '@ethersproject/constants';
+import { ProposalTypeIds } from '../utils/constants';
+import { CONTRACT } from './contracts';
 
 const nestInArray = (arg: ValidArgType | ValidArgType[]): NestedArray => {
   return {
-    type: "nestedArray",
+    type: 'nestedArray',
     args: Array.isArray(arg) ? arg : [arg],
   };
 };
 
 export const TX: Record<string, TXLego> = {
   POST_SIGNAL: buildMultiCallTX({
-    id: "POST_SIGNAL",
+    id: 'POST_SIGNAL',
     JSONDetails: {
-      type: "JSONDetails",
+      type: 'JSONDetails',
       jsonSchema: {
         title: `.formValues.title`,
         description: `.formValues.description`,
         contentURI: `.formValues.link`,
-        contentURIType: { type: "static", value: "url" },
-        proposalType: { type: "static", value: ProposalTypeIds.Signal },
+        contentURIType: { type: 'static', value: 'url' },
+        proposalType: { type: 'static', value: ProposalTypeIds.Signal },
       },
     },
     actions: [
       {
         contract: CONTRACT.POSTER,
-        method: "post",
+        method: 'post',
         args: [
           {
-            type: "JSONDetails",
+            type: 'JSONDetails',
             jsonSchema: {
               title: `.formValues.title`,
               description: `.formValues.description`,
               contentURI: `.formValues.link`,
-              contentURIType: { type: "static", value: "url" },
-              proposalType: { type: "static", value: ProposalTypeIds.Signal },
+              contentURIType: { type: 'static', value: 'url' },
+              proposalType: { type: 'static', value: ProposalTypeIds.Signal },
             },
           },
-          { type: "static", value: POSTER_TAGS.signalProposal },
+          { type: 'static', value: POSTER_TAGS.signalProposal },
         ],
       },
     ],
   }),
   APPROVE_TOKEN: {
-    id: "APPROVE_TOKEN",
+    id: 'APPROVE_TOKEN',
     contract: CONTRACT.ERC_20,
-    method: "approve",
+    method: 'approve',
     args: [
-      { type: "singleton", keychain: CONTRACT_KEYCHAINS.TRIBUTE_MINION },
-      { type: "static", value: MaxUint256 },
+      { type: 'singleton', keychain: CONTRACT_KEYCHAINS.TRIBUTE_MINION },
+      { type: 'static', value: MaxUint256 },
     ],
   },
   ISSUE: buildMultiCallTX({
-    id: "ISSUE",
+    id: 'ISSUE',
     JSONDetails: {
-      type: "JSONDetails",
+      type: 'JSONDetails',
       jsonSchema: {
-        title: ".formValues.title",
-        description: ".formValues.description",
+        title: '.formValues.title',
+        description: '.formValues.description',
         contentURI: `.formValues.link`,
-        contentURIType: { type: "static", value: "url" },
+        contentURIType: { type: 'static', value: 'url' },
         proposalType: {
-          type: "static",
+          type: 'static',
           value: ProposalTypeIds.IssueSharesLoot,
         },
       },
@@ -82,33 +82,33 @@ export const TX: Record<string, TXLego> = {
     actions: [
       {
         contract: CONTRACT.CURRENT_DAO,
-        method: "mintShares",
+        method: 'mintShares',
         args: [
-          nestInArray(".formValues.recipient"),
-          nestInArray(".formValues.sharesRequested"),
+          nestInArray('.formValues.recipient'),
+          nestInArray('.formValues.sharesRequested'),
         ],
       },
       {
         contract: CONTRACT.CURRENT_DAO,
-        method: "mintLoot",
+        method: 'mintLoot',
         args: [
-          nestInArray(".formValues.recipient"),
-          nestInArray(".formValues.lootRequested"),
+          nestInArray('.formValues.recipient'),
+          nestInArray('.formValues.lootRequested'),
         ],
       },
     ],
   }),
   ISSUE_SHARES: buildMultiCallTX({
-    id: "ISSUE_SHARES",
+    id: 'ISSUE_SHARES',
     JSONDetails: {
-      type: "JSONDetails",
+      type: 'JSONDetails',
       jsonSchema: {
-        title: ".formValues.title",
-        description: ".formValues.description",
+        title: '.formValues.title',
+        description: '.formValues.description',
         contentURI: `.formValues.link`,
-        contentURIType: { type: "static", value: "url" },
+        contentURIType: { type: 'static', value: 'url' },
         proposalType: {
-          type: "static",
+          type: 'static',
           value: ProposalTypeIds.IssueSharesLoot,
         },
       },
@@ -116,48 +116,48 @@ export const TX: Record<string, TXLego> = {
     actions: [
       {
         contract: CONTRACT.CURRENT_DAO,
-        method: "mintShares",
+        method: 'mintShares',
         args: [
-          nestInArray(".formValues.recipient"),
-          nestInArray(".formValues.sharesRequested"),
+          nestInArray('.formValues.recipient'),
+          nestInArray('.formValues.sharesRequested'),
         ],
       },
     ],
   }),
   ADD_SHAMAN: buildMultiCallTX({
-    id: "ADD_SHAMAN",
+    id: 'ADD_SHAMAN',
     JSONDetails: {
-      type: "JSONDetails",
+      type: 'JSONDetails',
       jsonSchema: {
-        title: ".formValues.title",
-        description: ".formValues.description",
+        title: '.formValues.title',
+        description: '.formValues.description',
         contentURI: `.formValues.link`,
-        contentURIType: { type: "static", value: "url" },
-        proposalType: { type: "static", value: ProposalTypeIds.AddShaman },
+        contentURIType: { type: 'static', value: 'url' },
+        proposalType: { type: 'static', value: ProposalTypeIds.AddShaman },
       },
     },
     actions: [
       {
         contract: CONTRACT.CURRENT_DAO,
-        method: "setShamans",
+        method: 'setShamans',
         args: [
-          nestInArray(".formValues.shamanAddress"),
-          nestInArray(".formValues.shamanPermission"),
+          nestInArray('.formValues.shamanAddress'),
+          nestInArray('.formValues.shamanPermission'),
         ],
       },
     ],
   }),
   ISSUE_ERC20: buildMultiCallTX({
-    id: "ISSUE_ERC20",
+    id: 'ISSUE_ERC20',
     JSONDetails: {
-      type: "JSONDetails",
+      type: 'JSONDetails',
       jsonSchema: {
-        title: ".formValues.title",
-        description: ".formValues.description",
+        title: '.formValues.title',
+        description: '.formValues.description',
         contentURI: `.formValues.link`,
-        contentURIType: { type: "static", value: "url" },
+        contentURIType: { type: 'static', value: 'url' },
         proposalType: {
-          type: "static",
+          type: 'static',
           value: ProposalTypeIds.TransferErc20,
         },
       },
@@ -165,22 +165,22 @@ export const TX: Record<string, TXLego> = {
     actions: [
       {
         contract: CONTRACT.ERC_20_FUNDING,
-        method: "transfer",
-        args: [".formValues.recipient", ".formValues.paymentTokenAmt"],
+        method: 'transfer',
+        args: ['.formValues.recipient', '.formValues.paymentTokenAmt'],
       },
     ],
   }),
   ISSUE_ERC20_SIDECAR: buildMultiCallTX({
-    id: "ISSUE_ERC20_SIDECAR",
+    id: 'ISSUE_ERC20_SIDECAR',
     JSONDetails: {
-      type: "JSONDetails",
+      type: 'JSONDetails',
       jsonSchema: {
-        title: ".formValues.title",
-        description: ".formValues.description",
+        title: '.formValues.title',
+        description: '.formValues.description',
         contentURI: `.formValues.link`,
-        contentURIType: { type: "static", value: "url" },
+        contentURIType: { type: 'static', value: 'url' },
         proposalType: {
-          type: "static",
+          type: 'static',
           value: ProposalTypeIds.TransferErc20,
         },
       },
@@ -188,35 +188,35 @@ export const TX: Record<string, TXLego> = {
     actions: [
       {
         contract: CONTRACT.CURRENT_DAO,
-        method: "executeAsBaal",
+        method: 'executeAsBaal',
         args: [
-          ".formValues.safeAddress",
-          { type: "static", value: "0" },
+          '.formValues.safeAddress',
+          { type: 'static', value: '0' },
           {
-            type: "encodeCall",
+            type: 'encodeCall',
             action: {
               contract: CONTRACT.GNOSIS_MODULE,
-              method: "execTransactionFromModule",
+              method: 'execTransactionFromModule',
               args: [
                 {
-                  type: "singleton",
+                  type: 'singleton',
                   keychain: CONTRACT_KEYCHAINS.GNOSIS_MULTISEND,
                 },
-                { type: "static", value: "0" },
+                { type: 'static', value: '0' },
                 {
-                  type: "multicall",
+                  type: 'multicall',
                   actions: [
                     {
                       contract: CONTRACT.ERC_20_FUNDING,
-                      method: "transfer",
+                      method: 'transfer',
                       args: [
-                        ".formValues.recipient",
-                        ".formValues.paymentTokenAmt",
+                        '.formValues.recipient',
+                        '.formValues.paymentTokenAmt',
                       ],
                     },
                   ],
                 },
-                { type: "static", value: "1" },
+                { type: 'static', value: '1' },
               ],
             },
           },
@@ -225,16 +225,16 @@ export const TX: Record<string, TXLego> = {
     ],
   }),
   ISSUE_NETWORK_TOKEN: buildMultiCallTX({
-    id: "ISSUE_NETWORK_TOKEN",
+    id: 'ISSUE_NETWORK_TOKEN',
     JSONDetails: {
-      type: "JSONDetails",
+      type: 'JSONDetails',
       jsonSchema: {
-        title: ".formValues.title",
-        description: ".formValues.description",
+        title: '.formValues.title',
+        description: '.formValues.description',
         contentURI: `.formValues.link`,
-        contentURIType: { type: "static", value: "url" },
+        contentURIType: { type: 'static', value: 'url' },
         proposalType: {
-          type: "static",
+          type: 'static',
           value: ProposalTypeIds.TransferNetworkToken,
         },
       },
@@ -242,32 +242,32 @@ export const TX: Record<string, TXLego> = {
     actions: [
       {
         contract: {
-          type: "static",
-          contractName: "NETWORK",
+          type: 'static',
+          contractName: 'NETWORK',
           abi: LOCAL_ABI.ERC20,
-          targetAddress: ".formValues.recipient",
+          targetAddress: '.formValues.recipient',
         },
-        method: "noMethod",
+        method: 'noMethod',
         args: [],
-        value: ".formValues.paymentAmount",
+        value: '.formValues.paymentAmount',
         data: {
-          type: "static",
+          type: 'static',
           value: ENCODED_0X0_DATA,
         },
       },
     ],
   }),
   ISSUE_NETWORK_TOKEN_SIDECAR: buildMultiCallTX({
-    id: "ISSUE_NETWORK_TOKEN_SIDECAR",
+    id: 'ISSUE_NETWORK_TOKEN_SIDECAR',
     JSONDetails: {
-      type: "JSONDetails",
+      type: 'JSONDetails',
       jsonSchema: {
-        title: ".formValues.title",
-        description: ".formValues.description",
+        title: '.formValues.title',
+        description: '.formValues.description',
         contentURI: `.formValues.link`,
-        contentURIType: { type: "static", value: "url" },
+        contentURIType: { type: 'static', value: 'url' },
         proposalType: {
-          type: "static",
+          type: 'static',
           value: ProposalTypeIds.TransferNetworkToken,
         },
       },
@@ -275,42 +275,42 @@ export const TX: Record<string, TXLego> = {
     actions: [
       {
         contract: CONTRACT.CURRENT_DAO,
-        method: "executeAsBaal",
+        method: 'executeAsBaal',
         args: [
-          ".formValues.safeAddress",
-          { type: "static", value: "0" },
+          '.formValues.safeAddress',
+          { type: 'static', value: '0' },
           {
-            type: "encodeCall",
+            type: 'encodeCall',
             action: {
               contract: CONTRACT.GNOSIS_MODULE,
-              method: "execTransactionFromModule",
+              method: 'execTransactionFromModule',
               args: [
                 {
-                  type: "singleton",
+                  type: 'singleton',
                   keychain: CONTRACT_KEYCHAINS.GNOSIS_MULTISEND,
                 },
-                { type: "static", value: "0" },
+                { type: 'static', value: '0' },
                 {
-                  type: "multicall",
+                  type: 'multicall',
                   actions: [
                     {
                       contract: {
-                        type: "static",
-                        contractName: "NETWORK",
+                        type: 'static',
+                        contractName: 'NETWORK',
                         abi: LOCAL_ABI.ERC20,
-                        targetAddress: ".formValues.recipient",
+                        targetAddress: '.formValues.recipient',
                       },
-                      method: "noMethod",
+                      method: 'noMethod',
                       args: [],
-                      value: ".formValues.paymentAmount",
+                      value: '.formValues.paymentAmount',
                       data: {
-                        type: "static",
+                        type: 'static',
                         value: ENCODED_0X0_DATA,
                       },
                     },
                   ],
                 },
-                { type: "static", value: "1" },
+                { type: 'static', value: '1' },
               ],
             },
           },
@@ -319,103 +319,103 @@ export const TX: Record<string, TXLego> = {
     ],
   }),
   UPDATE_METADATA_SETTINGS: {
-    id: "UPDATE_METADATA_SETTINGS",
+    id: 'UPDATE_METADATA_SETTINGS',
     contract: CONTRACT.POSTER,
-    method: "post",
+    method: 'post',
     args: [
       {
-        type: "JSONDetails",
+        type: 'JSONDetails',
         jsonSchema: {
-          daoId: ".daoId",
-          name: ".formValues.name",
-          description: ".formValues.description",
-          longDescription: ".formValues.long_description",
-          avatarImg: ".formValues.icon",
-          tags: ".formValues.tags",
+          daoId: '.daoId',
+          name: '.formValues.name',
+          description: '.formValues.description',
+          longDescription: '.formValues.long_description',
+          avatarImg: '.formValues.icon',
+          tags: '.formValues.tags',
           links: {
-            type: "nestedArray",
+            type: 'nestedArray',
             args: [
               {
-                type: "JSONDetails",
+                type: 'JSONDetails',
                 jsonSchema: {
-                  url: ".formValues.discord",
-                  label: { type: "static", value: "Discord" },
+                  url: '.formValues.discord',
+                  label: { type: 'static', value: 'Discord' },
                 },
               },
               {
-                type: "JSONDetails",
+                type: 'JSONDetails',
                 jsonSchema: {
-                  url: ".formValues.github",
-                  label: { type: "static", value: "Github" },
+                  url: '.formValues.github',
+                  label: { type: 'static', value: 'Github' },
                 },
               },
               {
-                type: "JSONDetails",
+                type: 'JSONDetails',
                 jsonSchema: {
-                  url: ".formValues.blog",
-                  label: { type: "static", value: "Blog" },
+                  url: '.formValues.blog',
+                  label: { type: 'static', value: 'Blog' },
                 },
               },
               {
-                type: "JSONDetails",
+                type: 'JSONDetails',
                 jsonSchema: {
-                  url: ".formValues.telegram",
-                  label: { type: "static", value: "Telegram" },
+                  url: '.formValues.telegram',
+                  label: { type: 'static', value: 'Telegram' },
                 },
               },
               {
-                type: "JSONDetails",
+                type: 'JSONDetails',
                 jsonSchema: {
-                  url: ".formValues.twitter",
-                  label: { type: "static", value: "Twitter" },
+                  url: '.formValues.twitter',
+                  label: { type: 'static', value: 'Twitter' },
                 },
               },
               {
-                type: "JSONDetails",
+                type: 'JSONDetails',
                 jsonSchema: {
-                  url: ".formValues.web",
-                  label: { type: "static", value: "Web" },
+                  url: '.formValues.web',
+                  label: { type: 'static', value: 'Web' },
                 },
               },
               {
-                type: "JSONDetails",
+                type: 'JSONDetails',
                 jsonSchema: {
-                  url: ".formValues.custom1",
-                  label: ".formValues.custom1Label",
+                  url: '.formValues.custom1',
+                  label: '.formValues.custom1Label',
                 },
               },
               {
-                type: "JSONDetails",
+                type: 'JSONDetails',
                 jsonSchema: {
-                  url: ".formValues.custom2",
-                  label: ".formValues.custom2Label",
+                  url: '.formValues.custom2',
+                  label: '.formValues.custom2Label',
                 },
               },
               {
-                type: "JSONDetails",
+                type: 'JSONDetails',
                 jsonSchema: {
-                  url: ".formValues.custom3",
-                  label: ".formValues.custom3Label",
+                  url: '.formValues.custom3',
+                  label: '.formValues.custom3Label',
                 },
               },
             ],
           },
         },
       },
-      { type: "static", value: POSTER_TAGS.daoProfileUpdate },
+      { type: 'static', value: POSTER_TAGS.daoProfileUpdate },
     ],
   },
   UPDATE_GOV_SETTINGS: buildMultiCallTX({
-    id: "UPDATE_GOV_SETTINGS",
+    id: 'UPDATE_GOV_SETTINGS',
     JSONDetails: {
-      type: "JSONDetails",
+      type: 'JSONDetails',
       jsonSchema: {
-        title: ".formValues.title",
-        description: ".formValues.description",
+        title: '.formValues.title',
+        description: '.formValues.description',
         contentURI: `.formValues.link`,
-        contentURIType: { type: "static", value: "url" },
+        contentURIType: { type: 'static', value: 'url' },
         proposalType: {
-          type: "static",
+          type: 'static',
           value: ProposalTypeIds.UpdateGovSettings,
         },
       },
@@ -423,25 +423,25 @@ export const TX: Record<string, TXLego> = {
     actions: [
       {
         contract: CONTRACT.CURRENT_DAO,
-        method: "setGovernanceConfig",
+        method: 'setGovernanceConfig',
         args: [
           {
-            type: "argEncode",
+            type: 'argEncode',
             args: [
-              ".formValues.votingPeriodInSeconds",
-              ".formValues.gracePeriodInSeconds",
-              ".formValues.newOffering",
-              ".formValues.quorum",
-              ".formValues.sponsorThreshold",
-              ".formValues.minRetention",
+              '.formValues.votingPeriodInSeconds',
+              '.formValues.gracePeriodInSeconds',
+              '.formValues.newOffering',
+              '.formValues.quorum',
+              '.formValues.sponsorThreshold',
+              '.formValues.minRetention',
             ],
             solidityTypes: [
-              "uint32",
-              "uint32",
-              "uint256",
-              "uint256",
-              "uint256",
-              "uint256",
+              'uint32',
+              'uint32',
+              'uint256',
+              'uint256',
+              'uint256',
+              'uint256',
             ],
           },
         ],
@@ -449,18 +449,18 @@ export const TX: Record<string, TXLego> = {
     ],
   }),
   TOKEN_SETTINGS: buildMultiCallTX({
-    id: "TOKEN_SETTINGS",
+    id: 'TOKEN_SETTINGS',
     JSONDetails: {
-      type: "JSONDetails",
+      type: 'JSONDetails',
       jsonSchema: {
-        title: ".formValues.title",
-        description: ".formValues.description",
+        title: '.formValues.title',
+        description: '.formValues.description',
         contentURI: `.formValues.link`,
-        contentURIType: { type: "static", value: "url" },
-        vTokenTransferable: ".formValues.vStake",
-        nvTokenTransferable: ".formValues.nvStake",
+        contentURIType: { type: 'static', value: 'url' },
+        vTokenTransferable: '.formValues.vStake',
+        nvTokenTransferable: '.formValues.nvStake',
         proposalType: {
-          type: "static",
+          type: 'static',
           value: ProposalTypeIds.UpdateTokenSettings,
         },
       },
@@ -468,39 +468,39 @@ export const TX: Record<string, TXLego> = {
     actions: [
       {
         contract: CONTRACT.CURRENT_DAO,
-        method: "setAdminConfig",
-        args: [".formValues.vStake", ".formValues.nvStake"],
+        method: 'setAdminConfig',
+        args: ['.formValues.vStake', '.formValues.nvStake'],
       },
     ],
   }),
   TOKENS_FOR_SHARES: {
-    id: "TOKENS_FOR_SHARES",
+    id: 'TOKENS_FOR_SHARES',
     contract: CONTRACT.TRIBUTE_MINION,
-    method: "submitTributeProposal",
+    method: 'submitTributeProposal',
     args: [
-      ".daoId",
-      ".formValues.tokenAddress",
-      ".formValues.tokenAmount",
-      ".formValues.sharesRequested",
-      ".formValues.lootRequested",
+      '.daoId',
+      '.formValues.tokenAddress',
+      '.formValues.tokenAmount',
+      '.formValues.sharesRequested',
+      '.formValues.lootRequested',
       {
-        type: "proposalExpiry",
-        search: ".formValues.proposalExpiry",
+        type: 'proposalExpiry',
+        search: '.formValues.proposalExpiry',
         fallback: 0,
       },
       {
-        type: "static",
-        value: "0",
+        type: 'static',
+        value: '0',
       },
       {
-        type: "JSONDetails",
+        type: 'JSONDetails',
         jsonSchema: {
-          title: ".formValues.title",
-          description: ".formValues.description",
+          title: '.formValues.title',
+          description: '.formValues.description',
           contentURI: `.formValues.link`,
-          contentURIType: { type: "static", value: "url" },
+          contentURIType: { type: 'static', value: 'url' },
           proposalType: {
-            type: "static",
+            type: 'static',
             value: ProposalTypeIds.TokensForShares,
           },
         },
@@ -508,175 +508,175 @@ export const TX: Record<string, TXLego> = {
     ],
   },
   GUILDKICK: buildMultiCallTX({
-    id: "GUILDKICK",
+    id: 'GUILDKICK',
     JSONDetails: {
-      type: "JSONDetails",
+      type: 'JSONDetails',
       jsonSchema: {
-        title: ".formValues.title",
-        description: ".formValues.description",
-        link: ".formValues.link",
+        title: '.formValues.title',
+        description: '.formValues.description',
+        link: '.formValues.link',
         contentURI: `.formValues.link`,
-        contentURIType: { type: "static", value: "url" },
-        proposalType: { type: "static", value: ProposalTypeIds.GuildKick },
+        contentURIType: { type: 'static', value: 'url' },
+        proposalType: { type: 'static', value: ProposalTypeIds.GuildKick },
       },
     },
     actions: [
       {
         contract: CONTRACT.CURRENT_DAO,
-        method: "mintLoot",
+        method: 'mintLoot',
         args: [
           {
-            type: "nestedArray",
-            args: [".formValues.memberAddress"],
+            type: 'nestedArray',
+            args: ['.formValues.memberAddress'],
           },
           {
-            type: "nestedArray",
-            args: [".formValues.memberShares"],
+            type: 'nestedArray',
+            args: ['.formValues.memberShares'],
           },
         ],
       },
       {
         contract: CONTRACT.CURRENT_DAO,
-        method: "burnShares",
+        method: 'burnShares',
         args: [
           {
-            type: "nestedArray",
-            args: [".formValues.memberAddress"],
+            type: 'nestedArray',
+            args: ['.formValues.memberAddress'],
           },
           {
-            type: "nestedArray",
-            args: [".formValues.memberShares"],
+            type: 'nestedArray',
+            args: ['.formValues.memberShares'],
           },
         ],
       },
     ],
   }),
   MANAGE_DELEGATE: {
-    id: "MANAGE_DELEGATE",
+    id: 'MANAGE_DELEGATE',
     contract: CONTRACT.SHARES_ERC20,
-    method: "delegate",
-    args: [".formValues.delegatingTo"],
+    method: 'delegate',
+    args: ['.formValues.delegatingTo'],
   },
   RAGEQUIT: {
-    id: "RAGEQUIT",
+    id: 'RAGEQUIT',
     contract: CONTRACT.CURRENT_DAO,
-    method: "ragequit",
+    method: 'ragequit',
     args: [
-      ".formValues.to",
-      ".formValues.sharesToBurn",
-      ".formValues.lootToBurn",
-      ".formValues.tokens",
+      '.formValues.to',
+      '.formValues.sharesToBurn',
+      '.formValues.lootToBurn',
+      '.formValues.tokens',
     ],
   },
   WALLETCONNECT: buildMultiCallTX({
-    id: "WALLETCONNECT",
+    id: 'WALLETCONNECT',
     JSONDetails: {
-      type: "JSONDetails",
+      type: 'JSONDetails',
       jsonSchema: {
-        title: ".formValues.title",
-        description: ".formValues.description",
-        link: ".formValues.link",
+        title: '.formValues.title',
+        description: '.formValues.description',
+        link: '.formValues.link',
         contentURI: `.formValues.link`,
-        contentURIType: { type: "static", value: "url" },
-        proposalType: { type: "static", value: ProposalTypeIds.WalletConnect },
+        contentURIType: { type: 'static', value: 'url' },
+        proposalType: { type: 'static', value: ProposalTypeIds.WalletConnect },
       },
     },
     actions: [
       {
         contract: {
-          type: "static",
-          contractName: "ACE",
+          type: 'static',
+          contractName: 'ACE',
           abi: [],
-          targetAddress: ".formValues.txTo",
+          targetAddress: '.formValues.txTo',
         },
         args: [],
-        method: "noMethod",
-        value: ".formValues.txValue",
-        data: ".formValues.txData",
-        operations: ".formValues.txOperation",
+        method: 'noMethod',
+        value: '.formValues.txValue',
+        data: '.formValues.txData',
+        operations: '.formValues.txOperation',
       },
     ],
   }),
   ADD_SAFE: {
-    id: "ADD_SAFE",
+    id: 'ADD_SAFE',
     contract: CONTRACT.VAULT_SUMMONER,
-    method: "summonVault",
-    args: [".daoId", ".formValues.name"],
+    method: 'summonVault',
+    args: ['.daoId', '.formValues.name'],
   },
   MULTICALL: buildMultiCallTX({
-    id: "MULTICALL",
+    id: 'MULTICALL',
     JSONDetails: {
-      type: "JSONDetails",
+      type: 'JSONDetails',
       jsonSchema: {
-        title: ".formValues.title",
-        description: ".formValues.description",
-        link: ".formValues.link",
+        title: '.formValues.title',
+        description: '.formValues.description',
+        link: '.formValues.link',
         contentURI: `.formValues.link`,
-        contentURIType: { type: "static", value: "url" },
-        proposalType: { type: "static", value: ProposalTypeIds.Multicall },
+        contentURIType: { type: 'static', value: 'url' },
+        proposalType: { type: 'static', value: ProposalTypeIds.Multicall },
       },
     },
     actions: [], // TODO: refactor: argtype
     formActions: true,
   }),
   CONVERT: buildMultiCallTX({
-    id: "CONVERT",
+    id: 'CONVERT',
     JSONDetails: {
-      type: "JSONDetails",
+      type: 'JSONDetails',
       jsonSchema: {
-        title: ".formValues.title",
-        description: ".formValues.description",
-        link: ".formValues.link",
+        title: '.formValues.title',
+        description: '.formValues.description',
+        link: '.formValues.link',
         contentURI: `.formValues.link`,
-        contentURIType: { type: "static", value: "url" },
+        contentURIType: { type: 'static', value: 'url' },
         proposalType: {
-          type: "static",
-          value: ProposalTypeIds.IssueSharesLoot,
+          type: 'static',
+          value: ProposalTypeIds.ConvertShares,
         },
       },
     },
     actions: [
       {
         contract: CONTRACT.CURRENT_DAO,
-        method: "mintLoot",
+        method: 'mintLoot',
         args: [
           {
-            type: "nestedArray",
-            args: [".formValues.connectedAddress"],
+            type: 'nestedArray',
+            args: ['.formValues.connectedAddress'],
           },
           {
-            type: "nestedArray",
-            args: [".formValues.sharesToBurn"],
+            type: 'nestedArray',
+            args: ['.formValues.sharesToBurn'],
           },
         ],
       },
       {
         contract: CONTRACT.CURRENT_DAO,
-        method: "burnShares",
+        method: 'burnShares',
         args: [
           {
-            type: "nestedArray",
-            args: [".formValues.connectedAddress"],
+            type: 'nestedArray',
+            args: ['.formValues.connectedAddress'],
           },
           {
-            type: "nestedArray",
-            args: [".formValues.sharesToBurn"],
+            type: 'nestedArray',
+            args: ['.formValues.sharesToBurn'],
           },
         ],
       },
     ],
   }),
   ADD_SIGNER_TO_SIDECAR: buildMultiCallTX({
-    id: "ADD_SIGNER_TO_SIDECAR",
+    id: 'ADD_SIGNER_TO_SIDECAR',
     JSONDetails: {
-      type: "JSONDetails",
+      type: 'JSONDetails',
       jsonSchema: {
-        title: ".formValues.title",
-        description: ".formValues.description",
+        title: '.formValues.title',
+        description: '.formValues.description',
         contentURI: `.formValues.link`,
-        contentURIType: { type: "static", value: "url" },
+        contentURIType: { type: 'static', value: 'url' },
         proposalType: {
-          type: "static",
+          type: 'static',
           value: ProposalTypeIds.AddSigner,
         },
       },
@@ -684,32 +684,32 @@ export const TX: Record<string, TXLego> = {
     actions: [
       {
         contract: CONTRACT.CURRENT_DAO,
-        method: "executeAsBaal",
+        method: 'executeAsBaal',
         args: [
-          ".formValues.safeAddress",
-          { type: "static", value: "0" },
+          '.formValues.safeAddress',
+          { type: 'static', value: '0' },
           {
-            type: "encodeCall",
+            type: 'encodeCall',
             action: {
               contract: CONTRACT.GNOSIS_MODULE,
-              method: "execTransactionFromModule",
+              method: 'execTransactionFromModule',
               args: [
                 {
-                  type: "singleton",
+                  type: 'singleton',
                   keychain: CONTRACT_KEYCHAINS.GNOSIS_MULTISEND,
                 },
-                { type: "static", value: "0" },
+                { type: 'static', value: '0' },
                 {
-                  type: "multicall",
+                  type: 'multicall',
                   actions: [
                     {
                       contract: CONTRACT.GNOSIS_MODULE_OVERRIDE,
-                      method: "addOwnerWithThreshold",
-                      args: [".formValues.signer", ".formValues.threshold"],
+                      method: 'addOwnerWithThreshold',
+                      args: ['.formValues.signer', '.formValues.threshold'],
                     },
                   ],
                 },
-                { type: "static", value: "1" },
+                { type: 'static', value: '1' },
               ],
             },
           },
@@ -718,16 +718,16 @@ export const TX: Record<string, TXLego> = {
     ],
   }),
   DISPERSE_ERC20_SIDECAR: buildMultiCallTX({
-    id: "DISPERSE_ERC20_SIDECAR",
+    id: 'DISPERSE_ERC20_SIDECAR',
     JSONDetails: {
-      type: "JSONDetails",
+      type: 'JSONDetails',
       jsonSchema: {
-        title: ".formValues.title",
-        description: ".formValues.description",
+        title: '.formValues.title',
+        description: '.formValues.description',
         contentURI: `.formValues.link`,
-        contentURIType: { type: "static", value: "url" },
+        contentURIType: { type: 'static', value: 'url' },
         proposalType: {
-          type: "static",
+          type: 'static',
           value: ProposalTypeIds.RunPayroll,
         },
       },
@@ -735,47 +735,47 @@ export const TX: Record<string, TXLego> = {
     actions: [
       {
         contract: CONTRACT.CURRENT_DAO,
-        method: "executeAsBaal",
+        method: 'executeAsBaal',
         args: [
-          ".formValues.safeAddress",
-          { type: "static", value: "0" },
+          '.formValues.safeAddress',
+          { type: 'static', value: '0' },
           {
-            type: "encodeCall",
+            type: 'encodeCall',
             action: {
               contract: CONTRACT.GNOSIS_MODULE,
-              method: "execTransactionFromModule",
+              method: 'execTransactionFromModule',
               args: [
                 {
-                  type: "singleton",
+                  type: 'singleton',
                   keychain: CONTRACT_KEYCHAINS.GNOSIS_MULTISEND,
                 },
-                { type: "static", value: "0" },
+                { type: 'static', value: '0' },
                 {
-                  type: "multicall",
+                  type: 'multicall',
                   actions: [
                     {
                       contract: CONTRACT.ERC_20_FUNDING,
-                      method: "approve",
+                      method: 'approve',
                       args: [
                         {
-                          type: "static",
-                          value: "0xD152f549545093347A162Dce210e7293f1452150",
+                          type: 'static',
+                          value: '0xD152f549545093347A162Dce210e7293f1452150',
                         },
-                        ".formValues.disperse.total",
+                        '.formValues.disperse.total',
                       ],
                     },
                     {
                       contract: CONTRACT.DISPERSE,
-                      method: "disperseTokenSimple",
+                      method: 'disperseTokenSimple',
                       args: [
-                        ".formValues.paymentTokenAddress",
-                        ".formValues.disperse.recipients",
-                        ".formValues.disperse.values",
+                        '.formValues.paymentTokenAddress',
+                        '.formValues.disperse.recipients',
+                        '.formValues.disperse.values',
                       ],
                     },
                   ],
                 },
-                { type: "static", value: "1" },
+                { type: 'static', value: '1' },
               ],
             },
           },
@@ -787,23 +787,23 @@ export const TX: Record<string, TXLego> = {
 
 export const ACTION_TX: Record<string, TXLegoBase> = {
   SPONSOR: {
-    id: "SPONSOR",
+    id: 'SPONSOR',
     contract: CONTRACT.CURRENT_DAO,
-    method: "sponsorProposal",
+    method: 'sponsorProposal',
   },
   VOTE: {
-    id: "VOTE",
+    id: 'VOTE',
     contract: CONTRACT.CURRENT_DAO,
-    method: "submitVote",
+    method: 'submitVote',
   },
   PROCESS: {
-    id: "PROCESS",
+    id: 'PROCESS',
     contract: CONTRACT.CURRENT_DAO,
-    method: "processProposal",
+    method: 'processProposal',
   },
   CANCEL: {
-    id: "CANCEL",
+    id: 'CANCEL',
     contract: CONTRACT.CURRENT_DAO,
-    method: "cancelProposal",
+    method: 'cancelProposal',
   },
 };
