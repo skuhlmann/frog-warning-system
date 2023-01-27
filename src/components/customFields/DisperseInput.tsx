@@ -13,7 +13,7 @@ export const DisperseInput = (props: Buildable<Field>) => {
   const disperseField = watch("disperse");
 
   const validFieldMsg = useMemo(() => {
-    if (disperseField === "") {
+    if (disperseField === "" || !disperseField) {
       return undefined;
     }
     if (validateDisperseData(disperseField)) {
