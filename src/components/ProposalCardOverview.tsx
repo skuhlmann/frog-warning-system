@@ -62,9 +62,7 @@ const SubmittedContainer = styled.div`
 `;
 
 const StyledRouterLink = styled(RouterLink)`
-  :hover {
-    text-decoration: none;
-  }
+  text-decoration: none;
 `;
 
 type ProposalCardOverviewProps = {

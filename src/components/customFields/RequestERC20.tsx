@@ -107,7 +107,7 @@ export const RequestERC20 = (
       options={selectOptions || []}
       rightAddon={
         <Button color="secondary" size="sm" onClick={setMax}>
-          Max: {tokenBalance}
+          Max: {Number(tokenBalance).toFixed(2)}
         </Button>
       }
       rules={newRules}
