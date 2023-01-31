@@ -13,7 +13,7 @@
     "@daohaus/form-builder": "^0.1.5",
     "@daohaus/moloch-v3-context": "^0.1.5",
     "@daohaus/moloch-v3-data": "^0.1.5",
-    "@daohaus/tx-builder": "^0.1.5",
+    "@daohaus/tx-builder": "^0.1.6",
     "@daohaus/ui": "^0.1.5",
     "@daohaus/utils": "^0.1.5",
     "@daohaus/keychain-utils": "^0.1.5",

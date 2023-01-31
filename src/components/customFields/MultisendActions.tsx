@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import { FormBuilderFactory, useFormBuilder } from "@daohaus/form-builder";
 import { Keychain } from "@daohaus/keychain-utils";
 import {
+  cacheABI,
   fetchABI,
   getCode,
   txActionToMetaTx,
@@ -37,7 +38,7 @@ import { JsonFragment } from "@ethersproject/abi";
 
 import { CollapsibleFormSegment } from "../customLayouts/CollapsibleFormSegment";
 import { DAO_CHAIN } from "../../utils/constants";
-import { cacheABI } from "../../utils/cacheAbi";
+// import { cacheABI } from "../../utils/cacheAbi";
 
 const MainContainer = styled.div`
   display: block;
